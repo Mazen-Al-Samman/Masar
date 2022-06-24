@@ -1,116 +1,97 @@
 .container {
-  padding: 0 2rem;
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 16px;
 }
 
-.main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
+.nav {
+  padding: 12px 156px;
+  height: 100px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.16);
+}
+
+.container {
+  max-width: '100%';
+}
+
+.row {
+  width: 100% !important;
+}
+
+.leftNav {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
+.masarLogo {
+  margin-top: -10px;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+.navList {
+  list-style: none;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
+.navList li:first-child {
+  margin-left: 10px;
 }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
+.navList li {
+  display: inline-block;
+  margin-left: 56px;
 }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+.active {
+  font-weight: 600;
 }
 
-.title,
-.description {
-  text-align: center;
+.inlineBlock {
+  display: inline-block;
 }
 
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
+.searchBox {
+  display: inline-block;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
+  border-radius: 8px;
+  width: 267px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  padding: 14px;
+  position: relative;
 }
 
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+.searchBox input {
+  position: absolute;
+  left: 50px;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  font-family: 'Poppins';
+  width: 80%;
+  border: none;
 }
 
-.grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+.searchBox input:focus {
+  outline: none;
 }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+.translationBtn {
+  display: inline-block;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  margin-left: 20px;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.searchIcon {
+  z-index: 10000;
+  /* left: 10px; */
+  /* left: 100px; */
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+.mt3 {
+  margin-top: 20px !important;
 }
