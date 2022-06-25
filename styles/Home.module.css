@@ -1,7 +1,19 @@
-.container {
+.font-en {
   font-family: 'Poppins';
+}
+
+.font-ar {
+  font-family: 'arabic';
+}
+
+.container {
   font-weight: 400;
   font-size: 16px;
+}
+
+@font-face {
+  font-family: arabic;
+  src: url(../public/fonts/arabic.ttf);
 }
 
 .nav {
@@ -19,12 +31,8 @@
   width: 100% !important;
 }
 
-.leftNav {
-  display: flex;
-}
-
 .masarLogo {
-  margin-top: -10px;
+  margin-top: -8px;
 }
 
 .navList {
@@ -32,12 +40,12 @@
 }
 
 .navList li:first-child {
-  margin-left: 10px;
+  margin-inline-start: 10px;
 }
 
 .navList li {
   display: inline-block;
-  margin-left: 56px;
+  margin-inline-start: 56px;
 }
 
 .active {
@@ -63,12 +71,18 @@
 
 .searchBox input {
   position: absolute;
-  left: 50px;
   font-size: 14px;
   letter-spacing: 0.2px;
-  font-family: 'Poppins';
   width: 80%;
   border: none;
+}
+
+.searchBox-ar input {
+  right: 50px;
+}
+
+.searchBox-en input {
+  left: 50px;
 }
 
 .searchBox input:focus {
@@ -83,13 +97,11 @@
   width: 48px;
   height: 48px;
   padding: 12px;
-  margin-left: 20px;
+  margin-inline-start: 20px;
 }
 
 .searchIcon {
   z-index: 10000;
-  /* left: 10px; */
-  /* left: 100px; */
 }
 
 .mt3 {

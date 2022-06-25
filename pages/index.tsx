@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import NavBar from '../common/NavBar';
+import translation from '../common/translation';
 
 const Home: NextPage = () => {
   return (
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <NavBar></NavBar>
+        <NavBar translation={translation} lang='en'></NavBar>
       </main>
     </div>
   )
