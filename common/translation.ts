@@ -3,7 +3,12 @@ const en = {
     'allCompanies': 'All Companies',
     'aboutUs': 'About Us',
     'contact': 'Contact Us',
-    'search': 'Search for companies'
+    'search': 'Search for companies',
+    'departments': 'Departments',
+    'risk': 'Risk',
+    'auditing': 'Auditing',
+    'strategy': 'Strategy',
+    'users': 'Users',
 };
 
 const ar = {
@@ -11,7 +16,12 @@ const ar = {
     'allCompanies': 'كل الشركات',
     'aboutUs': 'من نحن',
     'contact': 'تواصل معنا',
-    'search': 'ابحث عن شركات'
+    'search': 'ابحث عن شركات',
+    'departments': 'الأقسام',
+    'risk': 'المخاطر',
+    'auditing': 'التدقيق',
+    'strategy': 'استراتيجية',
+    'users': 'المستخدمين',
 };
 
 const translations = {

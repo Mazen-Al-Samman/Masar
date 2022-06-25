@@ -72,8 +72,9 @@
 .searchBox input {
   position: absolute;
   font-size: 14px;
+  top: 12px;
   letter-spacing: 0.2px;
-  width: 80%;
+  width: 75%;
   border: none;
 }
 
@@ -89,7 +90,7 @@
   outline: none;
 }
 
-.translationBtn {
+.NavButton {
   display: inline-block;
   background: #FFFFFF;
   box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
@@ -97,7 +98,8 @@
   width: 48px;
   height: 48px;
   padding: 12px;
-  margin-inline-start: 20px;
+  margin-inline-start: 16px;
+  position: relative;
 }
 
 .searchIcon {
@@ -106,4 +108,39 @@
 
 .mt3 {
   margin-top: 20px !important;
+}
+
+.triangle {
+  background:#FFFFFF;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 15px;
+  top: 55px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  z-index: 10000;
+}
+
+.list {
+  background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 32px rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
+  width: 168px;
+  height: 123px;
+  position: absolute;
+  right: -20px;
+  top: 65px;
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.list button {
+  all: unset;
+  cursor: pointer;
+}
+
+.hr {
+  background-color: #E6E9EA;
 }
