@@ -1,11 +1,14 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import NavBar from '../common/NavBar';
 import translation from '../common/translation';
 
+interface IProps {
+  language: "ar" | "en";
+}
 
-const Home: NextPage = () => {
+const Home: NextPage<IProps> = ({ language }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -24,10 +27,20 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <NavBar translation={translation} lang='en'></NavBar>
+        <NavBar translation={translation} lang={language}></NavBar>
       </main>
     </div>
   )
+}
+
+export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
+  const { req } = ctx;
+  console.log(req.cookies);
+  return {
+    props: {
+      language: req.cookies.language ?? 'ar'
+    }
+  }
 }
 
 export default Home
