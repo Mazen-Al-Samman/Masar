@@ -3,12 +3,20 @@ import Link from 'next/link';
 import { NavButton, SearchBox } from './CommonComponents';
 import { Container, Row, Col } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
+import { useState } from 'react';
 
 function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
     const lang = props.lang;
     const translation = props.translation[lang];
     const cookies = new Cookies();
-
+    const [shownList, setShownList] = useState<string>('')
+    const handleShowList = (listName: string) => {
+        if (shownList == listName) {
+            setShownList('')
+            return
+        }
+        setShownList(listName)
+    }
     return (
         <Container fluid className={`${styles.nav} ${styles['font-' + lang]}`} dir={lang == 'ar' ? 'rtl' : 'ltr'}>
             <Row>
@@ -27,33 +35,34 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
 
                     <div className="mt-2">
                         {/* <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox> */}
-                        <NavButton source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'232px'} items={[
+                        <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'notifications'} source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'232px'} items={[
                             {
-                                'title': 'Profile',
+                                'title': translation.profile,
                                 'type': 'box',
                                 'icon': 'profile.svg',
                                 'onClick': function () {
-                                    alert('Profile')
+                                    alert('Profile');
                                 }
                             },
                             {
-                                'title': 'Notifications',
+                                'title': translation.notification,
                                 'type': 'box',
                                 'icon': 'notifications.svg',
                                 'onClick': function () {
-                                    alert('Notification')
+                                    alert('Notification');
                                 }
                             },
                             {
-                                'title': 'Contact Us',
+                                'title': translation.contact,
                                 'type': 'box',
                                 'icon': 'contact.svg',
                                 'onClick': function () {
-                                    alert('Contact Us')
+                                    alert('Contact Us');
                                 }
                             }
-                        ]}></NavButton>
-                        {/* <NavButton source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'168px'} items={[
+                        ]} lang={lang}></NavButton>
+
+                        <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'language'} source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} squareWidth={'168px'} items={[
                             {
                                 'title': 'English',
                                 'type': 'button',
@@ -70,19 +79,19 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
                                     window.location.reload()
                                 }
                             }
-                        ]}>
-                        </NavButton> */}
-                        {/* <NavButton source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles} squareWidth={'229px'} items={[
+                        ]} hasList={true} lang={lang}></NavButton>
+
+                        <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'logout'} source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles} squareWidth={'229px'} items={[
                             {
-                                'title': 'Are you sure, you want to logout ?',
+                                'title': translation.logoutMsg,
                                 'type': 'text',
                             },
                             {
-                                'title': 'Logout',
+                                'title': translation.logout,
                                 'type': 'button',
                                 'color': '#ED5858'
                             }
-                        ]} hasList={true}></NavButton> */}
+                        ]} hasList={true} lang={lang}></NavButton>
                     </div>
                 </Col>
             </Row>

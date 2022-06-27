@@ -9,6 +9,10 @@ const en = {
     'auditing': 'Auditing',
     'strategy': 'Strategy',
     'users': 'Users',
+    'profile': 'Profile',
+    'notification': 'Notfication',
+    'logoutMsg': 'Are you sure, you want to logout ?',
+    'logout': 'Logout'
 };
 
 const ar = {
@@ -22,6 +26,10 @@ const ar = {
     'auditing': 'التدقيق',
     'strategy': 'استراتيجية',
     'users': 'المستخدمين',
+    'profile': 'الملف الشخصي',
+    'notification': 'الإشعارات',
+    'logoutMsg': 'هل أنت متأكد, أنك ترغب بتسجيل الخروج ؟',
+    'logout': 'تسحيل الخروج'
 };
 
 const translations = {

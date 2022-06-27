@@ -127,11 +127,18 @@
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 32px rgba(0, 0, 0, 0.16);
   border-radius: 12px;
   position: absolute;
-  right: -20px;
   top: 65px;
   padding: 20px;
   text-align: center;
   font-size: 16px;
+}
+
+.list-ar {
+  left: -20px;
+}
+
+.list-en {
+  right: -20px;
 }
 
 .list button {
@@ -150,7 +157,7 @@
   font-size: 16px;
   color: black;
   display: flex;
-  justify-content: left;
+  justify-content: start;
   cursor: pointer;
 }
 
@@ -159,6 +166,6 @@
 }
 
 .box span {
-  margin-left: 16px;
+  margin-inline-start: 16px;
   margin-top: 3px;
 }
