@@ -1,7 +1,7 @@
 import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import NavBar from '../common/NavBar';
+import NavBar from '../components/NavBar';
 import translation from '../common/translation';
 
 interface IProps {
