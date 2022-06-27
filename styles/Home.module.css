@@ -111,13 +111,13 @@
 }
 
 .triangle {
-  background:#FFFFFF;
+  background: #FFFFFF;
   width: 20px;
   height: 20px;
   position: absolute;
   right: 15px;
-  top: 55px;
-  border-radius: 1px;
+  top: 57px;
+  border-radius: 4px;
   transform: rotate(45deg);
   z-index: 10000;
 }
@@ -126,8 +126,6 @@
   background: #FFFFFF;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 32px rgba(0, 0, 0, 0.16);
   border-radius: 12px;
-  width: 168px;
-  height: 123px;
   position: absolute;
   right: -20px;
   top: 65px;
@@ -143,4 +141,24 @@
 
 .hr {
   background-color: #E6E9EA;
+}
+
+.box {
+  background: #E6E9EA80;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 16px;
+  color: black;
+  display: flex;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.box:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.box span {
+  margin-left: 16px;
+  margin-top: 3px;
 }

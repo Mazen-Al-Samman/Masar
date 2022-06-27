@@ -8,24 +8,6 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
     const lang = props.lang;
     const translation = props.translation[lang];
     const cookies = new Cookies();
-    const list = [
-        {
-            'title': 'English',
-            'type': 'button',
-            'onClick': function () {
-                cookies.set('language', 'en', { path: '/' });
-                window.location.reload()
-            }
-        },
-        {
-            'title': 'عربي',
-            'type': 'button',
-            'onClick': function () {
-                cookies.set('language', 'ar', { path: '/' });
-                window.location.reload()
-            }
-        }
-    ];
 
     return (
         <Container fluid className={`${styles.nav} ${styles['font-' + lang]}`} dir={lang == 'ar' ? 'rtl' : 'ltr'}>
@@ -44,10 +26,63 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
                     </div>
 
                     <div className="mt-2">
-                        <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox>
-                        {/* <NavButton source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} items={list}></NavButton> */}
-                        <NavButton source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} items={list}></NavButton>
-                        {/* <NavButton source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles}></NavButton> */}
+                        {/* <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox> */}
+                        <NavButton source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'232px'} items={[
+                            {
+                                'title': 'Profile',
+                                'type': 'box',
+                                'icon': 'profile.svg',
+                                'onClick': function () {
+                                    alert('Profile')
+                                }
+                            },
+                            {
+                                'title': 'Notifications',
+                                'type': 'box',
+                                'icon': 'notifications.svg',
+                                'onClick': function () {
+                                    alert('Notification')
+                                }
+                            },
+                            {
+                                'title': 'Contact Us',
+                                'type': 'box',
+                                'icon': 'contact.svg',
+                                'onClick': function () {
+                                    alert('Contact Us')
+                                }
+                            }
+                        ]}></NavButton>
+                        {/* <NavButton source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'168px'} items={[
+                            {
+                                'title': 'English',
+                                'type': 'button',
+                                'onClick': function () {
+                                    cookies.set('language', 'en', { path: '/' });
+                                    window.location.reload()
+                                }
+                            },
+                            {
+                                'title': 'عربي',
+                                'type': 'button',
+                                'onClick': function () {
+                                    cookies.set('language', 'ar', { path: '/' });
+                                    window.location.reload()
+                                }
+                            }
+                        ]}>
+                        </NavButton> */}
+                        {/* <NavButton source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles} squareWidth={'229px'} items={[
+                            {
+                                'title': 'Are you sure, you want to logout ?',
+                                'type': 'text',
+                            },
+                            {
+                                'title': 'Logout',
+                                'type': 'button',
+                                'color': '#ED5858'
+                            }
+                        ]} hasList={true}></NavButton> */}
                     </div>
                 </Col>
             </Row>
