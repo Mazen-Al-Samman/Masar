@@ -29,7 +29,7 @@ const ar = {
     'profile': 'الملف الشخصي',
     'notification': 'الإشعارات',
     'logoutMsg': 'هل أنت متأكد, أنك ترغب بتسجيل الخروج ؟',
-    'logout': 'تسحيل الخروج'
+    'logout': 'تسجيل الخروج'
 };
 
 const translations = {
