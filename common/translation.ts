@@ -32,7 +32,7 @@ const ar = {
     'logout': 'تسجيل الخروج'
 };
 
-const translations = {
+const translations: { [key: string]: object; } = {
     en: en,
     ar: ar
 };

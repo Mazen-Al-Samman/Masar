@@ -27,7 +27,7 @@ const Home: NextPage<IProps> = ({ language }) => {
       </Head>
 
       <main>
-        <NavBar translation={translation} lang={language}></NavBar>
+        {/* <NavBar translation={translation} lang={language}></NavBar> */}
       </main>
     </div>
   )
