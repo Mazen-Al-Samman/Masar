@@ -1,5 +1,6 @@
 import styles from './styles/box.module.css';
 import TextBox from '../components/TextBox';
+import ChartBox from '../components/ChartBox';
 
 interface BoxStyle {
     width: string,
@@ -12,7 +13,7 @@ interface InnerBox {
 
 const Box = ({ width, height, type }: any) => {
     return (
-        <div className={styles.box} style={{ width: width, height: height }}>
+        <div className={styles.box} style={{ width: width, height: height, margin: '0 16px' }}>
             {renderBox(type)}
         </div>
     )
@@ -33,7 +34,8 @@ function renderBox(type: string) {
                 title: 'Real Estates',
                 desc: '6 Companies'
             },
-        ]}></TextBox>
+        ]}></TextBox>;
+        case 'pieChart': return <ChartBox></ChartBox>
     }
 }
 export default Box;
