@@ -2,7 +2,7 @@ import styles from './styles/box.module.css';
 import TextBox from '../components/TextBox';
 import ChartBox from '../components/ChartBox';
 import ColumnChartBox from "./ColumnChartBox";
-import {Col} from "react-bootstrap";
+import ImageBox from "./ImageBox";
 
 interface BoxConfig {
     width: string,
@@ -24,6 +24,7 @@ function renderBox(type: string, config: any) {
         case 'text': return <TextBox config={config}></TextBox>;
         case 'pieChart': return <ChartBox config={config}></ChartBox>
         case 'columnChart': return <ColumnChartBox config={config}></ColumnChartBox>
+        case 'image': return <ImageBox config={config}></ImageBox>
     }
 }
 

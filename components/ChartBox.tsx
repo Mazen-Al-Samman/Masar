@@ -42,7 +42,7 @@ const ChartBox = ({config}: BoxItems) => {
                 fontFamily: 'Poppins',
                 fontWeight: 600,
                 offsetX: -2,
-                offsetY: -4,
+                offsetY: series.length > 3 ? -20 : -10,
                 itemMargin: {
                     vertical: 8,
                 },

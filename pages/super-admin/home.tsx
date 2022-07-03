@@ -56,43 +56,19 @@ export default function Home({lang}: MainProps) {
                     }
                 }></Box>
 
-                <Box width='408px' height='349px' type='text' config={
-                    {
-                        mainText: 'Companies',
-                        items: [
-                            {
-                                title: 'Financial Services',
-                                desc: '12 Companies'
-                            },
-                            {
-                                title: 'Education',
-                                desc: '4 Companies'
-                            },
-                            {
-                                title: 'Real Estates',
-                                desc: '6 Companies'
-                            }
-                        ]
-                    }
-                }></Box>
+                {/* Total KPI Timeliness */}
+                <Box width='408px' height='349px' type='pieChart' config={{
+                    mainText: 'Total Risk Category',
+                    series: [31, 16, 25, 6, 22, 16, 16, 22, 31, 31],
+                    labels: ['Strategic', 'Compliance', 'Operational', 'Technology', 'Financial', 'Compliance', 'Compliance', 'Financial', 'Strategic', 'Strategic'],
+                    colors: ['#034732', '#009FB7', '#E3D7FF', '#C33149', '#CFE8EF', '#715AFF', '#FE9158', '#1D2D44', '#AEF78E', '#443850']
+                }}></Box>
 
-                <Box width='264px' height='349px' type='text' config={
+                <Box width='264px' height='349px' type='image' config={
                     {
-                        mainText: 'Companies',
-                        items: [
-                            {
-                                title: 'Financial Services',
-                                desc: '12 Companies'
-                            },
-                            {
-                                title: 'Education',
-                                desc: '4 Companies'
-                            },
-                            {
-                                title: 'Real Estates',
-                                desc: '6 Companies'
-                            }
-                        ]
+                        mainText: 'Total Controls Assessment',
+                        subText: 'None',
+                        image: '/icons/none.svg',
                     }
                 }></Box>
             </div>
