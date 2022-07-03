@@ -1,6 +1,8 @@
 import styles from './styles/box.module.css';
 import TextBox from '../components/TextBox';
 import ChartBox from '../components/ChartBox';
+import ColumnChartBox from "./ColumnChartBox";
+import {Col} from "react-bootstrap";
 
 interface BoxConfig {
     width: string,
@@ -19,9 +21,9 @@ const Box = ({ width, height, type, config }: BoxConfig) => {
 
 function renderBox(type: string, config: any) {
     switch (type) {
-        case 'text':
-            return <TextBox config={config}></TextBox>;
+        case 'text': return <TextBox config={config}></TextBox>;
         case 'pieChart': return <ChartBox config={config}></ChartBox>
+        case 'columnChart': return <ColumnChartBox config={config}></ColumnChartBox>
     }
 }
 
