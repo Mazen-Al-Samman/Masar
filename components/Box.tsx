@@ -2,40 +2,27 @@ import styles from './styles/box.module.css';
 import TextBox from '../components/TextBox';
 import ChartBox from '../components/ChartBox';
 
-interface BoxStyle {
+interface BoxConfig {
     width: string,
-    height: string
+    height: string,
+    type: string,
+    config: any
 }
 
-interface InnerBox {
-    type: string
-}
-
-const Box = ({ width, height, type }: any) => {
+const Box = ({ width, height, type, config }: BoxConfig) => {
     return (
-        <div className={styles.box} style={{ width: width, height: height, margin: '0 16px' }}>
-            {renderBox(type)}
+        <div className={styles.box} style={{width: width, height: height, margin: '0 16px'}}>
+            {renderBox(type, config)}
         </div>
     )
 };
 
-function renderBox(type: string) {
+function renderBox(type: string, config: any) {
     switch (type) {
-        case 'text': return <TextBox mainText='Companies' items={[
-            {
-                title: 'Financial Services',
-                desc: '12 Companies'
-            },
-            {
-                title: 'Education',
-                desc: '4 Companies'
-            },
-            {
-                title: 'Real Estates',
-                desc: '6 Companies'
-            },
-        ]}></TextBox>;
-        case 'pieChart': return <ChartBox></ChartBox>
+        case 'text':
+            return <TextBox config={config}></TextBox>;
+        case 'pieChart': return <ChartBox config={config}></ChartBox>
     }
 }
+
 export default Box;

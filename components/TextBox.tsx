@@ -1,14 +1,17 @@
-import { v4 as uuidv4 } from 'uuid';
-interface BoxData {
-    mainText: string,
-    items: BoxItems[]
+import {v4 as uuidv4} from 'uuid';
+import {main} from "@popperjs/core";
+
+interface BoxConfig {
+    config: {
+        mainText: string,
+        items: BoxItems[]
+    }
 }
 
 interface BoxItems {
     title: string,
     desc: string
 }
-
 
 
 const styles = {
@@ -48,7 +51,9 @@ const styles = {
     }
 }
 
-const TextBox = ({ mainText, items }: BoxData) => {
+const TextBox = ({config}: BoxConfig) => {
+    const {mainText, items} = config;
+    console.log(mainText);
     return (
         <div style={styles.main}>
             <p style={styles.p}>{mainText}</p>
@@ -59,7 +64,7 @@ const TextBox = ({ mainText, items }: BoxData) => {
                             <div key={uuidv4()}>
                                 <p style={styles.inner.p}>{item.title}</p>
                                 <span style={styles.inner.span}>{item.desc}</span>
-                                <hr style={styles.inner.hr} />
+                                <hr style={styles.inner.hr}/>
                             </div>
                         )
                     })
