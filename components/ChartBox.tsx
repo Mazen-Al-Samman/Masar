@@ -12,17 +12,19 @@ interface chartConfig {
     series: number[],
     labels: string[],
     colors: string[],
-    mainText: string
+    mainText: string,
+    lang: string
 }
 
 const ChartBox = ({config}: BoxItems) => {
-    const {series, colors, labels, mainText} = config;
+    const {series, colors, labels, mainText, lang} = config;
+    const negative = (lang == 'ar') ? -1 : 1;
     const obj = {
         series: series,
         options: {
             chart: {
                 width: '10px',
-                offsetX: -40,
+                offsetX: negative * -40,
             },
             labels: labels,
             dataLabels: {
@@ -36,18 +38,18 @@ const ChartBox = ({config}: BoxItems) => {
             },
             legend: {
                 show: true,
-                horizontalAlign: 'center',
                 verticalAlign: 'center',
                 fontSize: '12px',
-                fontFamily: 'Poppins',
+                fontFamily: lang == 'ar' ? 'arabic' : 'Poppins',
                 fontWeight: 600,
-                offsetX: -2,
-                offsetY: series.length > 3 ? -20 : -10,
+                offsetX: negative * -10,
+                offsetY: (series.length > 3 ? -15 : 0),
                 itemMargin: {
                     vertical: 8,
                 },
+                position: (lang == 'ar') ? 'left' : 'right',
                 markers: {
-                    offsetX: -15,
+                    offsetX: negative * -15,
                     offsetY: 1.1,
                 },
                 formatter: function (seriesName: string, opts: any) {

@@ -14,11 +14,13 @@ interface ChartData {
     labels: string[],
     categories: string[],
     data: number[],
-    mainText: string
+    mainText: string,
+    lang: string
 }
 
 const ColumnChartBox = ({config}: ChartConfig) => {
-    const {mainText, colors, percents, labels, categories, data} = config;
+    const {mainText, colors, percents, labels, categories, data, lang} = config;
+    const negative = (lang == 'ar') ? -1 : 1;
     const options = {
         chart: {
             offsetY: -40,
@@ -53,7 +55,7 @@ const ColumnChartBox = ({config}: ChartConfig) => {
                 shape: "circle",
                 radius: 10,
                 offsetY: 1,
-                offsetX: -10
+                offsetX: negative * -10
             },
             formatter: function (seriesName: string, opts: any) {
                 return [percents[opts.seriesIndex] + " " + seriesName]
