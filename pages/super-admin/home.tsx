@@ -23,6 +23,18 @@ export default function Home({lang}: MainProps) {
                             {
                                 title: translate.realEstates,
                                 desc: `6 ${translate.companies}`
+                            },
+                            {
+                                title: translate.financialServices,
+                                desc: `12 ${translate.companies}`
+                            },
+                            {
+                                title: translate.education,
+                                desc: `4 ${translate.companies}`
+                            },
+                            {
+                                title: translate.realEstates,
+                                desc: `6 ${translate.companies}`
                             }
                         ]
                     }

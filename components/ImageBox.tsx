@@ -13,6 +13,7 @@ interface BoxConfig {
 const styles = {
     main: {
         padding: '32px',
+        fontWeight: 'bold'
     },
     p: {
         fontSize: '20px',

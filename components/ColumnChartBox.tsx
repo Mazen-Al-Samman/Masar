@@ -46,10 +46,10 @@ const ColumnChartBox = ({config}: ChartConfig) => {
             offsetX: -30,
             offsetY: -3,
             fontSize: '12px',
-            fontFamily: 'Poppins',
+            fontFamily: lang == 'ar' ? 'arabic' : 'poppins',
             fontWeight: 600,
             itemMargin: {
-                vertical: 12,
+                vertical: 8,
             },
             markers: {
                 shape: "circle",

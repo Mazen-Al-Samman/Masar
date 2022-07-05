@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import css from './styles/box.module.css';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -43,7 +44,7 @@ const ChartBox = ({config}: BoxItems) => {
                 fontFamily: lang == 'ar' ? 'arabic' : 'Poppins',
                 fontWeight: 600,
                 offsetX: negative * -10,
-                offsetY: (series.length > 3 ? -15 : 0),
+                offsetY: (series.length > 3 ? -30 : 0),
                 itemMargin: {
                     vertical: 8,
                 },

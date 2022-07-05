@@ -1,5 +1,5 @@
 import {v4 as uuidv4} from 'uuid';
-import {main} from "@popperjs/core";
+import css from './styles/box.module.css';
 
 interface BoxConfig {
     config: {
@@ -29,6 +29,8 @@ const styles = {
     inner: {
         div: {
             marginTop: '30px',
+            height:'250px',
+            overflow: 'auto'
         },
         p: {
             fontWeight: '700',
@@ -57,7 +59,7 @@ const TextBox = ({config}: BoxConfig) => {
     return (
         <div style={styles.main}>
             <p style={styles.p}>{mainText}</p>
-            <div style={styles.inner.div}>
+            <div style={styles.inner.div} className={css.scroll}>
                 {
                     items.map(item => {
                         return (

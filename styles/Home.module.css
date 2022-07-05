@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
 .font-en {
   font-family: 'Poppins';
 }
 
 .font-ar {
-  font-family: 'arabic';
+  font-family: 'cairo';
 }
 
 .container {
@@ -13,7 +14,7 @@
 
 @font-face {
   font-family: arabic;
-  src: url(../public/fonts/arabic.ttf);
+  src: url(../public/fonts/arabic2.ttf);
 }
 
 .nav {
