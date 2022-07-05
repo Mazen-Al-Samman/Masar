@@ -38,18 +38,33 @@ export default function Home({lang}: MainProps) {
                 }}></Box>
 
                 {/* Total KPI Timeliness */}
-                <Box width='408px' height='349px' type='pieChart' config={{
-                    mainText: translate.totalKpiTimeliness,
-                    series: [4, 3, 3],
-                    labels: [translate.onSchedule, translate.aheadOfSchedule, translate.behindSchedule],
-                    colors: ['#715AFF', '#1D2D44', '#009FB7'],
-                    lang: lang,
-                }}></Box>
+                <Box width='408px' height='349px' type='image' config={
+                    {
+                        mainText: translate.totalControlsAssessment,
+                        subText: translate.none,
+                        image: '/icons/none.svg',
+                        lang: lang,
+                        iconDescItems: [
+                            {
+                                title: translate.adequate,
+                                color: '#5CE5BD'
+                            },
+                            {
+                                title: translate.needsImprovement,
+                                color: '#000000'
+                            },
+                            {
+                                title: translate.none,
+                                color: '#ED5858'
+                            }
+                        ]
+                    }
+                }></Box>
 
             </div>
             <div style={{padding: '0px 156px', display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                 {/* Total Risk Rating */}
-                <Box width='408px' height='349px' type='columnChart' config={
+                <Box width='696px' height='349px' type='columnChart' config={
                     {
                         mainText: translate.totalRiskRating,
                         colors: ['#5CE5BD', '#3A9177', '#FFCE20', '#ED5858', '#AD4040'],
@@ -69,14 +84,6 @@ export default function Home({lang}: MainProps) {
                     colors: ['#034732', '#009FB7', '#E3D7FF', '#C33149', '#CFE8EF', '#715AFF', '#FE9158', '#1D2D44', '#AEF78E', '#443850'],
                     lang: lang,
                 }}></Box>
-
-                <Box width='264px' height='349px' type='image' config={
-                    {
-                        mainText: translate.totalControlsAssessment,
-                        subText: translate.none,
-                        image: '/icons/none.svg',
-                    }
-                }></Box>
             </div>
         </>
     );

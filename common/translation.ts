@@ -38,7 +38,9 @@ const en = {
     'financial': 'Financial',
     'totalControlsAssessment': 'Total Controls Assessment',
     'none': 'None',
-    'totalKpiTimeliness': 'Total KPI Timelines'
+    'totalKpiTimeliness': 'Total KPI Timelines',
+    'adequate': 'Adequate',
+    'needsImprovement': 'Needs Improvement'
 };
 
 const ar = {
@@ -79,8 +81,10 @@ const ar = {
     'technology': 'تقني',
     'financial': 'مالي',
     'totalControlsAssessment': 'التقييم الكامل للضوابط',
-    'none': 'لا يوجد',
-    'totalKpiTimeliness': 'توقيت الـ KPI الكلي'
+    'none': 'ضعيف',
+    'totalKpiTimeliness': 'توقيت الـ KPI الكلي',
+    'adequate': 'مناسب',
+    'needsImprovement': 'يحتاج للتطوير'
 };
 
 const translations: { [key: string]: object; } = {

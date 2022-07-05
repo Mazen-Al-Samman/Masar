@@ -32,7 +32,7 @@ const ColumnChartBox = ({config}: ChartConfig) => {
         colors: colors,
         plotOptions: {
             bar: {
-                columnWidth: '60',
+                columnWidth: '50',
                 distributed: true,
                 borderRadius: 5,
             }
@@ -87,7 +87,7 @@ const ColumnChartBox = ({config}: ChartConfig) => {
                     options={options}
                     series={series}
                     type="bar"
-                    width={350}
+                    width={610}
                     height={275}
                 />
             }

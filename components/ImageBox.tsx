@@ -4,7 +4,9 @@ interface BoxConfig {
     config: {
         mainText: string,
         image: string,
-        subText: string
+        subText: string,
+        lang: string,
+        iconDescItems: []
     }
 }
 
@@ -24,25 +26,49 @@ const styles = {
         div: {
             marginTop: '30px',
             display: 'flex',
-            justifyContent: 'center'
         },
         p: {
             textAlign: 'center',
             fontSize: '16px',
+        },
+        colorSpan: {
+            width: '12px',
+            height: '12px',
+            borderRadius: '12px',
+            marginTop: '2px',
+            marginInlineEnd: '15px'
+        },
+        sideText: {
+            fontSize: '12px'
         }
     }
 }
 
 const ImageBox = ({config}: BoxConfig) => {
-    const {mainText, subText, image} = config;
+    const {mainText, subText, image, lang, iconDescItems} = config;
     console.log(mainText);
     return (
         <div style={styles.main}>
             <p style={styles.p}>{mainText}</p>
             <div style={styles.inner.div}>
-                <Image src={image} width={170} height={170} alt={subText}></Image>
+                <div>
+                    <Image src={image} width={190} height={190} alt={subText}></Image>
+                    <p style={styles.inner.p}>{subText}</p>
+                </div>
+
+                <div style={{marginTop: '35px', marginLeft: '30px'}}>
+                    {
+                        iconDescItems.map(item => {
+                            return (
+                                <div style={{display: "flex", justifyContent: lang == 'ar' ? 'right' : 'left'}}>
+                                    <p style={{...styles.inner.colorSpan, backgroundColor: item.color}}></p>
+                                    <p style={styles.inner.sideText}>{item.title}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
-            <p style={styles.inner.p}>{subText}</p>
         </div>
     )
 };
