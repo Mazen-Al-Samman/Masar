@@ -6,7 +6,7 @@ export default function Home({lang}: MainProps) {
     const translate = translation[lang];
     return (
         <>
-            <div style={{padding: '0px 156px', display: 'flex', justifyContent: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 {/* Companies */}
                 <Box width='264px' height='349px' type='text' config={
                     {
@@ -74,7 +74,7 @@ export default function Home({lang}: MainProps) {
                 }></Box>
 
             </div>
-            <div style={{padding: '0px 156px', display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '24px'}}>
                 {/* Total Risk Rating */}
                 <Box width='696px' height='349px' type='columnChart' config={
                     {

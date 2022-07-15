@@ -6,9 +6,8 @@ import Cookies from 'universal-cookie';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
-    const lang = props.lang;
-    const translation = props.translation;
+function NavBar(props: { lang: string; translation: { [x: string]: any; }; buttons: string[] }) {
+    const {lang, translation, buttons} = props;
     const cookies = new Cookies();
     const superAdminHeader = [
         {
@@ -19,10 +18,10 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
             'title': translation.allCompanies,
             'url': '/'
         },
-        {
-            'title': translation.aboutUs,
-            'url': '/'
-        },
+        // {
+        //     'title': translation.aboutUs,
+        //     'url': '/'
+        // },
         {
             'title': translation.contact,
             'url': '/'
@@ -52,7 +51,8 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
         },
     ];
 
-    const [shownList, setShownList] = useState<string>('')
+    const [shownList, setShownList] = useState<string>('');
+    // const [buttons, setButtons] = useState(['filter', 'search', 'language']);
     const handleShowList = (listName: string) => {
         if (shownList == listName) {
             setShownList('')
@@ -76,8 +76,14 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
                     </div>
 
                     <div className="mt-2">
-                        <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox>
-                        {/* <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'notifications'} source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'232px'} items={[
+                        {
+                            buttons.includes('search') &&
+                            <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox>
+                        }
+                        
+                        {
+                            buttons.includes('profile') &&
+                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'notifications'} source='/icons/notification.svg' alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true} squareWidth={'232px'} items={[
                             {
                                 'title': translation.profile,
                                 'type': 'box',
@@ -102,38 +108,44 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; }) {
                                     alert('Contact Us');
                                 }
                             }
-                        ]} lang={lang}></NavButton> */}
+                        ]} lang={lang}></NavButton>}
 
-                        <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'language'} source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} squareWidth={'168px'} items={[
-                            {
-                                'title': 'English',
-                                'type': 'button',
-                                'onClick': function () {
-                                    cookies.set('language', 'en', { path: '/' });
-                                    window.location.reload()
+                        {
+                            buttons.includes('language') &&
+                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'language'} source='/icons/translate.svg' alt='Translation Icon' width={24} height={24} styles={styles} squareWidth={'168px'} items={[
+                                {
+                                    'title': 'English',
+                                    'type': 'button',
+                                    'onClick': function () {
+                                        cookies.set('language', 'en', { path: '/' });
+                                        window.location.reload()
+                                    }
+                                },
+                                {
+                                    'title': 'عربي',
+                                    'type': 'button',
+                                    'onClick': function () {
+                                        cookies.set('language', 'ar', { path: '/' });
+                                        window.location.reload()
+                                    }
                                 }
-                            },
-                            {
-                                'title': 'عربي',
-                                'type': 'button',
-                                'onClick': function () {
-                                    cookies.set('language', 'ar', { path: '/' });
-                                    window.location.reload()
+                            ]} hasList={true} lang={lang}></NavButton>
+                        }
+                        
+                        {
+                            buttons.includes('logout') &&
+                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'logout'} source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles} squareWidth={'229px'} items={[
+                                {
+                                    'title': translation.logoutMsg,
+                                    'type': 'text',
+                                },
+                                {
+                                    'title': translation.logout,
+                                    'type': 'button',
+                                    'color': '#ED5858'
                                 }
-                            }
-                        ]} hasList={true} lang={lang}></NavButton>
-                        {/* 
-                        <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList} listName={'logout'} source='/icons/logout.svg' alt='Logout Icon' width={24} height={24} styles={styles} squareWidth={'229px'} items={[
-                            {
-                                'title': translation.logoutMsg,
-                                'type': 'text',
-                            },
-                            {
-                                'title': translation.logout,
-                                'type': 'button',
-                                'color': '#ED5858'
-                            }
-                        ]} hasList={true} lang={lang}></NavButton> */}
+                            ]} hasList={true} lang={lang}></NavButton>
+                        }
                     </div>
                 </Col>
             </Row>
