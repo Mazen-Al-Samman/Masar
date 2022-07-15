@@ -1,0 +1,22 @@
+import { FormLabel } from "react-bootstrap";
+import styles from "../../components/styles/form.module.css";
+
+
+interface Config {
+    id: string,
+    name: string,
+    placeHolder: string,
+    label: string
+}
+
+const Text = ({ id, name, placeHolder, label }: Config) => {
+    return (
+        <div className={styles.item}>
+            <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
+            <br />
+            <input className={styles.form} id={id} name={name} placeholder={placeHolder} style={{ width: '348px', height: '48px', border: '1px solid #E6E9EA', borderRadius: '8px', paddingInlineStart: '16px' }} type="text" />
+        </div>
+    )
+}
+
+export default Text;
