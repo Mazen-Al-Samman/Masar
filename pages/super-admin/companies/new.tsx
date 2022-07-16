@@ -55,7 +55,7 @@ const NewCompany = ({setButtons}: MainProps) => {
 
                         <div style={{marginTop: '40px'}}>
                             <Text id="company-name" name="company-name" placeHolder="example"
-                                  label="Company Name"></Text>
+                                  label="Company Name" width={348} height={48}></Text>
                             <RadioList id="country" name="country" placeHolder="Select" label="Country" list={
                                 [
                                     {
@@ -87,8 +87,8 @@ const NewCompany = ({setButtons}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Text id="city" name="city" placeHolder="example" label="City"></Text>
-                            <Text id="address" name="address" placeHolder="example" label="Address"></Text>
+                            <Text id="city" name="city" placeHolder="example" label="City" width={348} height={48}></Text>
+                            <Text id="address" name="address" placeHolder="example" label="Address" width={348} height={48}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
@@ -238,17 +238,17 @@ const NewCompany = ({setButtons}: MainProps) => {
 
                         <div style={{marginTop: '40px'}}>
                             <Text id="manager-name" name="manager-name" placeHolder="example"
-                                  label="Manager Name"></Text>
+                                  label="Manager Name" width={348} height={48}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-email" name="manager-email" placeHolder="john.doe@example.com"
-                                  label="Email"></Text>
+                                  label="Email" width={348} height={48}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-position" name="manager-position" placeHolder="example"
-                                  label="Position"></Text>
+                                  label="Position" width={348} height={48}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
