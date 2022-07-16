@@ -215,15 +215,12 @@ const NewCompany = ({setButtons}: MainProps) => {
                     height: '54px',
                     borderRadius: '8px',
                     color: 'white',
-                    marginTop: '62px'
+                    marginTop: '62px',
+                    display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'
                 }}>
-                    <p style={{display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'}}>
-                        <p>
-                            Next
-                        </p>
-                        <p style={{marginLeft: '12px', marginTop: '2px'}}>
-                            <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
-                        </p>
+                    <p>Next</p>
+                    <p style={{marginLeft: '12px', marginTop: '3px'}}>
+                        <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
                     </p>
                 </button>
             </form>
