@@ -2,7 +2,7 @@ import {FormLabel} from "react-bootstrap";
 import styles from "../../components/styles/form.module.css";
 import Image from 'next/image';
 import {v4 as uuidv4} from 'uuid';
-import {useState} from "react";
+import {useState, useEffect, useRef} from "react";
 
 
 interface Config {
@@ -23,6 +23,7 @@ interface Item {
 const Phone = ({id, name, placeHolder, label, list}: Config) => {
     const [show, setShow] = useState(false);
     const [country, setCountry] = useState({flag: 'jordan', code: '00962'});
+    const ref = useRef(null);
 
     const toggleList = () => {
         setShow(!show);
@@ -30,7 +31,7 @@ const Phone = ({id, name, placeHolder, label, list}: Config) => {
 
     const selectCountry = (e: any) => {
         // Remove bold class from all countries
-        var elements = document.querySelectorAll("[data-idx]");
+        let elements = document.querySelectorAll("[data-idx]");
         elements.forEach((element) => {
             element.classList.remove(styles.bold);
         })
@@ -44,8 +45,25 @@ const Phone = ({id, name, placeHolder, label, list}: Config) => {
         setCountry({flag: selectedCountryObject.flag, code: selectedCountryObject.code});
     }
 
+    const closeLists = () => {
+        setShow(false);
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (event: any) => {
+            // @ts-ignore
+            if (ref.current && !ref.current.contains(event.target)) {
+                closeLists();
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside, true);
+        };
+    }, [ref]);
+
     return (
-        <div className={styles.item}>
+        <div className={styles.item} ref={ref}>
             <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
             <div>
                 <div style={{

@@ -14,7 +14,6 @@ interface Config {
 
 interface Item {
     title: string,
-    isChecked: boolean
 }
 
 const RadioList = ({id, name, placeHolder, label, list}: Config) => {
