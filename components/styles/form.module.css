@@ -11,20 +11,21 @@
     top: 12px;
     right: 12px;
     border-radius: 12px;
-    padding-inline-start: 2.20px;
+    padding-inline-start: 2.2px;
     padding-top: 2px;
 }
 
 .list {
     position: absolute;
     width: 348px;
-    height: 296px;
+    max-height: 296px;
     background: #FFFFFF;
-    box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
+    box-shadow: 0 4px 32px rgba(155, 168, 171, 0.24);
     border-radius: 8px;
     margin-top: 10px;
     padding: 24px;
     overflow-y: auto;
+    z-index: 10000;
 }
 
 .list [type="radio"]:checked,
@@ -32,9 +33,9 @@
     position: absolute;
     left: -9999px;
 }
+
 .list [type="radio"]:checked + label,
-.list [type="radio"]:not(:checked) + label
-{
+.list [type="radio"]:not(:checked) + label {
     position: relative;
     padding-left: 32px;
     cursor: pointer;
@@ -43,9 +44,11 @@
     color: #04252E;
     font-size: 14px;
 }
+
 .list [type="radio"]:checked + label {
     font-weight: 600;
 }
+
 .list [type="radio"]:checked + label:before,
 .list [type="radio"]:not(:checked) + label:before {
     content: '';
@@ -58,6 +61,7 @@
     border-radius: 100%;
     background: #fff;
 }
+
 .list [type="radio"]:checked + label:after,
 .list [type="radio"]:not(:checked) + label:after {
     content: '';
@@ -65,17 +69,19 @@
     height: 12px;
     background: #04252E;
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 3.1px;
+    left: 3.3px;
     border-radius: 100%;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
+
 .list [type="radio"]:not(:checked) + label:after {
     opacity: 0;
     -webkit-transform: scale(0);
     transform: scale(0);
 }
+
 .list [type="radio"]:checked + label:after {
     opacity: 1;
     -webkit-transform: scale(1);
@@ -86,8 +92,9 @@
     margin-top: 20px;
 }
 
+
 .scroll {
-    height: 100%;
+    max-height: 245px;
     width: 105%;
 }
 
@@ -115,4 +122,13 @@
 
 .item:nth-child(even) {
     margin-inline-start: 56px;
+}
+
+.bold {
+    font-weight: 1000;
+}
+
+.selectedFlag {
+    position: absolute;
+    left: 16px;
 }
