@@ -6,11 +6,14 @@ import Header from '../components/Header';
 import styles from '../styles/Home.module.css'
 import {useState} from 'react';
 
-function MyApp({Component, pageProps, lang}: MainProps) {
+const isBrowser = typeof window !== "undefined";
+
+function MyApp({Component, pageProps, lang, token}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
     const [buttons, setButtons] = useState(['filter', 'search', 'language']);
     const [showNav, setShowNav] = useState(true);
+
     return (
         <main className={styles["font-" + lang]} dir={dir}>
             <Header></Header>
@@ -27,9 +30,13 @@ function MyApp({Component, pageProps, lang}: MainProps) {
 
 MyApp.getInitialProps = async (context: any) => {
     const {req} = context.ctx;
+    const {language, auth_key} = req.cookies;
+
     return {
-        lang: req.cookies.language ?? 'ar'
+        lang: language ?? 'ar',
+        token: auth_key ?? null,
     }
 };
+
 
 export default MyApp
