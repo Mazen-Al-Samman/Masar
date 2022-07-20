@@ -16,7 +16,7 @@ interface userObject {
     auth_key: string
 }
 
-const Login = ({showNav, setButtons}: MainProps) => {
+const Login = ({setButtons, setPadding}: MainProps) => {
     const router = useRouter();
     const cookies = new Cookies();
 
@@ -53,18 +53,19 @@ const Login = ({showNav, setButtons}: MainProps) => {
 
     const login = (userData: userObject) => {
         if (typeof window !== "undefined") {
-            cookies.set('auth_key', userData.auth_key, { path: '/' });
+            cookies.set('auth_key', userData.auth_key, {path: '/'});
             router.push('/super-admin');
         }
     }
 
     useLayoutEffect(() => {
-        setButtons(['language'])
+        setButtons(['language']);
+        setPadding(false);
     }, []);
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', height: '78vh'}}>
             <div style={{
-                width: '60%',
+                width: '70%',
                 display: 'flex',
                 alignItems: 'center',
                 height: '450px',
@@ -116,10 +117,24 @@ const Login = ({showNav, setButtons}: MainProps) => {
                 </form>
             </div>
 
-            <div style={{width: '30%', borderLeft: '2px solid #E6E9EA', marginTop: '-55px', height: '100vh'}}>
-                <div style={{marginTop: '80px', marginLeft: '30%'}}>
-                    <h1>Lorem ipsum dolor sit amet.</h1>
-                    <Image src={`/img/login.svg`} width={568} height={600}></Image>
+            <div style={{
+                width: '40%',
+                borderLeft: '2px solid #E6E9EA',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '16px',
+                marginTop: '-50px',
+                position: 'relative'
+            }}>
+                <div style={{width: '100%'}}>
+                    <div style={{marginTop: '-50%', marginLeft: '30px'}}>
+                        <h1 style={{fontSize: '64px', fontWeight: '700'}}>Lorem ipsum dolor sit <br/> amet.</h1>
+                        <span style={{fontSize: '20px', fontWeight: '700'}}>- Masar</span>
+                    </div>
+                    <div style={{position: 'absolute', bottom: '0'}}>
+                        <Image src={`/img/login.svg`} width={500} height={500}></Image>
+                    </div>
                 </div>
             </div>
         </div>

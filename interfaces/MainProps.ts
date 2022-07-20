@@ -4,7 +4,8 @@ interface MainProps {
     pageProps: any,
     token: string,
     setButtons: Function,
-    showNav: Function
+    showNav: Function,
+    setPadding: Function
 }
 
 export default MainProps;

@@ -8,11 +8,12 @@ import {useState} from 'react';
 
 const isBrowser = typeof window !== "undefined";
 
-function MyApp({Component, pageProps, lang, token}: MainProps) {
+function MyApp({Component, pageProps, lang}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
     const [buttons, setButtons] = useState(['filter', 'search', 'language']);
     const [showNav, setShowNav] = useState(true);
+    const [padding, setPadding] = useState(true);
 
     return (
         <main className={styles["font-" + lang]} dir={dir}>
@@ -21,8 +22,8 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                 showNav &&
                 <NavBar translation={translation} lang={lang} buttons={buttons}></NavBar>
             }
-            <div style={{padding: '0 156px'}}>
-                <Component {...pageProps} lang={lang} setButtons={setButtons} showNav={setShowNav}/>
+            <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
+                <Component {...pageProps} lang={lang} setButtons={setButtons} showNav={setShowNav} setPadding={setPadding}/>
             </div>
         </main>
     );
