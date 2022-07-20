@@ -2,7 +2,7 @@ import MainProps from '../../interfaces/MainProps';
 import Box from '../../components/Box';
 import translation from "../../common/translation";
 
-export default function Home({lang}: MainProps) {
+export default function Index({lang}: MainProps) {
     const translate = translation[lang];
     return (
         <>

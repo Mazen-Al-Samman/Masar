@@ -29,8 +29,16 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
 }
 
 MyApp.getInitialProps = async (context: any) => {
-    const {req} = context.ctx;
+    const {req, res, pathname} = context.ctx;
     const {language, auth_key} = req.cookies;
+
+    if (!auth_key && pathname != '/') {
+        res.writeHead(302, { Location: '/' });
+        res.end();
+    } else if (auth_key && pathname == '/') {
+        res.writeHead(302, { Location: '/super-admin' });
+        res.end();
+    }
 
     return {
         lang: language ?? 'ar',
