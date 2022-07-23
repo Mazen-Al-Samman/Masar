@@ -1,23 +1,17 @@
 import MainProps from "../interfaces/MainProps";
 import React, {useLayoutEffect, useState} from "react";
-import styles from './css/login.module.css';
 import Text from "../components/form/Text";
 import Image from "next/image";
 import Link from "next/link";
-import axios, {AxiosResponse} from "axios";
-import {useRouter} from "next/router";
+import axios from "axios";
 import Cookies from "universal-cookie";
-
-interface response {
-    data: userObject
-}
+import HandleRequest from "./api/Handler";
 
 interface userObject {
     auth_key: string
 }
 
-const Login = ({setButtons, setPadding}: MainProps) => {
-    const router = useRouter();
+const Login = ({setButtons, setPadding, lang}: MainProps) => {
     const cookies = new Cookies();
 
     const [email, setEmail] = useState(null);
@@ -33,28 +27,28 @@ const Login = ({setButtons, setPadding}: MainProps) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        axios.request<userObject>({
+
+        // Send a request to the API via the handler function.
+        const request = HandleRequest({
+            url: '/user/login',
             method: 'post',
-            url: 'https://masar-api.tech-inspire.com/user/login',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept-Language': lang
+            },
             data: {
                 email,
                 password
             },
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            login(response.data)
-        }).catch(error => {
-            let errors = error.response.data;
-            setValidation(errors);
-        })
+            successCallBack: login,
+            failedCallBack: setValidation,
+        });
     }
 
     const login = (userData: userObject) => {
         if (typeof window !== "undefined") {
             cookies.set('auth_key', userData.auth_key, {path: '/'});
-            router.push('/super-admin');
+            window.location.href = '/super-admin';
         }
     }
 
@@ -69,7 +63,7 @@ const Login = ({setButtons, setPadding}: MainProps) => {
                 display: 'flex',
                 alignItems: 'center',
                 height: '450px',
-                justifyContent: 'center'
+                justifyContent: 'center',
             }}>
                 <form>
                     <p style={{fontSize: '24px', fontWeight: '700'}}>Let’s get you started !</p>
@@ -119,7 +113,8 @@ const Login = ({setButtons, setPadding}: MainProps) => {
 
             <div style={{
                 width: '40%',
-                borderLeft: '2px solid #E6E9EA',
+                borderLeft: `${lang == 'en' ? '2px solid #E6E9EA' : 'none'}`,
+                borderRight: `${lang == 'ar' ? '2px solid #E6E9EA' : 'none'}`,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -128,12 +123,19 @@ const Login = ({setButtons, setPadding}: MainProps) => {
                 position: 'relative'
             }}>
                 <div style={{width: '100%'}}>
-                    <div style={{marginTop: '-50%', marginLeft: '30px'}}>
-                        <h1 style={{fontSize: '64px', fontWeight: '700'}}>Lorem ipsum dolor sit <br/> amet.</h1>
+                    <div style={{marginInlineStart: '10%', position: 'absolute', top: '16%'}}>
+                        <h1 style={{fontSize: '64px', fontWeight: '700'}}>Lorem ipsum<br/> dolor sit <br/>amet.</h1>
                         <span style={{fontSize: '20px', fontWeight: '700'}}>- Masar</span>
                     </div>
-                    <div style={{position: 'absolute', bottom: '0'}}>
-                        <Image src={`/img/login.svg`} width={500} height={500}></Image>
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '0',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%'
+                    }}>
+                        <Image src={`/img/login.svg`} width={500}
+                               style={{transform: `rotateY(${lang == 'ar' ? '180deg' : '0deg'})`}} height={500}></Image>
                     </div>
                 </div>
             </div>

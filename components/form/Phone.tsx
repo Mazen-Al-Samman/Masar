@@ -40,7 +40,6 @@ const Phone = ({id, name, placeHolder, label, list}: Config) => {
         let selectedCountryElement = e.target.closest('[data-idx]');
         let selectedCountryIdx = selectedCountryElement.getAttribute('data-idx');
         let selectedCountryObject = list[selectedCountryIdx];
-        console.log(selectedCountryElement)
         selectedCountryElement.classList.add(styles.bold);
         setCountry({flag: selectedCountryObject.flag, code: selectedCountryObject.code});
     }

@@ -8,16 +8,16 @@ import {useState} from 'react';
 
 const isBrowser = typeof window !== "undefined";
 
-function MyApp({Component, pageProps, lang}: MainProps) {
+function MyApp({Component, pageProps, lang, token}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
-    const [buttons, setButtons] = useState(['filter', 'search', 'language']);
+    const [buttons, setButtons] = useState(['filter', 'search', 'language', !token? '' : 'logout]']);
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
 
     return (
         <main className={styles["font-" + lang]} dir={dir}>
-            <Header></Header>
+            <Header lang={lang}></Header>
             {
                 showNav &&
                 <NavBar translation={translation} lang={lang} buttons={buttons}></NavBar>

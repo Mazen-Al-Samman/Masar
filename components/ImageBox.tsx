@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { v4 as uuidv4 } from 'uuid';
 
 interface BoxConfig {
     config: {
@@ -29,7 +30,7 @@ const styles = {
             display: 'flex',
         },
         p: {
-            textAlign: 'center',
+            textAlign: "center",
             fontSize: '16px',
         },
         colorSpan: {
@@ -47,7 +48,6 @@ const styles = {
 
 const ImageBox = ({config}: BoxConfig) => {
     const {mainText, subText, image, lang, iconDescItems} = config;
-    console.log(mainText);
     return (
         <div style={styles.main}>
             <p style={styles.p}>{mainText}</p>
@@ -61,7 +61,7 @@ const ImageBox = ({config}: BoxConfig) => {
                     {
                         iconDescItems.map(item => {
                             return (
-                                <div style={{display: "flex", justifyContent: lang == 'ar' ? 'right' : 'left'}}>
+                                <div key={uuidv4()} style={{display: "flex", justifyContent: lang == 'ar' ? 'right' : 'left'}}>
                                     <p style={{...styles.inner.colorSpan, backgroundColor: item.color}}></p>
                                     <p style={styles.inner.sideText}>{item.title}</p>
                                 </div>

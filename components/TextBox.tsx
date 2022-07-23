@@ -55,7 +55,6 @@ const styles = {
 
 const TextBox = ({config}: BoxConfig) => {
     const {mainText, items} = config;
-    console.log(mainText);
     return (
         <div style={styles.main}>
             <p style={styles.p}>{mainText}</p>
