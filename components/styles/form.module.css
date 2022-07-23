@@ -1,0 +1,134 @@
+.form::placeholder {
+    color: #B4BEC0 !important;
+    font-size: 14px;
+}
+
+.listIcon {
+    width: 24px;
+    height: 24px;
+    background-color: #E6E9EA;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 12px;
+    padding-inline-start: 2.2px;
+    padding-top: 2px;
+}
+
+.list {
+    position: absolute;
+    width: 348px;
+    max-height: 296px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 32px rgba(155, 168, 171, 0.24);
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 24px;
+    overflow-y: auto;
+    z-index: 10000;
+}
+
+.list [type="radio"]:checked,
+.list [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+.list [type="radio"]:checked + label,
+.list [type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #04252E;
+    font-size: 14px;
+}
+
+.list [type="radio"]:checked + label {
+    font-weight: 600;
+}
+
+.list [type="radio"]:checked + label:before,
+.list [type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+
+.list [type="radio"]:checked + label:after,
+.list [type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #04252E;
+    position: absolute;
+    top: 3.1px;
+    left: 3.3px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.list [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.list [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.listItem:not(:first-child) {
+    margin-top: 20px;
+}
+
+
+.scroll {
+    max-height: 245px;
+    width: 105%;
+}
+
+.scroll {
+    overflow-y: scroll;
+    margin-inline-end: -20px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px #E6E9EA;
+}
+
+.item {
+    display: inline-block;
+}
+
+.item:nth-child(even) {
+    margin-inline-start: 56px;
+}
+
+.bold {
+    font-weight: 1000;
+}
+
+.selectedFlag {
+    position: absolute;
+    left: 16px;
+}

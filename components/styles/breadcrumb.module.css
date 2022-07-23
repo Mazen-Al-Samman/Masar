@@ -1,0 +1,19 @@
+.list {
+    list-style: none;
+    margin-top: -24px !important;
+    padding: 0;
+}
+
+.list span {
+    margin: 0 16px;
+}
+
+.list li {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.main {
+    font-weight: 600 !important;
+}

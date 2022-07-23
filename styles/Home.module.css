@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .font-en {
   font-family: 'Poppins';
 }
 
 .font-ar {
-  font-family: 'arabic';
+  font-family: 'cairo';
 }
 
 .container {
@@ -13,7 +16,7 @@
 
 @font-face {
   font-family: arabic;
-  src: url(../public/fonts/arabic.ttf);
+  src: url(../public/fonts/arabic2.ttf);
 }
 
 .nav {
@@ -21,10 +24,11 @@
   height: 100px;
   background: #FFFFFF;
   box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.16);
+  margin-bottom: 56px;
 }
 
 .container {
-  max-width: '100%';
+  max-width: 100%;
 }
 
 .row {
@@ -119,7 +123,7 @@
   top: 57px;
   border-radius: 4px;
   transform: rotate(45deg);
-  z-index: 10000;
+  z-index: 100000;
 }
 
 .list {
@@ -131,6 +135,7 @@
   padding: 20px;
   text-align: center;
   font-size: 16px;
+  z-index: 10000000;
 }
 
 .list-ar {

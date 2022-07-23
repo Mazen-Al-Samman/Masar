@@ -1,0 +1,27 @@
+.container {
+    padding: 0px 156px;
+}
+
+.box {
+    background: #FFFFFF;
+    box-shadow: 0 20px 50px rgba(4, 37, 46, 0.08);
+    border-radius: 12px;
+}
+
+.scroll {
+    overflow-y: scroll;
+    margin-inline-end: -20px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px #E6E9EA;
+}

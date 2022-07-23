@@ -12,7 +12,35 @@ const en = {
     'profile': 'Profile',
     'notification': 'Notfication',
     'logoutMsg': 'Are you sure, you want to logout ?',
-    'logout': 'Logout'
+    'logout': 'Logout',
+    'companies': 'Companies',
+    'financialServices': 'Financial Services',
+    'education': 'Education',
+    'realEstates': 'Real Estates',
+    'totalKpiStatus': 'Total KPI Status',
+    'achieved': 'Achieved',
+    'overAchieved': 'Over Achieved',
+    'notAchieved': 'Not Achieved',
+    'onSchedule': 'On Schedule',
+    'aheadOfSchedule': 'Ahead of Schedule',
+    'behindSchedule': 'Behind Schedule',
+    'totalRiskRating': 'Total Risk Rating',
+    'totalRiskCategory': 'Total Risk Category',
+    'veryHigh': 'Very High',
+    'high': 'High',
+    'medium': 'Medium',
+    'low': 'Low',
+    'veryLow': 'Very Low',
+    'strategic': 'Strategic',
+    'compliance': 'Compliance',
+    'operational': 'Operational',
+    'technology': 'Technology',
+    'financial': 'Financial',
+    'totalControlsAssessment': 'Total Controls Assessment',
+    'none': 'None',
+    'totalKpiTimeliness': 'Total KPI Timelines',
+    'adequate': 'Adequate',
+    'needsImprovement': 'Needs Improvement'
 };
 
 const ar = {
@@ -29,10 +57,37 @@ const ar = {
     'profile': 'الملف الشخصي',
     'notification': 'الإشعارات',
     'logoutMsg': 'هل أنت متأكد, أنك ترغب بتسجيل الخروج ؟',
-    'logout': 'تسجيل الخروج'
+    'logout': 'تسجيل الخروج',
+    'companies': 'شركات',
+    'financialServices': 'خدمات مالية',
+    'education': 'تعليم',
+    'realEstates': 'عقارات',
+    'totalKpiStatus': 'حالة الـ KPI الكلية',
+    'achieved': 'المتوقع',
+    'overAchieved': 'أكثر من المتوقع',
+    'notAchieved': 'لم يتم إنجازه',
+    'onSchedule': 'على الموعد',
+    'aheadOfSchedule': 'متأخر',
+    'behindSchedule': 'قبل الموعد',
+    'totalRiskRating': 'تقييم المخاطر الكلي',
+    'totalRiskCategory': 'التصنيف الكلي للمخاطر',
+    'veryHigh': 'عال جدًا',
+    'high': 'عال',
+    'medium': 'متوسط',
+    'low': 'قليل',
+    'veryLow': 'قليل جدًا',
+    'strategic': 'استراتيجي',
+    'operational': 'عملي',
+    'technology': 'تقني',
+    'financial': 'مالي',
+    'totalControlsAssessment': 'التقييم الكامل للضوابط',
+    'none': 'ضعيف',
+    'totalKpiTimeliness': 'توقيت الـ KPI الكلي',
+    'adequate': 'مناسب',
+    'needsImprovement': 'يحتاج للتطوير'
 };
 
-const translations = {
+const translations: { [key: string]: object; } = {
     en: en,
     ar: ar
 };
