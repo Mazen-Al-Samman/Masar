@@ -170,7 +170,7 @@ const NewCompany = ({setButtons}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <RadioList id="numOfEmployees" name="numOfEmployees" placeHolder="Select"
+                            <RadioList id="number_of_employees" name="number_of_employees" placeHolder="Select"
                                        label="Number Of Employees" list={
                                 [
                                     {

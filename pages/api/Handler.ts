@@ -12,7 +12,23 @@ interface request {
     context?: any
 }
 
-const HandleRequest = ({url, method, headers, data, context}: request) => {
+export const HandleRequestClient = ({url, method, headers, data, successCallBack, failedCallBack}: request) => {
+    url = BaseUrl + url;
+    return axios({
+        method,
+        url,
+        headers,
+        data,
+    }).then((response => {
+        const data = response.data;
+        successCallBack && successCallBack(data);
+    })).catch((error) => {
+        const errors = error.response.data;
+        failedCallBack && failedCallBack(errors);
+    })
+}
+
+export const HandleRequestSSR = ({url, method, headers, data, context}: request) => {
     if (context) {
         const {language, auth_key} = context.req.cookies;
         headers['x-api-key'] = auth_key;
@@ -28,4 +44,7 @@ const HandleRequest = ({url, method, headers, data, context}: request) => {
     });
 }
 
-export default HandleRequest;
+export default {
+    HandleRequestSSR,
+    HandleRequestClient
+};

@@ -11,7 +11,7 @@ const NewCompany = () => {
             width: '50%'
         }}>
             <Image src={`/icons/plus.svg`} width={24} height={24}></Image>
-            <Link href={`companies/new`}>Add new Company</Link>
+            <Link href={{pathname: `/super-admin/companies/new`}}>Add new Company</Link>
         </div>
     )
 }

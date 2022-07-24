@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import HandleRequest from "./api/Handler";
+import {HandleRequestClient} from "./api/Handler";
 
 interface userObject {
     auth_key: string
@@ -29,7 +29,7 @@ const Login = ({setButtons, setPadding, lang}: MainProps) => {
         e.preventDefault();
 
         // Send a request to the API via the handler function.
-        const request = HandleRequest({
+        const request = HandleRequestClient({
             url: '/user/login',
             method: 'post',
             headers: {
