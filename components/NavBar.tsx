@@ -12,11 +12,11 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; butto
     const superAdminHeader = [
         {
             'title': translation.home,
-            'url': '/'
+            'url': '/super-admin'
         },
         {
             'title': translation.allCompanies,
-            'url': '/'
+            'url': '/super-admin/companies'
         },
         // {
         //     'title': translation.aboutUs,

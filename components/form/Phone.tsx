@@ -10,17 +10,18 @@ interface Config {
     name: string,
     placeHolder: string,
     label: string,
-    list: Item[]
+    list: Item[],
+    lang: string
 }
 
 interface Item {
-    title: string,
-    isChecked: boolean,
+    title_en: string,
+    title_ar: string,
     flag: string,
     code: string
 }
 
-const Phone = ({id, name, placeHolder, label, list}: Config) => {
+const Phone = ({id, name, placeHolder, label, list, lang}: Config) => {
     const [show, setShow] = useState(false);
     const [country, setCountry] = useState({flag: 'jordan', code: '00962'});
     const ref = useRef(null);
@@ -73,9 +74,11 @@ const Phone = ({id, name, placeHolder, label, list}: Config) => {
                     position: 'absolute'
                 }}>
                     <div className={styles.selectedFlag}>
-                        <Image id='select-country-flag' src={`/icons/${country.flag}.svg`} alt="Selected flag"
-                               width={24}
-                               height={45}/>
+                        <div style={{marginTop: '11px'}}>
+                            <Image id='select-country-flag' src={`/icons/${country.flag.toLowerCase()}.svg`} alt="Selected flag"
+                                   width={24}
+                                   height={24}/>
+                        </div>
                     </div>
 
                     <span className={styles.listIcon} onClick={toggleList}>
@@ -115,18 +118,20 @@ const Phone = ({id, name, placeHolder, label, list}: Config) => {
                     <div className={styles.scroll}>
                         {
                             list.map((item, idx) => {
+                                // @ts-ignore
+                                const title = item[`title_${lang}`];
                                 return (
                                     <div onClick={selectCountry} data-idx={idx} key={uuidv4()}
                                          className={styles.listItem}>
                                         <p style={{display: 'flex', justifyContent: 'left', cursor: 'pointer'}}>
                                             <Image style={{position: 'absolute', top: '1000px'}}
-                                                   className={styles.searchIcon} src={`/icons/${item.flag}.svg`}
+                                                   className={styles.searchIcon} src={`/icons/${item.flag.toLowerCase()}.svg`}
                                                    alt="Jordan Icon" width={24} height={24}/>
                                             <span style={{
                                                 marginInlineStart: '16px',
                                                 fontSize: '14px',
                                                 marginTop: '2px'
-                                            }}>{item.title}</span>
+                                            }}>{title + ` (${item.code.replace("00", "+")})`}</span>
                                         </p>
                                     </div>
                                 )

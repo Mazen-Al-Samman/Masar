@@ -4,16 +4,22 @@ import Image from 'next/image';
 import {v4 as uuidv4} from 'uuid';
 import {useState, useEffect, useRef} from "react";
 
-interface Config {
+export interface Config {
     id: string,
     name: string,
     placeHolder: string,
     label: string,
-    list: Item[]
+    list: RadioListConfig
 }
 
-interface Item {
+export interface RadioListConfig {
     title: string,
+    data: SingleObject[]
+}
+
+export interface SingleObject {
+    id?: string,
+    title?: string,
 }
 
 const RadioList = ({id, name, placeHolder, label, list}: Config) => {
@@ -78,11 +84,11 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
                 <div className={styles.list}>
                     <div className={styles.scroll}>
                         {
-                            list.map(item => {
+                            list && list.data.map(item => {
                                 return (
                                     <div key={uuidv4()} className={styles.listItem}>
-                                        <input type="radio" id={item.title} name={name} value={item.title}
-                                               onClick={handleChange} checked={item.title == value}/>
+                                        <input type="radio" id={item.title} name={name} value={item.id}
+                                               onChange={handleChange} checked={item.title == value}/>
                                         <label htmlFor={item.title}>{item.title}</label>
                                     </div>
                                 )

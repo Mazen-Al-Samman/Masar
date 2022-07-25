@@ -3,12 +3,19 @@ import MainProps from "../../../interfaces/MainProps";
 import React, {useLayoutEffect, useState} from 'react'
 import Image from 'next/image';
 import Text from "../../../components/form/Text";
-import RadioList from "../../../components/form/RadioList";
+import RadioList, {RadioListConfig} from "../../../components/form/RadioList";
 import Phone from "../../../components/form/Phone";
 import TextArea from "../../../components/form/TextArea";
+import {HandleRequestSSR} from "../../api/Handler";
+import {countries} from "../../../public/assets/countries";
 
-const NewCompany = ({setButtons}: MainProps) => {
+export interface newCompanyConfig {
+    number_of_employees: RadioListConfig,
+    revenue: RadioListConfig,
+    sector: RadioListConfig
+}
 
+const NewCompany = ({setButtons, data, lang}: MainProps) => {
     const [next, setNext] = useState(false);
     useLayoutEffect(() => {
         setButtons(['language', 'logout'])
@@ -24,6 +31,23 @@ const NewCompany = ({setButtons}: MainProps) => {
         event.preventDefault();
         setNext(false);
         window.scrollTo(0, 0)
+    }
+
+    const prepareCountries = (): RadioListConfig => {
+        const data = countries.map((country) => {
+            // @ts-ignore
+            const title: string = country[`title_${lang}`];
+            const id: string = country.id;
+            return {
+                id: id,
+                title: title
+            }
+        });
+
+        return {
+            title: 'Country',
+            data: data
+        }
     }
 
     return (
@@ -46,7 +70,7 @@ const NewCompany = ({setButtons}: MainProps) => {
                     <div id={`step1`}>
                         {/* Page Header */}
                         <div style={{marginTop: '40px', display: 'flex', justifyContent: 'left'}}>
-                            <Image src={`/icons/company.svg`} alt="Comapny Icon" width={56} height={56}/>
+                            <Image src={`/icons/company.svg`} alt="Company Icon" width={56} height={56}/>
                             <div style={{marginLeft: '24px', marginTop: '17px'}}>
                                 <h1 style={{fontSize: '20px', fontWeight: '700'}}>Company Details</h1>
                                 <p style={{color: '#365158', fontSize: '14px'}}>Please fill the information below</p>
@@ -56,150 +80,31 @@ const NewCompany = ({setButtons}: MainProps) => {
                         <div style={{marginTop: '40px'}}>
                             <Text id="company-name" name="company-name" placeHolder="example"
                                   label="Company Name" width={348} height={48}></Text>
-                            <RadioList id="country" name="country" placeHolder="Select" label="Country" list={
-                                [
-                                    {
-                                        title: 'Syria',
-                                    },
-                                    {
-                                        title: 'Iraq',
-                                    },
-                                    {
-                                        title: 'UAE',
-                                    },
-                                    {
-                                        title: 'Qatar',
-                                    },
-                                    {
-                                        title: 'Saudi Arabia',
-                                    },
-                                    {
-                                        title: 'Kuwait',
-                                    },
-                                    {
-                                        title: 'Yemen',
-                                    },
-                                    {
-                                        title: 'Jordan',
-                                    },
-                                ]
-                            }></RadioList>
+                            <RadioList id="country" name="country" placeHolder="Select" label="Country"
+                                       list={prepareCountries()}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Text id="city" name="city" placeHolder="example" label="City" width={348} height={48}></Text>
-                            <Text id="address" name="address" placeHolder="example" label="Address" width={348} height={48}></Text>
+                            <Text id="city" name="city" placeHolder="example" label="City" width={348}
+                                  height={48}></Text>
+                            <Text id="address" name="address" placeHolder="example" label="Address" width={348}
+                                  height={48}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Phone id="phone" name="phone" placeHolder="123456789" label="Phone Number" list={
-                                [
-                                    {
-                                        title: 'Jordan (+962)',
-                                        isChecked: true,
-                                        flag: 'jordan',
-                                        code: '00962'
-                                    },
-                                    {
-                                        title: 'Iraq (+972)',
-                                        isChecked: false,
-                                        flag: 'iraq',
-                                        code: '00972'
-                                    },
-                                    {
-                                        title: 'UAE (+98)',
-                                        isChecked: false,
-                                        flag: 'uae',
-                                        code: '0098'
-                                    },
-                                    {
-                                        title: 'Qatar (+12)',
-                                        isChecked: false,
-                                        flag: 'qatar',
-                                        code: '0012'
-                                    },
-                                    {
-                                        title: 'Saudi Arabia (+673)',
-                                        isChecked: false,
-                                        flag: 'saudi',
-                                        code: '00673'
-                                    },
-                                    {
-                                        title: 'Kuwait (+34)',
-                                        isChecked: false,
-                                        flag: 'kuwait',
-                                        code: '0034'
-                                    },
-                                    {
-                                        title: 'Yemen (+967)',
-                                        isChecked: false,
-                                        flag: 'jordan',
-                                        code: '00967'
-                                    },
-                                    {
-                                        title: 'Syria (+963)',
-                                        isChecked: false,
-                                        flag: 'jordan',
-                                        code: '00963'
-                                    },
-                                ]
-                            }></Phone>
-
-                            <RadioList id="sector" name="sector" placeHolder="Select" label="Sector" list={
-                                [
-                                    {
-                                        title: 'Banking',
-                                    },
-                                    {
-                                        title: 'Financial Services',
-                                    },
-                                    {
-                                        title: 'Education',
-                                    },
-                                    {
-                                        title: 'Real Estates',
-                                    },
-                                    {
-                                        title: 'Hospitality & Tourism',
-                                    },
-                                    {
-                                        title: 'Public Sector',
-                                    }
-                                ]
-                            }></RadioList>
+                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789" label="Phone Number"
+                                   list={countries}></Phone>
+                            <RadioList id="sector" name="sector" placeHolder="Select" label="Sector"
+                                       list={data['sector']}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <RadioList id="number_of_employees" name="number_of_employees" placeHolder="Select"
-                                       label="Number Of Employees" list={
-                                [
-                                    {
-                                        title: '1-10 Employees',
-                                    },
-                                    {
-                                        title: '11-50 Employees',
-                                    },
-                                    {
-                                        title: '+50 Employee',
-                                    }
-                                ]
-                            }></RadioList>
+                                       label="Number Of Employees" list={data['number_of_employees']}></RadioList>
 
                             <RadioList id="annualRevenue" name="annualRevenue" placeHolder="Select"
                                        label="Annual Revenue"
-                                       list={
-                                           [
-                                               {
-                                                   title: '1-10 Employees',
-                                               },
-                                               {
-                                                   title: '11-50 Employees',
-                                               },
-                                               {
-                                                   title: '+50 Employee',
-                                               }
-                                           ]
-                                       }></RadioList>
+                                       list={data['revenue']}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
@@ -252,58 +157,8 @@ const NewCompany = ({setButtons}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Phone id="phone" name="phone" placeHolder="123456789" label="Phone Number" list={
-                                [
-                                    {
-                                        title: 'Jordan (+962)',
-                                        isChecked: true,
-                                        flag: 'jordan',
-                                        code: '00962'
-                                    },
-                                    {
-                                        title: 'Iraq (+972)',
-                                        isChecked: false,
-                                        flag: 'iraq',
-                                        code: '00972'
-                                    },
-                                    {
-                                        title: 'UAE (+98)',
-                                        isChecked: false,
-                                        flag: 'uae',
-                                        code: '0098'
-                                    },
-                                    {
-                                        title: 'Qatar (+12)',
-                                        isChecked: false,
-                                        flag: 'qatar',
-                                        code: '0012'
-                                    },
-                                    {
-                                        title: 'Saudi Arabia (+673)',
-                                        isChecked: false,
-                                        flag: 'saudi',
-                                        code: '00673'
-                                    },
-                                    {
-                                        title: 'Kuwait (+34)',
-                                        isChecked: false,
-                                        flag: 'kuwait',
-                                        code: '0034'
-                                    },
-                                    {
-                                        title: 'Yemen (+967)',
-                                        isChecked: false,
-                                        flag: 'jordan',
-                                        code: '00967'
-                                    },
-                                    {
-                                        title: 'Syria (+963)',
-                                        isChecked: false,
-                                        flag: 'jordan',
-                                        code: '00963'
-                                    },
-                                ]
-                            }></Phone>
+                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789" label="Phone Number"
+                                   list={countries}></Phone>
                         </div>
 
                         <div style={{display: 'flex', justifyContent: 'left'}}>
@@ -344,6 +199,26 @@ const NewCompany = ({setButtons}: MainProps) => {
             </form>
         </>
     )
+}
+
+export async function getServerSideProps(ctx: any) {
+    const newCompanyFilterRequest = HandleRequestSSR({
+        url: '/company/get-form-attributes',
+        method: 'get',
+        headers: {},
+        data: {},
+        context: ctx
+    });
+
+    const [filter] = await Promise.all([
+        newCompanyFilterRequest
+    ]);
+
+    return {
+        props: {
+            data: filter.data,
+        }
+    };
 }
 
 export default NewCompany;

@@ -9,9 +9,9 @@ interface Config {
     label: string,
     width: number,
     height: number,
-    onChange: Function,
-    onFocus: Function,
-    type: string
+    onChange?: Function,
+    onFocus?: Function,
+    type?: string
 }
 
 const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFocus}: Config) => {
@@ -25,12 +25,12 @@ const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFo
                 border: '1px solid #E6E9EA',
                 borderRadius: '8px',
                 paddingInlineStart: '16px'
-            }} type={`${type}`} onChange={(e: any) => {
-                onChange(e.target.value)
+            }} type={`${type && type}`} onChange={(e: any) => {
+                onChange && onChange(e.target.value)
             }}
-            onFocus={(e: any) => {
-                onFocus(e.target.name)
-            }}
+                   onFocus={(e: any) => {
+                       onFocus && onFocus(e.target.name)
+                   }}
             />
         </div>
     )
