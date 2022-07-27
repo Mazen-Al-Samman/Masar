@@ -11,7 +11,9 @@ interface Config {
     placeHolder: string,
     label: string,
     list: Item[],
-    lang: string
+    lang: string,
+    onFocus?: Function,
+    validation?: string
 }
 
 interface Item {
@@ -21,7 +23,7 @@ interface Item {
     code: string
 }
 
-const Phone = ({id, name, placeHolder, label, list, lang}: Config) => {
+const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation}: Config) => {
     const [show, setShow] = useState(false);
     const [country, setCountry] = useState({flag: 'jordan', code: '00962'});
     const ref = useRef(null);
@@ -75,7 +77,8 @@ const Phone = ({id, name, placeHolder, label, list, lang}: Config) => {
                 }}>
                     <div className={styles.selectedFlag}>
                         <div style={{marginTop: '11px'}}>
-                            <Image id='select-country-flag' src={`/icons/${country.flag.toLowerCase()}.svg`} alt="Selected flag"
+                            <Image id='select-country-flag' src={`/icons/${country.flag.toLowerCase()}.svg`}
+                                   alt="Selected flag"
                                    width={24}
                                    height={24}/>
                         </div>
@@ -101,15 +104,32 @@ const Phone = ({id, name, placeHolder, label, list, lang}: Config) => {
                 }}
                 >
                     <p style={{padding: '13px 0', letterSpacing: '1px'}}>{country.code}</p>
-                    <input className={styles.form} id={id} name={name} placeholder={placeHolder} style={{
-                        width: '70%',
-                        border: 'none',
-                        paddingTop: '3px',
-                        marginLeft: '8px',
-                        letterSpacing: '1px',
-                        outline: 'none'
-                    }} autoComplete="off" type="text"/>
+                    <input className={styles.form} id={id} name={name} placeholder={placeHolder}
+                           autoComplete="off" type="text"
+                           style={{
+                               width: '70%',
+                               border: 'none',
+                               paddingTop: '3px',
+                               marginLeft: '8px',
+                               letterSpacing: '1px',
+                               outline: 'none'
+                           }}
+                           onFocus={(e: any) => {
+                               onFocus && onFocus(e.target.name)
+                           }}
+                    />
                 </div>
+                {
+                    validation &&
+                    <p style={{
+                        position: 'absolute',
+                        color: 'red',
+                        textAlign: 'center',
+                        marginTop: '5px',
+                        fontSize: '12px',
+                        letterSpacing: '1px'
+                    }}>{validation}</p>
+                }
             </div>
 
             {
@@ -125,7 +145,8 @@ const Phone = ({id, name, placeHolder, label, list, lang}: Config) => {
                                          className={styles.listItem}>
                                         <p style={{display: 'flex', justifyContent: 'left', cursor: 'pointer'}}>
                                             <Image style={{position: 'absolute', top: '1000px'}}
-                                                   className={styles.searchIcon} src={`/icons/${item.flag.toLowerCase()}.svg`}
+                                                   className={styles.searchIcon}
+                                                   src={`/icons/${item.flag.toLowerCase()}.svg`}
                                                    alt="Jordan Icon" width={24} height={24}/>
                                             <span style={{
                                                 marginInlineStart: '16px',

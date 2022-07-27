@@ -6,7 +6,7 @@ import Text from "../../../components/form/Text";
 import RadioList, {RadioListConfig} from "../../../components/form/RadioList";
 import Phone from "../../../components/form/Phone";
 import TextArea from "../../../components/form/TextArea";
-import {HandleRequestSSR} from "../../api/Handler";
+import {HandleRequestClient, HandleRequestSSR} from "../../api/Handler";
 import {countries} from "../../../public/assets/countries";
 
 export interface newCompanyConfig {
@@ -15,22 +15,116 @@ export interface newCompanyConfig {
     sector: RadioListConfig
 }
 
-const NewCompany = ({setButtons, data, lang}: MainProps) => {
+interface Validation {
+    title_en?: string,
+    title_ar?: string,
+    country?: string,
+    sector?: string,
+    number_of_employees_id?: string,
+    revenue_id?: string,
+    description_en?: string,
+    description_ar?: string,
+    sector_id?: string,
+    phone_number?: string,
+    manager_name?: string,
+    manager_phone_number?: string,
+    manager_position?: string,
+    manager_email?: string
+}
+
+interface Company {
+    title_en?: string,
+    title_ar?: string,
+    description_en?: string,
+    description_ar?: string,
+    phone_number?: string,
+    country?: string,
+    city?: string,
+    revenue_id?: string,
+    sector_id?: string,
+    number_of_employees_id?: string
+}
+
+interface Manager {
+    username?: string,
+    email?: string,
+    position?: string,
+    phone_number?: string,
+}
+
+const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
+    const [validation, setValidation] = useState<Validation>({})
+    const [company, setCompany] = useState<Company>({})
+    const [manager, setManager] = useState<Manager>({})
+    const companyAttributes = [
+        "title_en",
+        "title_ar",
+        "description_en",
+        "description_ar",
+        "phone_number",
+        "country",
+        "city",
+        "revenue_id",
+        "sector_id",
+        "number_of_employees_id",
+    ]
+    // const [values, setValue] =
     const [next, setNext] = useState(false);
     useLayoutEffect(() => {
         setButtons(['language', 'logout'])
     }, []);
 
+    // Move to the Manager Form
     const nextPage = (event: any) => {
         event.preventDefault();
         setNext(true);
         window.scrollTo(0, 0)
     }
 
+    // Back to the Company form
     const previousPage = (event: any) => {
-        event.preventDefault();
+        event && event.preventDefault();
         setNext(false);
         window.scrollTo(0, 0)
+    }
+
+    // This function will check if there is any company field error, and back to the company details form.
+    const validateAttributes = (errors: object) => {
+        setValidation(errors);
+        const errorsAttributes = Object.keys(errors);
+        const companyErrors = errorsAttributes.filter(value => companyAttributes.includes(value));
+        if (companyErrors.length) previousPage(null);
+    }
+
+    // Clear validation errors
+    const clearErrors = (key: Validation) => {
+        let errorObj = {...validation};
+        // @ts-ignore
+        delete errorObj[`${key}`];
+        setValidation(errorObj);
+    }
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+
+        // Send a request to the API via the handler function.
+        const request = HandleRequestClient({
+            url: '/company/create-or-update',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept-Language': lang,
+                'x-api-key': token,
+            },
+            data: {
+                company,
+                manager
+            },
+            successCallBack: function () {
+                alert("Hello world!")
+            },
+            failedCallBack: validateAttributes,
+        });
     }
 
     const prepareCountries = (): RadioListConfig => {
@@ -64,7 +158,7 @@ const NewCompany = ({setButtons, data, lang}: MainProps) => {
                     }
                 ]}></Breadcrumb>
 
-            <form style={{marginBottom: '50px'}}>
+            <form style={{marginBottom: '50px', letterSpacing: '1px'}}>
                 {
                     !next &&
                     <div id={`step1`}>
@@ -78,10 +172,13 @@ const NewCompany = ({setButtons, data, lang}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '40px'}}>
-                            <Text id="company-name" name="company-name" placeHolder="example"
-                                  label="Company Name" width={348} height={48}></Text>
-                            <RadioList id="country" name="country" placeHolder="Select" label="Country"
-                                       list={prepareCountries()}></RadioList>
+                            <Text id="title-en" name="title_en" placeHolder="example"
+                                  label="English Title" width={348} height={48} validation={validation.title_en}
+                                  onFocus={clearErrors}></Text>
+
+                            <Text id="title-ar" name="title_ar" placeHolder="example"
+                                  label="Arabic Title" width={348} height={48} validation={validation.title_ar}
+                                  onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
@@ -92,24 +189,37 @@ const NewCompany = ({setButtons, data, lang}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789" label="Phone Number"
-                                   list={countries}></Phone>
-                            <RadioList id="sector" name="sector" placeHolder="Select" label="Sector"
-                                       list={data['sector']}></RadioList>
+                            <Phone lang={lang} id="phone" name="phone_number" placeHolder="123456789"
+                                   label="Phone Number"
+                                   list={countries} validation={validation.phone_number} onFocus={clearErrors}></Phone>
+                            <RadioList id="sector" name="sector_id" placeHolder="Select" label="Sector"
+                                       list={data['sector']} validation={validation.sector_id}
+                                       onFocus={clearErrors}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <RadioList id="number_of_employees" name="number_of_employees" placeHolder="Select"
-                                       label="Number Of Employees" list={data['number_of_employees']}></RadioList>
+                            <RadioList id="number_of_employees" name="number_of_employees_id" placeHolder="Select"
+                                       label="Number Of Employees" list={data['number_of_employees']}
+                                       validation={validation.number_of_employees_id} onFocus={clearErrors}></RadioList>
 
-                            <RadioList id="annualRevenue" name="annualRevenue" placeHolder="Select"
+                            <RadioList id="annualRevenue" name="revenue_id" placeHolder="Select"
                                        label="Annual Revenue"
-                                       list={data['revenue']}></RadioList>
+                                       list={data['revenue']} validation={validation.revenue_id}
+                                       onFocus={clearErrors}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <TextArea id="description" name="description" placeHolder="example"
-                                      label="Company Description"></TextArea>
+                            <RadioList id="country" name="country" placeHolder="Select" label="Country"
+                                       list={prepareCountries()} validation={validation.country}
+                                       onFocus={clearErrors}></RadioList>
+                        </div>
+
+                        <div style={{marginTop: '32px'}}>
+                            <TextArea id="description_ar" name="description_ar" placeHolder="example"
+                                      label="Arabic Description" validation={validation.description_ar} onFocus={clearErrors}></TextArea>
+
+                            <TextArea id="description" name="description_en" placeHolder="example"
+                                      label="English Description" validation={validation.description_ar} onFocus={clearErrors}></TextArea>
                         </div>
 
                         <button onClick={nextPage} style={{
@@ -143,22 +253,25 @@ const NewCompany = ({setButtons, data, lang}: MainProps) => {
 
                         <div style={{marginTop: '40px'}}>
                             <Text id="manager-name" name="manager-name" placeHolder="example"
-                                  label="Manager Name" width={348} height={48}></Text>
+                                  label="Manager Name" width={348} height={48}
+                                  validation={validation.manager_name} onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-email" name="manager-email" placeHolder="john.doe@example.com"
-                                  label="Email" width={348} height={48}></Text>
+                                  label="Email" width={348} height={48} validation={validation.manager_email}
+                                  onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-position" name="manager-position" placeHolder="example"
-                                  label="Position" width={348} height={48}></Text>
+                                  label="Position" width={348} height={48}
+                                  validation={validation.manager_position} onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Phone lang={lang} id="phone" name="phone" placeHolder="123456789" label="Phone Number"
-                                   list={countries}></Phone>
+                                   list={countries} validation={validation.manager_phone_number}></Phone>
                         </div>
 
                         <div style={{display: 'flex', justifyContent: 'left'}}>
@@ -177,7 +290,7 @@ const NewCompany = ({setButtons, data, lang}: MainProps) => {
                                 </p>
                             </button>
 
-                            <button style={{
+                            <button onClick={handleSubmit} style={{
                                 backgroundColor: '#04252E',
                                 width: '149px',
                                 height: '54px',

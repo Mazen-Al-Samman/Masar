@@ -11,10 +11,11 @@ interface Config {
     height: number,
     onChange?: Function,
     onFocus?: Function,
-    type?: string
+    type?: string,
+    validation?: string,
 }
 
-const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFocus}: Config) => {
+const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFocus, validation}: Config) => {
     return (
         <div className={styles.item}>
             <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
@@ -32,6 +33,16 @@ const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFo
                        onFocus && onFocus(e.target.name)
                    }}
             />
+            {
+                validation && <p style={{
+                position: 'absolute',
+                color: 'red',
+                textAlign: 'center',
+                marginTop: '5px',
+                fontSize: '12px',
+                letterSpacing: '1px'
+            }}>{validation}</p>
+            }
         </div>
     )
 }

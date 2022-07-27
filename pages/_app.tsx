@@ -23,7 +23,7 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                 <NavBar translation={translation} lang={lang} buttons={buttons}></NavBar>
             }
             <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
-                <Component {...pageProps} lang={lang} setButtons={setButtons} showNav={setShowNav} setPadding={setPadding}/>
+                <Component {...pageProps} lang={lang} setButtons={setButtons} showNav={setShowNav} setPadding={setPadding} token={token}/>
             </div>
         </main>
     );

@@ -9,7 +9,9 @@ export interface Config {
     name: string,
     placeHolder: string,
     label: string,
-    list: RadioListConfig
+    list: RadioListConfig,
+    onFocus?: Function,
+    validation?: string
 }
 
 export interface RadioListConfig {
@@ -22,7 +24,7 @@ export interface SingleObject {
     title?: string,
 }
 
-const RadioList = ({id, name, placeHolder, label, list}: Config) => {
+const RadioList = ({id, name, placeHolder, label, list, onFocus, validation}: Config) => {
     const [show, setShow] = useState(false);
     const [value, setValue] = useState('');
     const ref = useRef(null);
@@ -32,7 +34,8 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
     }
 
     const handleChange = (e: any) => {
-        let newValue = e.target.value;
+        let newValue = e.target.id;
+        onFocus && onFocus(name);
         setValue(newValue);
     }
 
@@ -97,6 +100,14 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
                     </div>
                 </div>
             }
+            <p style={{
+                position: 'absolute',
+                color: 'red',
+                textAlign: 'center',
+                marginTop: '5px',
+                fontSize: '12px',
+                letterSpacing: '1px'
+            }}>{validation && validation}</p>
         </div>
     )
 }
