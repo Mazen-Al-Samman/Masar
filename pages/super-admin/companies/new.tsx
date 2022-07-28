@@ -26,10 +26,10 @@ interface Validation {
     description_ar?: string,
     sector_id?: string,
     phone_number?: string,
-    manager_name?: string,
-    manager_phone?: string,
-    manager_position?: string,
-    manager_email?: string
+    username?: string,
+    phone?: string,
+    position?: string,
+    email?: string
 }
 
 interface Company {
@@ -52,10 +52,22 @@ interface Manager {
     phone?: string,
 }
 
+interface PhoneCountry {
+    phone_number: Country,
+    phone: Country
+}
+
+export interface Country {
+    flag: string,
+    code: string
+}
+
 const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
     const [validation, setValidation] = useState<Validation>({})
     const [company, setCompany] = useState<Company>({})
     const [manager, setManager] = useState<Manager>({})
+    const [countryCompany, setCountryCompany] = useState<Country>({flag: 'jordan', code: '00962'});
+    const [countryManager, setCountryManager] = useState<Country>({flag: 'jordan', code: '00962'});
     const companyAttributes = [
         "title_en",
         "title_ar",
@@ -127,7 +139,12 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        // Add Country Code to phone
+        let companyClone = {...company};
+        let managerClone = {...manager};
 
+        if (company.phone_number) companyClone.phone_number = countryCompany.code + company.phone_number;
+        if (managerClone.phone) managerClone.phone = countryManager.code + manager.phone;
         // Send a request to the API via the handler function.
         const request = HandleRequestClient({
             url: '/company/create-or-update',
@@ -138,8 +155,8 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                 'x-api-key': token,
             },
             data: {
-                company,
-                manager
+                company: companyClone,
+                manager: managerClone
             },
             successCallBack: function () {
                 alert("Hello world!")
@@ -220,7 +237,8 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                             <Phone lang={lang} id="phone" name="phone_number" placeHolder="123456789"
                                    label="Phone Number" value={company.phone_number}
                                    list={countries} validation={validation.phone_number} onChange={prepareObject}
-                                   onFocus={clearErrors}></Phone>
+                                   onFocus={clearErrors} country={countryCompany}
+                                   setCountry={setCountryCompany}></Phone>
 
                             <RadioList id="sector"
                                        name="sector_id"
@@ -299,20 +317,20 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                         <div style={{marginTop: '40px'}}>
                             <Text id="manager-name" name="username" placeHolder="example"
                                   label="Manager Name" width={348} height={48}
-                                  validation={validation.manager_name} onChange={prepareObject} value={manager.username}
+                                  validation={validation.username} onChange={prepareObject} value={manager.username}
                                   onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-email" name="email" placeHolder="john.doe@example.com"
-                                  label="Email" width={348} height={48} validation={validation.manager_email}
+                                  label="Email" width={348} height={48} validation={validation.email}
                                   onFocus={clearErrors} onChange={prepareObject} value={manager.email}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Text id="manager-position" name="position" placeHolder="example"
                                   label="Position" width={348} height={48}
-                                  validation={validation.manager_position} onChange={prepareObject}
+                                  validation={validation.position} onChange={prepareObject}
                                   value={manager.position}
                                   onFocus={clearErrors}></Text>
                         </div>
@@ -320,8 +338,9 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                         <div style={{marginTop: '32px'}}>
                             <Phone lang={lang} id="phone" name="phone" placeHolder="123456789"
                                    label="Phone Number"
-                                   list={countries} validation={validation.manager_phone}
-                                   value={manager.phone} onChange={prepareObject}></Phone>
+                                   list={countries} validation={validation.phone}
+                                   value={manager.phone} onChange={prepareObject} onFocus={clearErrors} country={countryManager}
+                                   setCountry={setCountryManager}></Phone>
                         </div>
 
                         <div style={{display: 'flex', justifyContent: 'left'}}>

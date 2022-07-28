@@ -3,6 +3,7 @@ import styles from "../../components/styles/form.module.css";
 import Image from 'next/image';
 import {v4 as uuidv4} from 'uuid';
 import {useState, useEffect, useRef} from "react";
+import {Country} from "../../pages/super-admin/companies/new";
 
 
 interface Config {
@@ -16,6 +17,8 @@ interface Config {
     validation?: string,
     onChange?: Function,
     value?: string
+    country: Country,
+    setCountry: Function
 }
 
 interface Item {
@@ -25,9 +28,8 @@ interface Item {
     code: string
 }
 
-const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, onChange, value}: Config) => {
+const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, onChange, value, country, setCountry}: Config) => {
     const [show, setShow] = useState(false);
-    const [country, setCountry] = useState({flag: 'jordan', code: '00962'});
     const ref = useRef(null);
 
     const toggleList = () => {
