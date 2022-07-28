@@ -11,7 +11,9 @@ export interface Config {
     label: string,
     list: RadioListConfig,
     onFocus?: Function,
-    validation?: string
+    validation?: string,
+    onChange?: Function,
+    selected?: string
 }
 
 export interface RadioListConfig {
@@ -24,9 +26,11 @@ export interface SingleObject {
     title?: string,
 }
 
-const RadioList = ({id, name, placeHolder, label, list, onFocus, validation}: Config) => {
+const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, selected, onChange}: Config) => {
     const [show, setShow] = useState(false);
-    const [value, setValue] = useState('');
+    // Check the value for the selected
+    let selectedObject = list && list.data.filter(item => item.id == selected);
+    const [value, setValue] = useState(selectedObject ? selectedObject[0]?.title : '');
     const ref = useRef(null);
 
     const toggleList = () => {
@@ -36,6 +40,7 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation}: Co
     const handleChange = (e: any) => {
         let newValue = e.target.id;
         onFocus && onFocus(name);
+        onChange && onChange(name, e.target.value);
         setValue(newValue);
     }
 
@@ -88,6 +93,7 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation}: Co
                     <div className={styles.scroll}>
                         {
                             list && list.data.map(item => {
+                                console.log(item.title, value)
                                 return (
                                     <div key={uuidv4()} className={styles.listItem}>
                                         <input type="radio" id={item.title} name={name} value={item.id}

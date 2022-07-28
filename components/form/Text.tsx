@@ -13,21 +13,22 @@ interface Config {
     onFocus?: Function,
     type?: string,
     validation?: string,
+    value?: string
 }
 
-const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFocus, validation}: Config) => {
+const Text = ({id, name, placeHolder, label, width, height, onChange, type, onFocus, validation, value}: Config) => {
     return (
         <div className={styles.item}>
             <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
             <br/>
-            <input className={styles.form} id={id} name={name} placeholder={placeHolder} style={{
+            <input className={styles.form} id={id} name={name} value={value} placeholder={placeHolder} style={{
                 width: `${width}px`,
                 height: `${height}px`,
                 border: '1px solid #E6E9EA',
                 borderRadius: '8px',
                 paddingInlineStart: '16px'
             }} type={`${type && type}`} onChange={(e: any) => {
-                onChange && onChange(e.target.value)
+                onChange && onChange(name, e.target.value)
             }}
                    onFocus={(e: any) => {
                        onFocus && onFocus(e.target.name)

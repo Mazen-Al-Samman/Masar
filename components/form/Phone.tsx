@@ -13,7 +13,9 @@ interface Config {
     list: Item[],
     lang: string,
     onFocus?: Function,
-    validation?: string
+    validation?: string,
+    onChange?: Function,
+    value?: string
 }
 
 interface Item {
@@ -23,7 +25,7 @@ interface Item {
     code: string
 }
 
-const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation}: Config) => {
+const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, onChange, value}: Config) => {
     const [show, setShow] = useState(false);
     const [country, setCountry] = useState({flag: 'jordan', code: '00962'});
     const ref = useRef(null);
@@ -113,6 +115,10 @@ const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation}: 
                                marginLeft: '8px',
                                letterSpacing: '1px',
                                outline: 'none'
+                           }}
+                           value={value}
+                           onChange={(e: any) => {
+                               onChange && onChange(name, e.target.value)
                            }}
                            onFocus={(e: any) => {
                                onFocus && onFocus(e.target.name)

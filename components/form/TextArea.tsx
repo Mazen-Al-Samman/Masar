@@ -8,15 +8,19 @@ interface Config {
     placeHolder: string,
     label: string,
     onFocus?: Function,
-    validation?: string
+    validation?: string,
+    onChange?: Function,
+    value?: string
 }
 
-const TextArea = ({id, name, placeHolder, label, onFocus, validation}: Config) => {
+const TextArea = ({id, name, placeHolder, label, onFocus, validation, value, onChange}: Config) => {
     return (
         <div className={styles.item}>
             <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
             <br/>
-            <textarea className={styles.form} id={id} name={name} placeholder={placeHolder} style={{
+            <textarea className={styles.form} id={id} value={value} name={name} onChange={(e: any) => {
+                onChange && onChange(name, e.target.value)
+            }} placeholder={placeHolder} style={{
                 width: '348px',
                 height: '96px',
                 border: '1px solid #E6E9EA',

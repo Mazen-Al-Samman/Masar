@@ -27,7 +27,7 @@ interface Validation {
     sector_id?: string,
     phone_number?: string,
     manager_name?: string,
-    manager_phone_number?: string,
+    manager_phone?: string,
     manager_position?: string,
     manager_email?: string
 }
@@ -49,7 +49,7 @@ interface Manager {
     username?: string,
     email?: string,
     position?: string,
-    phone_number?: string,
+    phone?: string,
 }
 
 const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
@@ -67,12 +67,33 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
         "revenue_id",
         "sector_id",
         "number_of_employees_id",
-    ]
+    ];
+
     // const [values, setValue] =
     const [next, setNext] = useState(false);
     useLayoutEffect(() => {
         setButtons(['language', 'logout'])
     }, []);
+
+    // Set the input value.
+    const prepareObject = (name: string, value: string) => {
+        let dataStore = {...manager};
+        const isCompany = isCompanyAttribute(name);
+        if (isCompany) {
+            // @ts-ignore
+            dataStore = {...company};
+        }
+        // @ts-ignore
+        dataStore[`${name}`] = value;
+        if (isCompany) {
+            // @ts-ignore
+            setCompany(dataStore);
+        } else setManager(dataStore);
+    }
+
+    const isCompanyAttribute = (name: string) => {
+        return companyAttributes.includes(name);
+    }
 
     // Move to the Manager Form
     const nextPage = (event: any) => {
@@ -174,52 +195,76 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                         <div style={{marginTop: '40px'}}>
                             <Text id="title-en" name="title_en" placeHolder="example"
                                   label="English Title" width={348} height={48} validation={validation.title_en}
-                                  onFocus={clearErrors}></Text>
+                                  onFocus={clearErrors} onChange={prepareObject} value={company.title_en}></Text>
 
                             <Text id="title-ar" name="title_ar" placeHolder="example"
                                   label="Arabic Title" width={348} height={48} validation={validation.title_ar}
-                                  onFocus={clearErrors}></Text>
+                                  onFocus={clearErrors} onChange={prepareObject} value={company.title_ar}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
+                            <RadioList id="country"
+                                       name="country"
+                                       placeHolder="Select"
+                                       label="Country"
+                                       list={prepareCountries()}
+                                       validation={validation.country}
+                                       onChange={prepareObject}
+                                       selected={company.country}
+                                       onFocus={clearErrors}></RadioList>
                             <Text id="city" name="city" placeHolder="example" label="City" width={348}
-                                  height={48}></Text>
-                            <Text id="address" name="address" placeHolder="example" label="Address" width={348}
-                                  height={48}></Text>
+                                  height={48} onChange={prepareObject} value={company.city}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <Phone lang={lang} id="phone" name="phone_number" placeHolder="123456789"
-                                   label="Phone Number"
-                                   list={countries} validation={validation.phone_number} onFocus={clearErrors}></Phone>
-                            <RadioList id="sector" name="sector_id" placeHolder="Select" label="Sector"
-                                       list={data['sector']} validation={validation.sector_id}
+                                   label="Phone Number" value={company.phone_number}
+                                   list={countries} validation={validation.phone_number} onChange={prepareObject}
+                                   onFocus={clearErrors}></Phone>
+
+                            <RadioList id="sector"
+                                       name="sector_id"
+                                       onChange={prepareObject}
+                                       selected={company.sector_id}
+                                       placeHolder="Select"
+                                       label="Sector"
+                                       list={data['sector']}
+                                       validation={validation.sector_id}
                                        onFocus={clearErrors}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <RadioList id="number_of_employees" name="number_of_employees_id" placeHolder="Select"
-                                       label="Number Of Employees" list={data['number_of_employees']}
-                                       validation={validation.number_of_employees_id} onFocus={clearErrors}></RadioList>
+                            <RadioList id="number_of_employees"
+                                       name="number_of_employees_id"
+                                       placeHolder="Select"
+                                       label="Number Of Employees"
+                                       list={data['number_of_employees']}
+                                       onChange={prepareObject}
+                                       selected={company.number_of_employees_id}
+                                       validation={validation.number_of_employees_id}
+                                       onFocus={clearErrors}></RadioList>
 
-                            <RadioList id="annualRevenue" name="revenue_id" placeHolder="Select"
+                            <RadioList id="annualRevenue"
+                                       name="revenue_id"
+                                       placeHolder="Select"
                                        label="Annual Revenue"
-                                       list={data['revenue']} validation={validation.revenue_id}
-                                       onFocus={clearErrors}></RadioList>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <RadioList id="country" name="country" placeHolder="Select" label="Country"
-                                       list={prepareCountries()} validation={validation.country}
+                                       list={data['revenue']}
+                                       validation={validation.revenue_id}
+                                       onChange={prepareObject}
+                                       selected={company.revenue_id}
                                        onFocus={clearErrors}></RadioList>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
                             <TextArea id="description_ar" name="description_ar" placeHolder="example"
-                                      label="Arabic Description" validation={validation.description_ar} onFocus={clearErrors}></TextArea>
+                                      label="Arabic Description" validation={validation.description_ar}
+                                      onChange={prepareObject} value={company.description_ar}
+                                      onFocus={clearErrors}></TextArea>
 
                             <TextArea id="description" name="description_en" placeHolder="example"
-                                      label="English Description" validation={validation.description_ar} onFocus={clearErrors}></TextArea>
+                                      label="English Description" validation={validation.description_en}
+                                      onFocus={clearErrors} onChange={prepareObject}
+                                      value={company.description_en}></TextArea>
                         </div>
 
                         <button onClick={nextPage} style={{
@@ -252,26 +297,31 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                         </div>
 
                         <div style={{marginTop: '40px'}}>
-                            <Text id="manager-name" name="manager-name" placeHolder="example"
+                            <Text id="manager-name" name="username" placeHolder="example"
                                   label="Manager Name" width={348} height={48}
-                                  validation={validation.manager_name} onFocus={clearErrors}></Text>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <Text id="manager-email" name="manager-email" placeHolder="john.doe@example.com"
-                                  label="Email" width={348} height={48} validation={validation.manager_email}
+                                  validation={validation.manager_name} onChange={prepareObject} value={manager.username}
                                   onFocus={clearErrors}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Text id="manager-position" name="manager-position" placeHolder="example"
-                                  label="Position" width={348} height={48}
-                                  validation={validation.manager_position} onFocus={clearErrors}></Text>
+                            <Text id="manager-email" name="email" placeHolder="john.doe@example.com"
+                                  label="Email" width={348} height={48} validation={validation.manager_email}
+                                  onFocus={clearErrors} onChange={prepareObject} value={manager.email}></Text>
                         </div>
 
                         <div style={{marginTop: '32px'}}>
-                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789" label="Phone Number"
-                                   list={countries} validation={validation.manager_phone_number}></Phone>
+                            <Text id="manager-position" name="position" placeHolder="example"
+                                  label="Position" width={348} height={48}
+                                  validation={validation.manager_position} onChange={prepareObject}
+                                  value={manager.position}
+                                  onFocus={clearErrors}></Text>
+                        </div>
+
+                        <div style={{marginTop: '32px'}}>
+                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789"
+                                   label="Phone Number"
+                                   list={countries} validation={validation.manager_phone}
+                                   value={manager.phone} onChange={prepareObject}></Phone>
                         </div>
 
                         <div style={{display: 'flex', justifyContent: 'left'}}>
