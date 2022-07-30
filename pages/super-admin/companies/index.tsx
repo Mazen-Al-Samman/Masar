@@ -3,12 +3,11 @@ import {HandleRequestSSR} from "../../api/Handler";
 import {Col, Container, Row} from 'react-bootstrap';
 
 const Companies = ({data}: any) => {
-    console.log("data", data)
     return (
         <div>
-            <Container>
-                <Row style={{display: 'flex', justifyContent: 'center'}}>
-                    <Col lg={5} style={{margin: '0 14px 30px 14px'}}>
+            <Container  style={{display: 'flex', justifyContent: 'center'}}>
+                <Row>
+                    <Col lg={5} style={{margin: '0 50px 30px 14px'}}>
                         <Details type={`new`}></Details>
                     </Col>
                     {
@@ -16,7 +15,7 @@ const Companies = ({data}: any) => {
                         data.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col lg={5} style={{margin: '0 14px 30px 14px'}}>
+                                <Col lg={5} style={{margin: '0 50px 30px 14px'}}>
                                     <Details type={`company`} data={
                                         {
                                             title,

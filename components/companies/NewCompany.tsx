@@ -7,10 +7,12 @@ const NewCompany = () => {
             fontSize: '24px',
             fontWeight: '700',
             display: 'flex',
-            justifyContent: 'space-between',
-            width: '50%'
+            justifyContent: 'center',
+            width: '100%',
         }}>
-            <Image src={`/icons/plus.svg`} width={24} height={24}></Image>
+            <div style={{marginInlineEnd: '20px', marginTop: '2px'}}>
+                <Image src={`/icons/plus.svg`} width={24} height={24}></Image>
+            </div>
             <Link href={{pathname: `/super-admin/companies/new`}}>Add new Company</Link>
         </div>
     )

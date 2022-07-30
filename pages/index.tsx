@@ -11,11 +11,17 @@ interface userObject {
     auth_key: string
 }
 
+interface Form {
+    email?: string,
+    password?: string
+}
+
 const Login = ({setButtons, setPadding, lang}: MainProps) => {
     const cookies = new Cookies();
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [form, setForm] = useState<Form>({});
     const [validation, setValidation] = useState({'email': null, 'password': null});
 
     // Clear validation errors
@@ -37,12 +43,18 @@ const Login = ({setButtons, setPadding, lang}: MainProps) => {
                 'Accept-Language': lang
             },
             data: {
-                email,
-                password
+                ...form
             },
             successCallBack: login,
             failedCallBack: setValidation,
         });
+    }
+
+    const prepareForm = (name: string, value: string) => {
+        let formData = {...form};
+        // @ts-ignore
+        formData[`${name}`] = value;
+        setForm(formData);
     }
 
     const login = (userData: userObject) => {
@@ -71,7 +83,7 @@ const Login = ({setButtons, setPadding, lang}: MainProps) => {
                     <div>
                         <Text type={'text'} id={`email`} name={`email`} placeHolder={`john.doe@example.com`}
                               label={`Email Address`}
-                              width={528} height={48} onChange={setEmail}
+                              width={528} height={48} onChange={prepareForm}
                               onFocus={clearErrors}
                         ></Text>
                         <span style={{color: 'red', marginTop: '8px', display: 'block'}}>{validation.email}</span>
@@ -81,7 +93,7 @@ const Login = ({setButtons, setPadding, lang}: MainProps) => {
                         <Text type={'password'} id={`password`} name={`password`} placeHolder={`•••••••••••••••`}
                               label={`Password`}
                               width={528}
-                              height={48} onChange={setPassword}
+                              height={48} onChange={prepareForm}
                               onFocus={clearErrors}
                         ></Text>
                         <span style={{color: 'red', marginTop: '8px', display: 'block'}}>{validation.password}</span>

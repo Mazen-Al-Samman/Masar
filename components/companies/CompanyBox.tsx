@@ -32,17 +32,17 @@ const CompanyBox = ({logo, description, title, country, city, number_of_employee
                     src={logo ?? '/icons/employee.svg'}
                     layout='fill' objectFit='contain'></Image>
             </div>
-            <div style={{marginInlineStart: '24px'}}>
+            <div style={{marginInlineStart: '24px', width: '80%'}}>
                 <h1 style={{fontSize: '16px', fontWeight: '700'}}>{title}</h1>
                 <p style={{fontSize: '14px', fontWeight: '400', color: '#4F666D', marginTop: '8px'}}>{`${description?.substring(0, 110)}...`}</p>
 
-                <div style={{display: 'flex', justifyContent: 'left'}}>
-                    <div style={{display: 'flex', justifyContent: 'left'}}>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div style={{display: 'flex', justifyContent: 'left', width: '200px'}}>
                         <Image src={`/icons/employee.svg`} width={24} height={24}></Image>
                         <span style={styles.span}>{`${number_of_employees} Employee`}</span>
                     </div>
 
-                    <div style={{display: 'flex', justifyContent: 'left', marginInlineStart: '28px'}}>
+                    <div style={{display: 'flex', justifyContent: 'left', marginInlineStart: '28px', width: '200px'}}>
                         <Image src={`/icons/location.svg`} width={24} height={24}></Image>
                         <span style={styles.span}>{`${country}, ${city}`}</span>
                     </div>

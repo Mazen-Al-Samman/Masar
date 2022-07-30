@@ -9,7 +9,6 @@ interface Config {
 }
 
 const Details = ({type, data}: Config) => {
-    console.log("data", data)
     return (
         <div style={{
             backgroundColor: '#FFFFFF',
@@ -18,7 +17,7 @@ const Details = ({type, data}: Config) => {
             borderRadius: '12px',
             boxShadow: '0px 20px 50px rgba(4, 37, 46, 0.08)',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
             marginInlineStart: '24px',
         }} className={styles.company}>
