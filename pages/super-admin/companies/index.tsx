@@ -1,13 +1,24 @@
 import Details from "../../../components/companies/Details";
 import {HandleRequestSSR} from "../../api/Handler";
 import {Col, Container, Row} from 'react-bootstrap';
+import {useLayoutEffect} from "react";
+import MainProps from "../../../interfaces/MainProps";
 
-const Companies = ({data}: any) => {
+interface PageProps {
+    filtersData: object
+}
+
+const Companies = ({data, setButtons, filtersData, setFilter}: (MainProps & PageProps)) => {
+    useLayoutEffect(() => {
+        setButtons(['search', 'language', 'filter', 'logout']);
+        setFilter(filtersData);
+    }, []);
+
     return (
         <div>
             <Container  style={{display: 'flex', justifyContent: 'center'}}>
                 <Row>
-                    <Col lg={5} style={{margin: '0 50px 30px 14px'}}>
+                    <Col lg={5} style={{margin: '0 50px 20px 14px'}}>
                         <Details type={`new`}></Details>
                     </Col>
                     {
@@ -15,7 +26,7 @@ const Companies = ({data}: any) => {
                         data.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col lg={5} style={{margin: '0 50px 30px 14px'}}>
+                                <Col lg={5} style={{margin: '0 50px 20px 14px'}}>
                                     <Details type={`company`} data={
                                         {
                                             title,
@@ -37,6 +48,18 @@ const Companies = ({data}: any) => {
 }
 
 export async function getServerSideProps(ctx: any) {
+    const companiesFilter = HandleRequestSSR({
+        url: '/filter?type=1',
+        method: 'get',
+        headers: {},
+        data: {},
+        context: ctx
+    })
+
+    const [filters] = await Promise.all([
+        companiesFilter
+    ]);
+
     const companiesDataReq = HandleRequestSSR({
         url: '/company',
         method: 'get',
@@ -51,7 +74,8 @@ export async function getServerSideProps(ctx: any) {
 
     return {
         props: {
-            data: companies.data,
+            data: companies?.data,
+            filtersData: filters?.data
         }
     };
 };

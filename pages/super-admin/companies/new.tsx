@@ -52,11 +52,6 @@ interface Manager {
     phone?: string,
 }
 
-interface PhoneCountry {
-    phone_number: Country,
-    phone: Country
-}
-
 export interface Country {
     flag: string,
     code: string
@@ -81,7 +76,6 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
         "number_of_employees_id",
     ];
 
-    // const [values, setValue] =
     const [next, setNext] = useState(false);
     useLayoutEffect(() => {
         setButtons(['language', 'logout'])

@@ -11,19 +11,28 @@ const isBrowser = typeof window !== "undefined";
 function MyApp({Component, pageProps, lang, token}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
-    const [buttons, setButtons] = useState(['filter', 'search', 'language', !token? '' : 'logout]']);
+    const [buttons, setButtons] = useState(['filter', 'search', 'language', !token ? '' : 'logout]']);
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
+    const [filterConfig, setFilterConfig] = useState();
 
     return (
         <main className={styles["font-" + lang]} dir={dir}>
             <Header lang={lang}></Header>
             {
                 showNav &&
-                <NavBar translation={translation} lang={lang} buttons={buttons}></NavBar>
+                <NavBar filtersData={filterConfig} translation={translation} lang={lang} buttons={buttons} token={token}></NavBar>
             }
             <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
-                <Component {...pageProps} lang={lang} setButtons={setButtons} showNav={setShowNav} setPadding={setPadding} token={token}/>
+                <Component
+                    {...pageProps}
+                    lang={lang}
+                    setButtons={setButtons}
+                    showNav={setShowNav}
+                    setPadding={setPadding}
+                    setFilter={setFilterConfig}
+                    filters={filterConfig}
+                    token={token}/>
             </div>
         </main>
     );
@@ -34,10 +43,10 @@ MyApp.getInitialProps = async (context: any) => {
     const {language, auth_key} = req.cookies;
 
     if (!auth_key && pathname != '/') {
-        res.writeHead(302, { Location: '/' });
+        res.writeHead(302, {Location: '/'});
         res.end();
     } else if (auth_key && pathname == '/') {
-        res.writeHead(302, { Location: '/super-admin' });
+        res.writeHead(302, {Location: '/super-admin'});
         res.end();
     }
 

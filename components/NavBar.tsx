@@ -6,8 +6,15 @@ import Cookies from 'universal-cookie';
 import {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-function NavBar(props: { lang: string; translation: { [x: string]: any; }; buttons: string[] }) {
-    const {lang, translation, buttons} = props;
+interface NavBarConfig {
+    lang: string,
+    translation: { [x: string]: any; },
+    buttons: string[],
+    token: string,
+    filtersData?: object,
+}
+
+function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) {
     const cookies = new Cookies();
     const superAdminHeader = [
         {
@@ -18,41 +25,12 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; butto
             'title': translation.allCompanies,
             'url': '/super-admin/companies'
         },
-        // {
-        //     'title': translation.aboutUs,
-        //     'url': '/'
-        // },
         {
             'title': translation.contact,
             'url': '/'
         },
     ];
-
-    const adminHeader = [
-        {
-            'title': translation.departments,
-            'url': '/'
-        },
-        {
-            'title': translation.risk,
-            'url': '/'
-        },
-        {
-            'title': translation.auditing,
-            'url': '/'
-        },
-        {
-            'title': translation.strategy,
-            'url': '/'
-        },
-        {
-            'title': translation.users,
-            'url': '/'
-        },
-    ];
-
     const [shownList, setShownList] = useState<string>('');
-    // const [buttons, setButtons] = useState(['filter', 'search', 'language']);
     const handleShowList = (listName: string) => {
         if (shownList == listName) {
             setShownList('')
@@ -86,7 +64,7 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; butto
                             buttons.includes('profile') &&
                             <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList}
                                        listName={'notifications'} source='/icons/notification.svg'
-                                       alt='Notifcation Icon' width={24} height={24} styles={styles} hasList={true}
+                                       alt='Notification Icon' width={24} height={24} styles={styles} hasList={true}
                                        squareWidth={'232px'} items={[
                                 {
                                     'title': translation.profile,
@@ -112,51 +90,89 @@ function NavBar(props: { lang: string; translation: { [x: string]: any; }; butto
                                         alert('Contact Us');
                                     }
                                 }
-                            ]} lang={lang}></NavButton>}
+                            ]} lang={lang}></NavButton>
+                        }
+
+                        {
+                            buttons.includes('filter') &&
+                            <NavButton
+                                token={token}
+                                onShowList={(name: string) => handleShowList(name)}
+                                shownList={shownList}
+                                listName={'filter'}
+                                source='/icons/filter.svg'
+                                alt='Filter Icon'
+                                width={24}
+                                height={24}
+                                styles={styles}
+                                hasList={true}
+                                squareWidth={'1120px'}
+                                items={{'type': 'filter-box', 'data': filtersData}}
+                                lang={lang}></NavButton>}
 
                         {
                             buttons.includes('language') &&
-                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList}
-                                       listName={'language'} source='/icons/translate.svg' alt='Translation Icon'
-                                       width={24} height={24} styles={styles} squareWidth={'168px'} items={[
-                                {
-                                    'title': 'English',
-                                    'type': 'button',
-                                    'onClick': function () {
-                                        cookies.set('language', 'en', {path: '/'});
-                                        window.location.reload()
+                            <NavButton
+                                onShowList={(name: string) => handleShowList(name)}
+                                shownList={shownList}
+                                listName={'language'}
+                                source='/icons/translate.svg'
+                                alt='Translation Icon'
+                                width={24}
+                                height={24}
+                                styles={styles}
+                                squareWidth={'168px'}
+                                items={[
+                                    {
+                                        'title': 'English',
+                                        'type': 'button',
+                                        'onClick': function () {
+                                            cookies.set('language', 'en', {path: '/'});
+                                            window.location.reload()
+                                        }
+                                    },
+                                    {
+                                        'title': 'عربي',
+                                        'type': 'button',
+                                        'onClick': function () {
+                                            cookies.set('language', 'ar', {path: '/'});
+                                            window.location.reload()
+                                        }
                                     }
-                                },
-                                {
-                                    'title': 'عربي',
-                                    'type': 'button',
-                                    'onClick': function () {
-                                        cookies.set('language', 'ar', {path: '/'});
-                                        window.location.reload()
-                                    }
-                                }
-                            ]} hasList={true} lang={lang}></NavButton>
+                                ]}
+                                hasList={true}
+                                lang={lang}></NavButton>
                         }
 
                         {
                             buttons.includes('logout') &&
-                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList}
-                                       listName={'logout'} source='/icons/logout.svg' alt='Logout Icon' width={24}
-                                       height={24} styles={styles} squareWidth={'229px'} items={[
-                                {
-                                    'title': translation.logoutMsg,
-                                    'type': 'text',
-                                },
-                                {
-                                    'title': translation.logout,
-                                    'type': 'button',
-                                    'color': '#ED5858',
-                                    'onClick': function () {
-                                        cookies.remove('auth_key', {path: '/'});
-                                        window.location.reload()
+                            <NavButton
+                                onShowList={(name: string) => handleShowList(name)}
+                                shownList={shownList}
+                                listName={'logout'}
+                                source='/icons/logout.svg'
+                                alt='Logout Icon'
+                                width={24}
+                                height={24}
+                                styles={styles}
+                                squareWidth={'229px'}
+                                items={[
+                                    {
+                                        'title': translation.logoutMsg,
+                                        'type': 'text',
+                                    },
+                                    {
+                                        'title': translation.logout,
+                                        'type': 'button',
+                                        'color': '#ED5858',
+                                        'onClick': function () {
+                                            cookies.remove('auth_key', {path: '/'});
+                                            window.location.reload()
+                                        }
                                     }
-                                }
-                            ]} hasList={true} lang={lang}></NavButton>
+                                ]}
+                                hasList={true}
+                                lang={lang}></NavButton>
                         }
                     </div>
                 </Col>
