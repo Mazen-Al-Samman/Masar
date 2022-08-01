@@ -30,14 +30,7 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
             'url': '/'
         },
     ];
-    const [shownList, setShownList] = useState<string>('');
-    const handleShowList = (listName: string) => {
-        if (shownList == listName) {
-            setShownList('')
-            return
-        }
-        setShownList(listName)
-    }
+
     return (
         <Container fluid className={`${styles.nav}`}>
             <Row>
@@ -62,8 +55,7 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
 
                         {
                             buttons.includes('profile') &&
-                            <NavButton onShowList={(name: string) => handleShowList(name)} shownList={shownList}
-                                       listName={'notifications'} source='/icons/notification.svg'
+                            <NavButton source='/icons/notification.svg'
                                        alt='Notification Icon' width={24} height={24} styles={styles} hasList={true}
                                        squareWidth={'232px'} items={[
                                 {
@@ -97,9 +89,6 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
                             buttons.includes('filter') &&
                             <NavButton
                                 token={token}
-                                onShowList={(name: string) => handleShowList(name)}
-                                shownList={shownList}
-                                listName={'filter'}
                                 source='/icons/filter.svg'
                                 alt='Filter Icon'
                                 width={24}
@@ -113,9 +102,6 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
                         {
                             buttons.includes('language') &&
                             <NavButton
-                                onShowList={(name: string) => handleShowList(name)}
-                                shownList={shownList}
-                                listName={'language'}
                                 source='/icons/translate.svg'
                                 alt='Translation Icon'
                                 width={24}
@@ -147,9 +133,6 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
                         {
                             buttons.includes('logout') &&
                             <NavButton
-                                onShowList={(name: string) => handleShowList(name)}
-                                shownList={shownList}
-                                listName={'logout'}
                                 source='/icons/logout.svg'
                                 alt='Logout Icon'
                                 width={24}

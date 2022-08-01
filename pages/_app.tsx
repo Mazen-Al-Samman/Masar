@@ -11,7 +11,7 @@ const isBrowser = typeof window !== "undefined";
 function MyApp({Component, pageProps, lang, token}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
-    const [buttons, setButtons] = useState(['filter', 'search', 'language', !token ? '' : 'logout]']);
+    const [buttons, setButtons] = useState(['search', 'language', !token ? '' : 'logout]']);
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
     const [filterConfig, setFilterConfig] = useState();
