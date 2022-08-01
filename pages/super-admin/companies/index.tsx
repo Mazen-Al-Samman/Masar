@@ -3,22 +3,70 @@ import {HandleRequestSSR} from "../../api/Handler";
 import {Col, Container, Row} from 'react-bootstrap';
 import {useLayoutEffect} from "react";
 import MainProps from "../../../interfaces/MainProps";
+import {v4 as uuidV4} from 'uuid';
+import Image from "next/image";
 
 interface PageProps {
     filtersData: object
 }
 
-const Companies = ({data, setButtons, filtersData, setFilter}: (MainProps & PageProps)) => {
+const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelected}: (MainProps & PageProps)) => {
     useLayoutEffect(() => {
         setButtons(['search', 'language', 'filter', 'logout']);
         setFilter(filtersData);
     }, []);
 
+    const removeSelected = (key: string, value: string) => {
+        let selectedValues = {...selected};
+        // @ts-ignore
+        let selectedKeyValues = selectedValues[key];
+        selectedKeyValues = selectedKeyValues && selectedKeyValues.filter((item: string) => item != value);
+        console.log(selectedKeyValues);
+        // @ts-ignore
+        selectedValues[key] = selectedKeyValues;
+        setSelected(selectedValues);
+    }
+
     return (
         <div>
-            <Container  style={{display: 'flex', justifyContent: 'center'}}>
+            <Container style={{display: 'flex', justifyContent: 'center'}}>
                 <Row>
-                    <Col lg={5} style={{margin: '0 50px 20px 14px'}}>
+                    <Col lg={12}
+                         style={{marginBottom: '10px', marginLeft: '25px', display: 'flex', justifyContent: 'left'}}>
+                        {
+                            selected && Object.keys(selected).map((filter) => {
+                                // @ts-ignore
+                                return selected[filter].map((item: string) => {
+                                    // @ts-ignore
+                                    return <div key={uuidV4()} style={{
+                                        border: '1px solid #E6E9EA',
+                                        padding: '9px 16px',
+                                        borderRadius: '100px',
+                                        marginInline: '10px',
+                                        fontSize: '12px',
+                                        fontWeight: '700',
+                                        letterSpacing: '1px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        height: '40px',
+                                        minWidth: '120px'
+                                    }}>
+                                        <p>
+                                            {
+                                                // @ts-ignore
+                                                filtersData && filtersData[filter].filter((filterItem) => filterItem.id == item)[0]?.title
+                                            }
+                                        </p>
+                                        <Image onClick={() => removeSelected(filter, item)} src={'/icons/clear.svg'}
+                                               width={22}
+                                               height={22} alt='Clear Filter'></Image>
+                                    </div>
+                                })
+                            })
+                        }
+                    </Col>
+
+                    <Col lg={5} style={{margin: '0 10px 20px 14px'}}>
                         <Details type={`new`}></Details>
                     </Col>
                     {
@@ -26,7 +74,7 @@ const Companies = ({data, setButtons, filtersData, setFilter}: (MainProps & Page
                         data.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col lg={5} style={{margin: '0 50px 20px 14px'}}>
+                                <Col key={uuidV4()} lg={5} style={{margin: '0 10px 20px 14px'}}>
                                     <Details type={`company`} data={
                                         {
                                             title,

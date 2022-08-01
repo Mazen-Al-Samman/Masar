@@ -12,9 +12,11 @@ interface NavBarConfig {
     buttons: string[],
     token: string,
     filtersData?: object,
+    selected?: string[],
+    setSelected?: Function,
 }
 
-function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) {
+function NavBar({lang, translation, buttons, token, filtersData, selected, setSelected}: NavBarConfig) {
     const cookies = new Cookies();
     const superAdminHeader = [
         {
@@ -97,7 +99,10 @@ function NavBar({lang, translation, buttons, token, filtersData}: NavBarConfig) 
                                 hasList={true}
                                 squareWidth={'1120px'}
                                 items={{'type': 'filter-box', 'data': filtersData}}
-                                lang={lang}></NavButton>}
+                                selected={selected}
+                                setSelected={setSelected}
+                                lang={lang}></NavButton>
+                        }
 
                         {
                             buttons.includes('language') &&

@@ -15,10 +15,11 @@ interface NavConfig {
     squareWidth: string,
     lang: string,
     token?: string,
+    selected?: string[],
+    setSelected?: Function,
 }
 
-const NavButton = ({styles, source, width, height, alt, items, hasList, squareWidth, lang}: NavConfig) => {
-
+const NavButton = ({styles, source, width, height, alt, items, hasList, squareWidth, lang, selected, setSelected}: NavConfig) => {
     const [show, setShow] = useState(false);
     const ref = useRef(null);
     if (!Array.isArray(items)) items = [items];
@@ -69,7 +70,7 @@ const NavButton = ({styles, source, width, height, alt, items, hasList, squareWi
                                         return (<NavBox key={uuidv4()} onClick={item.onClick} text={item.title}
                                                         icon={item.icon ?? 'test.svg'}></NavBox>);
                                     case 'filter-box':
-                                        return (<FilterBox data={item.data}></FilterBox>);
+                                        return (<FilterBox key={uuidv4()} selected={selected} setSelected={setSelected} data={item.data}></FilterBox>);
                                     default:
                                         return '';
                                 }

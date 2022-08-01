@@ -240,7 +240,10 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                                        selected={company.sector_id}
                                        placeHolder="Select"
                                        label="Sector"
-                                       list={data['sector']}
+                                       list={
+                                           // @ts-ignore
+                                           data['sector']
+                                       }
                                        validation={validation.sector_id}
                                        onFocus={clearErrors}></RadioList>
                         </div>
@@ -250,7 +253,10 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                                        name="number_of_employees_id"
                                        placeHolder="Select"
                                        label="Number Of Employees"
-                                       list={data['number_of_employees']}
+                                       list={
+                                           // @ts-ignore
+                                           data['number_of_employees']
+                                       }
                                        onChange={prepareObject}
                                        selected={company.number_of_employees_id}
                                        validation={validation.number_of_employees_id}
@@ -260,7 +266,10 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                                        name="revenue_id"
                                        placeHolder="Select"
                                        label="Annual Revenue"
-                                       list={data['revenue']}
+                                       list={
+                                           // @ts-ignore
+                                           data['revenue']
+                                       }
                                        validation={validation.revenue_id}
                                        onChange={prepareObject}
                                        selected={company.revenue_id}
@@ -333,7 +342,8 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                             <Phone lang={lang} id="phone" name="phone" placeHolder="123456789"
                                    label="Phone Number"
                                    list={countries} validation={validation.phone}
-                                   value={manager.phone} onChange={prepareObject} onFocus={clearErrors} country={countryManager}
+                                   value={manager.phone} onChange={prepareObject} onFocus={clearErrors}
+                                   country={countryManager}
                                    setCountry={setCountryManager}></Phone>
                         </div>
 

@@ -6,11 +6,13 @@ interface MainProps {
     lang: string,
     token: string,
     data: newCompanyConfig[],
+    selected: string[],
     filters: object,
     setButtons: Function,
     showNav: Function,
     setPadding: Function,
-    setFilter: Function
+    setFilter: Function,
+    setSelected: Function,
 }
 
 export default MainProps;

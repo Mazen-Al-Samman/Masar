@@ -15,13 +15,22 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
     const [filterConfig, setFilterConfig] = useState();
+    // State for selected filters to be shared between components
+    const [selected, setSelected] = useState([]);
 
     return (
         <main className={styles["font-" + lang]} dir={dir}>
             <Header lang={lang}></Header>
             {
                 showNav &&
-                <NavBar filtersData={filterConfig} translation={translation} lang={lang} buttons={buttons} token={token}></NavBar>
+                <NavBar
+                    filtersData={filterConfig}
+                    translation={translation}
+                    lang={lang}
+                    buttons={buttons}
+                    selected={selected}
+                    setSelected={setSelected}
+                    token={token}></NavBar>
             }
             <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
                 <Component
@@ -32,7 +41,10 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                     setPadding={setPadding}
                     setFilter={setFilterConfig}
                     filters={filterConfig}
-                    token={token}/>
+                    token={token}
+                    selected={selected}
+                    setSelected={setSelected}
+                />
             </div>
         </main>
     );

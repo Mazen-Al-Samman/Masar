@@ -26,12 +26,13 @@ const styles = {
 }
 
 interface NavConfig {
-    data: object
+    data: object,
+    selected?: string[],
+    setSelected?: Function
 }
 
-const FilterBox = ({data}: NavConfig) => {
+const FilterBox = ({data, setSelected, selected}: NavConfig) => {
     const [filter, setFilter] = useState(data);
-    const [selected, setSelected] = useState({});
     let filtersKeys = filter && Object.keys(filter);
 
     const handleChange = (key: string, value: string) => {
@@ -40,7 +41,8 @@ const FilterBox = ({data}: NavConfig) => {
         if (!currentSelected[key]) currentSelected[key] = [];
         // @ts-ignore
         currentSelected[key].push(value);
-        setSelected(currentSelected)
+        console.log(currentSelected);
+        setSelected && setSelected(currentSelected)
     }
 
     return (
@@ -50,15 +52,17 @@ const FilterBox = ({data}: NavConfig) => {
                     filtersKeys && filtersKeys.map((key) => {
                         // @ts-ignore
                         let object = filter[key];
+                        // @ts-ignore
+                        let keySelectedItems = selected[key] ?? [];
                         return (
-                            <Col lg={4} style={styles.mainDiv} className={css.form}>
+                            <Col key={key} lg={4} style={styles.mainDiv} className={css.form}>
                                 <p style={styles.title}>{key}</p>
                                 <div style={styles.list} className={scroll.scroll}>
                                     {
                                         object.map((item: any) => {
                                             return (
                                                 <div key={item.title} className={css.formGroup}>
-                                                    <input onChange={() => handleChange(key, item.id)} type="checkbox" id={item.title}/>
+                                                    <input onChange={() => handleChange(key, item.id)} checked={keySelectedItems.includes(item.id)} type="checkbox" id={item.title}/>
                                                     <label className={css.label} htmlFor={item.title}>
                                                     <span className={css.checkbox}>
                                                         <span className={css.check}></span>
