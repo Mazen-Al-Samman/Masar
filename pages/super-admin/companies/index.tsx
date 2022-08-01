@@ -51,7 +51,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                                         height: '40px',
                                         minWidth: '120px'
                                     }}>
-                                        <p>
+                                        <p style={{marginRight: '10px', marginTop: '1px'}}>
                                             {
                                                 // @ts-ignore
                                                 filtersData && filtersData[filter].filter((filterItem) => filterItem.id == item)[0]?.title

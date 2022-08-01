@@ -38,10 +38,15 @@ const FilterBox = ({data, setSelected, selected}: NavConfig) => {
     const handleChange = (key: string, value: string) => {
         let currentSelected = {...selected};
         // @ts-ignore
-        if (!currentSelected[key]) currentSelected[key] = [];
-        // @ts-ignore
-        currentSelected[key].push(value);
-        console.log(currentSelected);
+        if (!currentSelected[key]?.includes(value)) {
+            // @ts-ignore
+            if (!currentSelected[key]) currentSelected[key] = [];
+            // @ts-ignore
+            currentSelected[key].push(value);
+        } else {
+            // @ts-ignore
+            currentSelected[key] = currentSelected[key].filter((item: string) => item != value);
+        }
         setSelected && setSelected(currentSelected)
     }
 
@@ -62,7 +67,9 @@ const FilterBox = ({data, setSelected, selected}: NavConfig) => {
                                         object.map((item: any) => {
                                             return (
                                                 <div key={item.title} className={css.formGroup}>
-                                                    <input onChange={() => handleChange(key, item.id)} checked={keySelectedItems.includes(item.id)} type="checkbox" id={item.title}/>
+                                                    <input onChange={() => handleChange(key, item.id)}
+                                                           checked={keySelectedItems.includes(item.id)} type="checkbox"
+                                                           id={item.title}/>
                                                     <label className={css.label} htmlFor={item.title}>
                                                     <span className={css.checkbox}>
                                                         <span className={css.check}></span>
