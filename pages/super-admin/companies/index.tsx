@@ -11,6 +11,25 @@ interface PageProps {
 }
 
 const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelected}: (MainProps & PageProps)) => {
+    // @ts-ignore
+    let filteredCompanies = [...data];
+    for (let selectedFilter in selected) {
+        if (!selected[selectedFilter].length) {
+            filteredCompanies = data;
+            continue;
+        }
+        let filterValues = selected[selectedFilter];
+        // @ts-ignore
+        filteredCompanies = filteredCompanies.filter((company) => filterValues.includes(company[selectedFilter]));
+    }
+
+    // @ts-ignore
+    let indexedFilterArray = [];
+    for (let filterKey in filtersData) {
+        // @ts-ignore
+        indexedFilterArray[filtersData[filterKey]['filter_key']] = filtersData[filterKey]['data'];
+    }
+
     useLayoutEffect(() => {
         setButtons(['search', 'language', 'filter', 'logout']);
         setFilter(filtersData);
@@ -21,7 +40,6 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
         // @ts-ignore
         let selectedKeyValues = selectedValues[key];
         selectedKeyValues = selectedKeyValues && selectedKeyValues.filter((item: string) => item != value);
-        console.log(selectedKeyValues);
         // @ts-ignore
         selectedValues[key] = selectedKeyValues;
         setSelected(selectedValues);
@@ -54,7 +72,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                                         <p style={{marginRight: '10px', marginTop: '1px'}}>
                                             {
                                                 // @ts-ignore
-                                                filtersData && filtersData[filter].filter((filterItem) => filterItem.id == item)[0]?.title
+                                                indexedFilterArray && indexedFilterArray[filter].filter((filterItem) => filterItem.id == item)[0]?.title
                                             }
                                         </p>
                                         <Image onClick={() => removeSelected(filter, item)} src={'/icons/clear.svg'}
@@ -70,8 +88,8 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         <Details type={`new`}></Details>
                     </Col>
                     {
-                        data &&
-                        data.map((company: any) => {
+                        filteredCompanies &&
+                        filteredCompanies.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
                                 <Col key={uuidV4()} lg={5} style={{margin: '0 10px 20px 14px'}}>

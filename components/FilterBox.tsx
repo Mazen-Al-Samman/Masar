@@ -33,6 +33,7 @@ interface NavConfig {
 
 const FilterBox = ({data, setSelected, selected}: NavConfig) => {
     const [filter, setFilter] = useState(data);
+    // @ts-ignore
     let filtersKeys = filter && Object.keys(filter);
 
     const handleChange = (key: string, value: string) => {
@@ -46,6 +47,8 @@ const FilterBox = ({data, setSelected, selected}: NavConfig) => {
         } else {
             // @ts-ignore
             currentSelected[key] = currentSelected[key].filter((item: string) => item != value);
+            // @ts-ignore
+            if (!currentSelected[key].length) delete currentSelected[key];
         }
         setSelected && setSelected(currentSelected)
     }
@@ -56,9 +59,11 @@ const FilterBox = ({data, setSelected, selected}: NavConfig) => {
                 {
                     filtersKeys && filtersKeys.map((key) => {
                         // @ts-ignore
-                        let object = filter[key];
+                        let object = filter[key]['data'];
                         // @ts-ignore
-                        let keySelectedItems = selected[key] ?? [];
+                        let filterKey = filter[key]['filter_key'];
+                        // @ts-ignore
+                        let keySelectedItems = selected[filterKey] ?? [];
                         return (
                             <Col key={key} lg={4} style={styles.mainDiv} className={css.form}>
                                 <p style={styles.title}>{key}</p>
@@ -67,7 +72,12 @@ const FilterBox = ({data, setSelected, selected}: NavConfig) => {
                                         object.map((item: any) => {
                                             return (
                                                 <div key={item.title} className={css.formGroup}>
-                                                    <input onChange={() => handleChange(key, item.id)}
+                                                    <input onChange={
+                                                        () => {
+                                                            // @ts-ignore
+                                                            handleChange(filter[key]['filter_key'], item.id)
+                                                        }
+                                                    }
                                                            checked={keySelectedItems.includes(item.id)} type="checkbox"
                                                            id={item.title}/>
                                                     <label className={css.label} htmlFor={item.title}>
