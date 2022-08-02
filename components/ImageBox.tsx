@@ -57,7 +57,7 @@ const ImageBox = ({config}: BoxConfig) => {
                     <p style={styles.inner.p}>{subText}</p>
                 </div>
 
-                <div style={{marginTop: '35px', marginLeft: '30px'}}>
+                <div style={{marginTop: '35px'}}>
                     {
                         iconDescItems.map(item => {
                             return (

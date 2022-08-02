@@ -43,8 +43,6 @@ const ColumnChartBox = ({config}: ChartConfig) => {
         legend: {
             show: true,
             position: 'right',
-            offsetX: -30,
-            offsetY: -3,
             fontSize: '12px',
             fontFamily: lang == 'ar' ? 'arabic' : 'poppins',
             fontWeight: 600,
@@ -81,16 +79,18 @@ const ColumnChartBox = ({config}: ChartConfig) => {
     ];
     return (
         <div style={{padding: '32px'}}>
-            <p style={{fontStyle: 'normal', fontWeight: '900', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
-            {(typeof window !== 'undefined') &&
-                <Chart
-                    options={options}
-                    series={series}
-                    type="bar"
-                    width={610}
-                    height={275}
-                />
-            }
+            <p style={{fontStyle: 'normal', fontWeight: '700', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
+            <div style={{display: "flex", justifyContent: "center"}}>
+                {(typeof window !== 'undefined') &&
+                    <Chart
+                        options={options}
+                        series={series}
+                        type="bar"
+                        width={610}
+                        height={275}
+                    />
+                }
+            </div>
         </div>
     )
 }

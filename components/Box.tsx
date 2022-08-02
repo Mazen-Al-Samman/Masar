@@ -5,15 +5,15 @@ import ColumnChartBox from "./ColumnChartBox";
 import ImageBox from "./ImageBox";
 
 interface BoxConfig {
-    width: string,
-    height: string,
+    width?: string,
+    height?: string,
     type: string,
     config: any
 }
 
-const Box = ({ width, height, type, config }: BoxConfig) => {
+const Box = ({width, height, type, config}: BoxConfig) => {
     return (
-        <div className={styles.box} style={{width: width, height: height, margin: '0 16px'}}>
+        <div className={styles.box} style={{width, height}}>
             {renderBox(type, config)}
         </div>
     )
@@ -21,10 +21,14 @@ const Box = ({ width, height, type, config }: BoxConfig) => {
 
 function renderBox(type: string, config: any) {
     switch (type) {
-        case 'text': return <TextBox config={config}></TextBox>;
-        case 'pieChart': return <ChartBox config={config}></ChartBox>
-        case 'columnChart': return <ColumnChartBox config={config}></ColumnChartBox>
-        case 'image': return <ImageBox config={config}></ImageBox>
+        case 'text':
+            return <TextBox config={config}></TextBox>;
+        case 'pieChart':
+            return <ChartBox config={config}></ChartBox>
+        case 'columnChart':
+            return <ColumnChartBox config={config}></ColumnChartBox>
+        case 'image':
+            return <ImageBox config={config}></ImageBox>
     }
 }
 

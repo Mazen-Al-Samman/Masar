@@ -12,14 +12,13 @@ const Details = ({type, data}: Config) => {
     return (
         <div style={{
             backgroundColor: '#FFFFFF',
-            width: '552px',
+            width: '100%',
             height: '185px',
             borderRadius: '12px',
             boxShadow: '0px 20px 50px rgba(4, 37, 46, 0.08)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginInlineStart: '24px',
         }} className={styles.company}>
             {renderBlock(type, data)}
         </div>

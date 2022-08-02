@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import css from './styles/box.module.css';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -25,7 +24,7 @@ const ChartBox = ({config}: BoxItems) => {
         options: {
             chart: {
                 width: '10px',
-                offsetX: negative * -40,
+                horizontal: 'center'
             },
             labels: labels,
             dataLabels: {
@@ -39,11 +38,11 @@ const ChartBox = ({config}: BoxItems) => {
             },
             legend: {
                 show: true,
-                verticalAlign: 'center',
+                verticalAlign: 'center' ?? undefined,
                 fontSize: '12px',
                 fontFamily: lang == 'ar' ? 'arabic' : 'Poppins',
                 fontWeight: 600,
-                offsetX: negative * -10,
+                offsetX: negative * 10,
                 offsetY: (series.length > 3 ? -30 : 0),
                 itemMargin: {
                     vertical: 8,
@@ -62,18 +61,21 @@ const ChartBox = ({config}: BoxItems) => {
 
 
     };
+
     return (
         <div style={{padding: '32px'}}>
-            <p style={{fontStyle: 'normal', fontWeight: '900', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
-            {(typeof window !== 'undefined') &&
-                <Chart
-                    options={obj.options}
-                    series={obj.series}
-                    type="pie"
-                    height={160}
-                    width={408}
-                />
-            }
+            <p style={{fontStyle: 'normal', fontWeight: '700', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                {(typeof window !== 'undefined') &&
+                    <Chart
+                        options={obj.options}
+                        series={obj.series}
+                        type="pie"
+                        height={160}
+                        width={408}
+                    />
+                }
+            </div>
         </div>
     );
 }

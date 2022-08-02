@@ -47,10 +47,10 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
 
     return (
         <div>
-            <Container style={{display: 'flex', justifyContent: 'center'}}>
-                <Row>
+            <Container>
+                <Row style={{display: 'flex', justifyContent: 'center'}}>
                     <Col lg={12}
-                         style={{marginBottom: '10px', marginLeft: '25px', display: 'flex', justifyContent: 'left'}}>
+                         style={{marginBottom: '10px', display: 'flex', justifyContent: 'left'}}>
                         {
                             selected && Object.keys(selected).map((filter) => {
                                 // @ts-ignore
@@ -84,7 +84,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         }
                     </Col>
 
-                    <Col lg={5} style={{margin: '0 10px 20px 14px'}}>
+                    <Col lg={6} style={{marginBottom: '24px'}}>
                         <Details type={`new`}></Details>
                     </Col>
                     {
@@ -92,7 +92,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         filteredCompanies.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col key={uuidV4()} lg={5} style={{margin: '0 10px 20px 14px'}}>
+                                <Col key={uuidV4()} lg={6} sm={12} md={12} style={{marginBottom: '24px'}}>
                                     <Details type={`company`} data={
                                         {
                                             title,
