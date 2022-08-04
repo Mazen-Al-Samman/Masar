@@ -9,10 +9,19 @@ interface request {
     data?: object,
     successCallBack?: Function,
     failedCallBack?: Function,
-    context?: any
+    context?: any,
+    errorFunction?: Function
 }
 
-export const HandleRequestClient = ({url, method, headers, data, successCallBack, failedCallBack}: request) => {
+export const HandleRequestClient = ({
+                                        url,
+                                        method,
+                                        headers,
+                                        data,
+                                        successCallBack,
+                                        failedCallBack,
+                                        errorFunction
+                                    }: request) => {
     url = BaseUrl + url;
     return axios({
         method,
@@ -23,8 +32,17 @@ export const HandleRequestClient = ({url, method, headers, data, successCallBack
         const data = response.data;
         successCallBack && successCallBack(data);
     })).catch((error) => {
-        const errors = error.response.data;
-        failedCallBack && failedCallBack(errors);
+        const errors = error.response;
+        switch (errors.status) {
+            case 500:
+                errorFunction && errorFunction();
+                break
+            case 401:
+                window.location.href = '/';
+                break;
+            default:
+                failedCallBack && failedCallBack(errors.data);
+        }
     })
 }
 

@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import styles from '../styles/Home.module.css'
 import {useState} from 'react';
 import Success from "../components/status/Success";
+import Failed from "../components/status/Failed";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -64,6 +65,10 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                 {
                     showSuccess &&
                     <Success {...successData} showSuccess={setShowSuccess}></Success>
+                }
+                {
+                    showFailed &&
+                    <Failed showFailed={setShowFailed}></Failed>
                 }
             </div>
         </main>

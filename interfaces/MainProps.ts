@@ -8,7 +8,7 @@ interface MainProps {
     data: newCompanyConfig[],
     selected: string[],
     filters: object,
-    showFailed: boolean,
+    showFailed: Function,
     showSuccess: Function,
     setButtons: Function,
     showNav: Function,

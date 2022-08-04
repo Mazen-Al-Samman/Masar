@@ -57,7 +57,7 @@ export interface Country {
     code: string
 }
 
-const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess}: MainProps) => {
+const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess, showFailed}: MainProps) => {
     const [validation, setValidation] = useState<Validation>({})
     const [company, setCompany] = useState<Company>({})
     const [manager, setManager] = useState<Manager>({})
@@ -129,6 +129,11 @@ const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess}
         if (companyErrors.length) previousPage(null);
     }
 
+    const handleError = () => {
+        showFailed(true);
+        return;
+    }
+
     // Clear validation errors
     const clearErrors = (key: Validation) => {
         let errorObj = {...validation};
@@ -162,6 +167,7 @@ const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess}
                 showSuccess(true);
             },
             failedCallBack: validateAttributes,
+            errorFunction: handleError
         });
     }
 
