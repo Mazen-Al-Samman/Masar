@@ -32,7 +32,7 @@ export const HandleRequestSSR = ({url, method, headers, data, context}: request)
     if (context) {
         const {language, auth_key} = context.req.cookies;
         headers['x-api-key'] = auth_key;
-        headers['Accept-Language'] = language;
+        headers['Accept-Language'] = language ?? 'en';
     }
 
     url = BaseUrl + url;

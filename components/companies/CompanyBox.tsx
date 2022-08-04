@@ -27,7 +27,7 @@ const styles = {
 const CompanyBox = ({logo, description, title, country, city, number_of_employees}: config) => {
     return (
         <div style={styles.mainDiv}>
-            <div style={{width: '20%', position: 'relative'}}>
+            <div style={{width: '75px', position: 'relative'}}>
                 <Image
                     src={logo ?? '/icons/employee.svg'}
                     layout='fill' objectFit='contain'></Image>
@@ -36,7 +36,7 @@ const CompanyBox = ({logo, description, title, country, city, number_of_employee
                 <h1 style={{fontSize: '16px', fontWeight: '700'}}>{title}</h1>
                 <p style={{fontSize: '14px', fontWeight: '400', color: '#4F666D', marginTop: '8px'}}>{`${description?.substring(0, 100)}...`}</p>
 
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: 'flex'}}>
                     <div style={{display: 'flex', justifyContent: 'left', width: '200px'}}>
                         <Image src={`/icons/employee.svg`} width={24} height={24}></Image>
                         <span style={styles.span}>{`${number_of_employees} Employee`}</span>

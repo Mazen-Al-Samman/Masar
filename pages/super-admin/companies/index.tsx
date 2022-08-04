@@ -5,6 +5,7 @@ import {useLayoutEffect} from "react";
 import MainProps from "../../../interfaces/MainProps";
 import {v4 as uuidV4} from 'uuid';
 import Image from "next/image";
+import { useRouter } from 'next/router';
 
 interface PageProps {
     filtersData: object
@@ -21,6 +22,11 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
         let filterValues = selected[selectedFilter];
         // @ts-ignore
         filteredCompanies = filteredCompanies.filter((company) => filterValues.includes(company[selectedFilter]));
+    }
+
+    const router = useRouter();
+    const redirectTo = (url: string) => {
+        return router.push(url);
     }
 
     // @ts-ignore
@@ -84,7 +90,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         }
                     </Col>
 
-                    <Col lg={6} style={{marginBottom: '24px'}}>
+                    <Col onClick={() => redirectTo(`companies/new`)} lg={6} style={{marginBottom: '24px'}}>
                         <Details type={`new`}></Details>
                     </Col>
                     {
@@ -92,7 +98,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         filteredCompanies.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col key={uuidV4()} lg={6} sm={12} md={12} style={{marginBottom: '24px'}}>
+                                <Col onClick={() => redirectTo(`companies/${company.id}`)} key={uuidV4()} lg={6} sm={12} md={12} style={{marginBottom: '24px'}}>
                                     <Details type={`company`} data={
                                         {
                                             title,

@@ -63,7 +63,7 @@ MyApp.getInitialProps = async (context: any) => {
     }
 
     return {
-        lang: language ?? 'ar',
+        lang: language ?? 'en',
         token: auth_key ?? null,
     }
 };

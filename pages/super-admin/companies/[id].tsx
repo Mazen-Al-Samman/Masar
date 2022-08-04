@@ -5,6 +5,7 @@ import CompanyMainData from "../../../components/companies/CompanyMainData";
 import {HandleRequestSSR} from "../../api/Handler";
 import {Col, Container, Row} from "react-bootstrap";
 import CompanyAttributes from "../../../components/companies/CompanyAttributes";
+import {useLayoutEffect} from "react";
 
 interface PageData {
     view: CompanyView
@@ -34,16 +35,20 @@ export interface CompanyView {
     numberOfDepartments: string
 }
 
-const View = ({lang, view}: (MainProps & PageData)) => {
-    console.log(view)
+const View = ({lang, view, setButtons}: (MainProps & PageData)) => {
     const translate = translation[lang];
+
+    useLayoutEffect(() => {
+        setButtons(['search', 'language', 'logout']);
+    }, []);
+
     return (
         <>
             <CompanyMainData data={view}></CompanyMainData>
             <CompanyAttributes data={view}></CompanyAttributes>
             <Container>
                 <Row>
-                    <Col sm={12} md={12} lg={4}>
+                    <Col style={{padding: 0}} sm={12} md={12} lg={4}>
                         <Box height='349px' type='text' config={
                             {
                                 mainText: translate.companies,
@@ -89,7 +94,7 @@ const View = ({lang, view}: (MainProps & PageData)) => {
                     </Col>
 
                     {/* Total KPI Timeliness */}
-                    <Col sm={12} md={12} lg={4}>
+                    <Col style={{padding: 0}} sm={12} md={12} lg={4}>
                         <Box height='349px' type='image' config={
                             {
                                 mainText: translate.totalControlsAssessment,
@@ -115,8 +120,8 @@ const View = ({lang, view}: (MainProps & PageData)) => {
                     </Col>
 
                 </Row>
-                <Row style={{marginTop: '24px'}}>
-                    <Col sm={12} md={12} lg={7}>
+                <Row style={{marginTop: '15px'}} className="gx-4">
+                    <Col style={{paddingInlineStart: 0}} sm={12} md={12} lg={7}>
                         {/* Total Risk Rating */}
                         <Box height='349px' type='columnChart' config={
                             {
@@ -131,7 +136,7 @@ const View = ({lang, view}: (MainProps & PageData)) => {
                         }></Box>
                     </Col>
 
-                    <Col sm={12} md={12} lg={5}>
+                    <Col style={{padding: 0}} sm={12} md={12} lg={5}>
                         <Box height='349px' type='pieChart' config={{
                             mainText: translate.totalRiskCategory,
                             series: [31, 16, 25, 6, 22, 16, 16, 22, 31, 31],
