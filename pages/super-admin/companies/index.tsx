@@ -98,7 +98,7 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
                         filteredCompanies.map((company: any) => {
                             const {title, description, number_of_employees, country, city, logo} = company;
                             return (
-                                <Col onClick={() => redirectTo(`companies/${company.id}`)} key={uuidV4()} lg={6} sm={12} md={12} style={{marginBottom: '24px'}}>
+                                <Col onClick={() => redirectTo(`companies/${company.id}`)} key={uuidV4()} lg={6} sm={12} md={12} style={{marginBottom: '24px', cursor: "pointer"}}>
                                     <Details type={`company`} data={
                                         {
                                             title,

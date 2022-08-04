@@ -1,7 +1,7 @@
 import {FormLabel} from "react-bootstrap";
 import styles from "../../components/styles/form.module.css";
 import Image from 'next/image';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 import {useState, useEffect, useRef} from "react";
 
 export interface Config {
@@ -93,9 +93,8 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
                     <div className={styles.scroll}>
                         {
                             list && list.data.map(item => {
-                                console.log(item.title, value)
                                 return (
-                                    <div key={uuidv4()} className={styles.listItem}>
+                                    <div key={uuidV4()} className={styles.listItem}>
                                         <input type="radio" id={item.title} name={name} value={item.id}
                                                onChange={handleChange} checked={item.title == value}/>
                                         <label htmlFor={item.title}>{item.title}</label>

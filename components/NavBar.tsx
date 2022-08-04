@@ -4,7 +4,7 @@ import {NavButton, SearchBox} from './CommonComponents';
 import {Container, Row, Col} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import {useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 
 interface NavBarConfig {
     lang: string,
@@ -43,7 +43,7 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                         <ul className={`${styles.navList} ${styles.mt3}`}>
                             {
                                 superAdminHeader.map(item => {
-                                    return <li key={uuidv4()}><Link href={item.url}>{item.title}</Link></li>;
+                                    return <li key={uuidV4()}><Link href={item.url}>{item.title}</Link></li>;
                                 })
                             }
                         </ul>

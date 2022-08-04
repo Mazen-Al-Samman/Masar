@@ -1,7 +1,7 @@
 import {FormLabel} from "react-bootstrap";
 import styles from "../../components/styles/form.module.css";
 import Image from 'next/image';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 import {useState, useEffect, useRef} from "react";
 import {Country} from "../../pages/super-admin/companies/new";
 
@@ -149,7 +149,7 @@ const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, o
                                 // @ts-ignore
                                 const title = item[`title_${lang}`];
                                 return (
-                                    <div onClick={selectCountry} data-idx={idx} key={uuidv4()}
+                                    <div onClick={selectCountry} data-idx={idx} key={uuidV4()}
                                          className={styles.listItem}>
                                         <p style={{display: 'flex', justifyContent: 'left', cursor: 'pointer'}}>
                                             <Image style={{position: 'absolute', top: '1000px'}}

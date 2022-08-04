@@ -11,6 +11,13 @@ interface PageData {
     view: CompanyView
 }
 
+interface Manager {
+    name: string,
+    position: string,
+    email: string,
+    phone_number: string
+}
+
 export interface CompanyView {
     id: string
     logo: string
@@ -23,7 +30,7 @@ export interface CompanyView {
     revenue_id: string
     sector: string
     sector_id: string
-    manager: string
+    manager: Manager
     manager_id: string
     number_of_employees: string
     number_of_employees_id: string
@@ -51,32 +58,20 @@ const View = ({lang, view, setButtons}: (MainProps & PageData)) => {
                     <Col style={{padding: 0}} sm={12} md={12} lg={4}>
                         <Box height='349px' type='text' config={
                             {
-                                mainText: translate.companies,
+                                mainText: 'Manager Details',
                                 items: [
                                     {
-                                        title: translate.financialServices,
-                                        desc: `12 ${translate.companies}`
+                                        title: view.manager.name,
+                                        desc: view.manager.position
                                     },
                                     {
-                                        title: translate.education,
-                                        desc: `4 ${translate.companies}`
+                                        title: 'Email',
+                                        desc: view.manager.email
                                     },
                                     {
-                                        title: translate.realEstates,
-                                        desc: `6 ${translate.companies}`
+                                        title: 'Phone Number',
+                                        desc: view.manager.phone_number
                                     },
-                                    {
-                                        title: translate.financialServices,
-                                        desc: `12 ${translate.companies}`
-                                    },
-                                    {
-                                        title: translate.education,
-                                        desc: `4 ${translate.companies}`
-                                    },
-                                    {
-                                        title: translate.realEstates,
-                                        desc: `6 ${translate.companies}`
-                                    }
                                 ]
                             }
                         }></Box>

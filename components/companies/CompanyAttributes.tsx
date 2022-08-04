@@ -7,7 +7,6 @@ interface PageData {
 }
 
 const CompanyAttributes = ({data}: PageData) => {
-    console.table(data)
     return (
         <Container style={{marginBottom: '24px'}}>
             <Row style={{

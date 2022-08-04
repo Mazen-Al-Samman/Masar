@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 import NavBox from "./NavBox";
 import FilterBox from '../components/FilterBox'
 import {useState, useEffect, useRef} from "react";
@@ -54,23 +54,23 @@ const NavButton = ({styles, source, width, height, alt, items, hasList, squareWi
                                 switch (item.type) {
                                     case 'button':
                                         return (
-                                            <div key={uuidv4()} style={{color: item.color ?? 'black'}}>
+                                            <div key={uuidV4()} style={{color: item.color ?? 'black'}}>
                                                 <button onClick={item.onClick}>{item.title}</button>
                                                 {idx != items.length - 1 ? <hr className={styles.hr}/> : ''}
                                             </div>
                                         );
                                     case 'text':
                                         return (
-                                            <div key={uuidv4()}>
+                                            <div key={uuidV4()}>
                                                 <p>{item.title}</p>
                                                 {idx != items.length - 1 ? <hr className={styles.hr}/> : ''}
                                             </div>
                                         );
                                     case 'box':
-                                        return (<NavBox key={uuidv4()} onClick={item.onClick} text={item.title}
+                                        return (<NavBox key={uuidV4()} onClick={item.onClick} text={item.title}
                                                         icon={item.icon ?? 'test.svg'}></NavBox>);
                                     case 'filter-box':
-                                        return (<FilterBox key={uuidv4()} selected={selected} setSelected={setSelected} data={item.data}></FilterBox>);
+                                        return (<FilterBox key={uuidV4()} selected={selected} setSelected={setSelected} data={item.data}></FilterBox>);
                                     default:
                                         return '';
                                 }

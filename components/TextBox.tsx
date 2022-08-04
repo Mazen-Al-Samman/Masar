@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 import css from './styles/box.module.css';
 
 interface BoxConfig {
@@ -62,7 +62,7 @@ const TextBox = ({config}: BoxConfig) => {
                 {
                     items.map(item => {
                         return (
-                            <div key={uuidv4()}>
+                            <div key={uuidV4()}>
                                 <p style={styles.inner.p}>{item.title}</p>
                                 <span style={styles.inner.span}>{item.desc}</span>
                                 <hr style={styles.inner.hr}/>

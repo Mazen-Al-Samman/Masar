@@ -38,7 +38,6 @@ const ChartBox = ({config}: BoxItems) => {
             },
             legend: {
                 show: true,
-                verticalAlign: 'center' ?? undefined,
                 fontSize: '12px',
                 fontFamily: lang == 'ar' ? 'arabic' : 'Poppins',
                 fontWeight: 600,
