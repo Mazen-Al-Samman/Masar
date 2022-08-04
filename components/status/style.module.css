@@ -1,0 +1,38 @@
+.mainDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.img {
+    width: 500px !important;
+    height: 500px !important;
+    position: relative;
+}
+
+.mainMsg {
+    margin-top: 25px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.subMsg {
+    font-size: 16px;
+    font-weight: 400;
+    color: #365158;
+}
+
+.redirectBtn {
+    background-color: #04252E;
+    width: 528px;
+    height: 48px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    margin-top: 40px;
+}

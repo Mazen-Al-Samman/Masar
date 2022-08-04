@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidV4 } from 'uuid';
 import Link from 'next/link';
 import styles from './styles/breadcrumb.module.css';
 
@@ -17,14 +17,14 @@ const Breadcrumb = ({ main, sub }: Links) => {
         <ul className={`${styles.list}`}>
             {
                 sub.map((item) => {
-                    return <li key={uuidv4()}>
+                    return <li key={uuidV4()}>
                         <Link href={item.link}>{item.title}</Link>
                         <span>/</span>
                     </li>
                 })
             }
 
-            <li className={`${styles.main}`} key={uuidv4()}>
+            <li className={`${styles.main}`} key={uuidV4()}>
                 <Link href={main.link}>{main.title}</Link>
             </li>
         </ul>

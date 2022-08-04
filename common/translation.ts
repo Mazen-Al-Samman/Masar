@@ -87,7 +87,7 @@ const ar = {
     'needsImprovement': 'يحتاج للتطوير'
 };
 
-const translations: { [key: string]: object; } = {
+const translations: { [key: string]: { [key: string]: string; }; } = {
     en: en,
     ar: ar
 };

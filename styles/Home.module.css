@@ -2,175 +2,279 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .font-en {
-  font-family: 'Poppins';
+    font-family: 'Poppins';
 }
 
 .font-ar {
-  font-family: 'cairo';
+    font-family: 'cairo';
 }
 
 .container {
-  font-weight: 400;
-  font-size: 16px;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 @font-face {
-  font-family: arabic;
-  src: url(../public/fonts/arabic2.ttf);
+    font-family: arabic;
+    src: url(../public/fonts/arabic2.ttf);
 }
 
 .nav {
-  padding: 12px 156px;
-  height: 100px;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.16);
-  margin-bottom: 56px;
+    padding: 12px 156px;
+    height: 100px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.16);
+    margin-bottom: 56px;
 }
 
 .container {
-  max-width: 100%;
+    max-width: 100%;
 }
 
 .row {
-  width: 100% !important;
+    width: 100% !important;
 }
 
 .masarLogo {
-  margin-top: -8px;
+    margin-top: -8px;
 }
 
 .navList {
-  list-style: none;
+    list-style: none;
 }
 
 .navList li:first-child {
-  margin-inline-start: 10px;
+    margin-inline-start: 10px;
 }
 
 .navList li {
-  display: inline-block;
-  margin-inline-start: 56px;
+    display: inline-block;
+    margin-inline-start: 56px;
 }
 
 .active {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .inlineBlock {
-  display: inline-block;
+    display: inline-block;
 }
 
 .searchBox {
-  display: inline-block;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
-  border-radius: 8px;
-  width: 267px;
-  height: 48px;
-  border-radius: 8px;
-  border: none;
-  padding: 14px;
-  position: relative;
+    display: inline-block;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
+    border-radius: 8px;
+    width: 267px;
+    height: 48px;
+    border-radius: 8px;
+    border: none;
+    padding: 14px;
+    position: relative;
 }
 
 .searchBox input {
-  position: absolute;
-  font-size: 14px;
-  top: 12px;
-  letter-spacing: 0.2px;
-  width: 75%;
-  border: none;
+    position: absolute;
+    font-size: 14px;
+    top: 12px;
+    letter-spacing: 0.2px;
+    width: 75%;
+    border: none;
 }
 
 .searchBox-ar input {
-  right: 50px;
+    right: 50px;
 }
 
 .searchBox-en input {
-  left: 50px;
+    left: 50px;
 }
 
 .searchBox input:focus {
-  outline: none;
+    outline: none;
 }
 
 .NavButton {
-  display: inline-block;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
-  border-radius: 8px;
-  width: 48px;
-  height: 48px;
-  padding: 12px;
-  margin-inline-start: 16px;
-  position: relative;
+    display: inline-block;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 32px rgba(155, 168, 171, 0.24);
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    margin-inline-start: 16px;
+    position: relative;
 }
 
 .searchIcon {
-  z-index: 10000;
+    z-index: 10000;
 }
 
 .mt3 {
-  margin-top: 20px !important;
+    margin-top: 20px !important;
 }
 
 .triangle {
-  background: #FFFFFF;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  right: 15px;
-  top: 57px;
-  border-radius: 4px;
-  transform: rotate(45deg);
-  z-index: 100000;
+    background: #FFFFFF;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 15px;
+    top: 57px;
+    border-radius: 4px;
+    transform: rotate(45deg);
+    z-index: 100000000;
 }
 
 .list {
-  background: #FFFFFF;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 32px rgba(0, 0, 0, 0.16);
-  border-radius: 12px;
-  position: absolute;
-  top: 65px;
-  padding: 20px;
-  text-align: center;
-  font-size: 16px;
-  z-index: 10000000;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 32px rgba(0, 0, 0, 0.16);
+    border-radius: 12px;
+    position: absolute;
+    top: 65px;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    z-index: 10000000;
 }
 
 .list-ar {
-  left: -20px;
+    left: -100%;
 }
 
 .list-en {
-  right: -20px;
+    right: -100%;
 }
 
 .list button {
-  all: unset;
-  cursor: pointer;
+    all: unset;
+    cursor: pointer;
 }
 
 .hr {
-  background-color: #E6E9EA;
+    background-color: #E6E9EA;
 }
 
 .box {
-  background: #E6E9EA80;
-  border-radius: 8px;
-  padding: 16px;
-  font-size: 16px;
-  color: black;
-  display: flex;
-  justify-content: start;
-  cursor: pointer;
+    background: #E6E9EA80;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 16px;
+    color: black;
+    display: flex;
+    justify-content: start;
+    cursor: pointer;
 }
 
 .box:not(:last-child) {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .box span {
-  margin-inline-start: 16px;
-  margin-top: 3px;
+    margin-inline-start: 16px;
+    margin-top: 3px;
+}
+
+.form {
+    padding: 24px;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup:last-child {
+    margin-bottom: 0;
+}
+
+.formGroup input {
+    display: none;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    grid-gap: 16px;
+    cursor: pointer;
+}
+
+.label .checkbox {
+    width: 20px;
+    height: 20px;
+    background: #ccc;
+    border-radius: 4px;
+    position: relative;
+    transition: .2s ease;
+    transition-delay: .2s;
+}
+
+.label .checkbox::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: #fff;
+    border-radius: 2.5px;
+    transition: .2s ease;
+    transition-delay: .2s;
+}
+
+.formGroup input:checked + .label .checkbox::before {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    transition-delay: 0s;
+}
+
+.formGroup input:checked + .label .checkbox {
+    background: #1b1e2c;
+    transition-delay: 0s;
+}
+
+.label .checkbox .check {
+    display: block;
+    width: 12px;
+    height: 6px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%) rotateZ(-45deg);
+}
+
+.label .checkbox .check::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 0;
+    background: #fff;
+    transition: .2s ease;
+    transition-delay: .2s;
+}
+
+.label .checkbox .check::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: .2s ease;
+    transition-delay: 0s;
+}
+
+.formGroup input:checked + .label .checkbox .check::before {
+    height: 100%;
+    transition-delay: .2s;
+}
+
+.formGroup input:checked + .label .checkbox .check::after {
+    width: 100%;
+    transition-delay: .4s;
 }

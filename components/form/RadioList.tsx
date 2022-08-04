@@ -1,24 +1,36 @@
 import {FormLabel} from "react-bootstrap";
 import styles from "../../components/styles/form.module.css";
 import Image from 'next/image';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidV4} from 'uuid';
 import {useState, useEffect, useRef} from "react";
 
-interface Config {
+export interface Config {
     id: string,
     name: string,
     placeHolder: string,
     label: string,
-    list: Item[]
+    list: RadioListConfig,
+    onFocus?: Function,
+    validation?: string,
+    onChange?: Function,
+    selected?: string
 }
 
-interface Item {
+export interface RadioListConfig {
     title: string,
+    data: SingleObject[]
 }
 
-const RadioList = ({id, name, placeHolder, label, list}: Config) => {
+export interface SingleObject {
+    id?: string,
+    title?: string,
+}
+
+const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, selected, onChange}: Config) => {
     const [show, setShow] = useState(false);
-    const [value, setValue] = useState('');
+    // Check the value for the selected
+    let selectedObject = list && list.data.filter(item => item.id == selected);
+    const [value, setValue] = useState(selectedObject ? selectedObject[0]?.title : '');
     const ref = useRef(null);
 
     const toggleList = () => {
@@ -26,7 +38,9 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
     }
 
     const handleChange = (e: any) => {
-        let newValue = e.target.value;
+        let newValue = e.target.id;
+        onFocus && onFocus(name);
+        onChange && onChange(name, e.target.value);
         setValue(newValue);
     }
 
@@ -78,11 +92,11 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
                 <div className={styles.list}>
                     <div className={styles.scroll}>
                         {
-                            list.map(item => {
+                            list && list.data.map(item => {
                                 return (
-                                    <div key={uuidv4()} className={styles.listItem}>
-                                        <input type="radio" id={item.title} name={name} value={item.title}
-                                               onClick={handleChange} checked={item.title == value}/>
+                                    <div key={uuidV4()} className={styles.listItem}>
+                                        <input type="radio" id={item.title} name={name} value={item.id}
+                                               onChange={handleChange} checked={item.title == value}/>
                                         <label htmlFor={item.title}>{item.title}</label>
                                     </div>
                                 )
@@ -91,6 +105,14 @@ const RadioList = ({id, name, placeHolder, label, list}: Config) => {
                     </div>
                 </div>
             }
+            <p style={{
+                position: 'absolute',
+                color: 'red',
+                textAlign: 'center',
+                marginTop: '5px',
+                fontSize: '12px',
+                letterSpacing: '1px'
+            }}>{validation && validation}</p>
         </div>
     )
 }
