@@ -57,7 +57,7 @@ export interface Country {
     code: string
 }
 
-const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
+const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess}: MainProps) => {
     const [validation, setValidation] = useState<Validation>({})
     const [company, setCompany] = useState<Company>({})
     const [manager, setManager] = useState<Manager>({})
@@ -78,7 +78,13 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
 
     const [next, setNext] = useState(false);
     useLayoutEffect(() => {
-        setButtons(['language', 'logout'])
+        setSuccessData({
+            title: "Your company has been created",
+            subTitle: "You can view your all companies by going to All Companies",
+            buttonLink: '/super-admin/companies',
+            buttonText: 'All Companies'
+        });
+        setButtons(['language', 'logout']);
     }, []);
 
     // Set the input value.
@@ -153,7 +159,7 @@ const NewCompany = ({setButtons, data, lang, token}: MainProps) => {
                 manager: managerClone
             },
             successCallBack: function () {
-                alert("Hello world!")
+                showSuccess(true);
             },
             failedCallBack: validateAttributes,
         });

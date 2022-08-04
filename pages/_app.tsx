@@ -5,6 +5,7 @@ import translations from '../common/translation';
 import Header from '../components/Header';
 import styles from '../styles/Home.module.css'
 import {useState} from 'react';
+import Success from "../components/status/Success";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -15,6 +16,15 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
     const [filterConfig, setFilterConfig] = useState();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showFailed, setShowFailed] = useState(false);
+    const [successData, setSuccessData] = useState({
+        title: "Great, Your action has been done successfully!",
+        subTitle: "Go to home page and have fun.",
+        buttonLink: '/super-admin',
+        buttonText: 'Home'
+    })
+
     // State for selected filters to be shared between components
     const [selected, setSelected] = useState([]);
 
@@ -33,33 +43,44 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                     token={token}></NavBar>
             }
             <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
-                <Component
-                    {...pageProps}
-                    lang={lang}
-                    setButtons={setButtons}
-                    showNav={setShowNav}
-                    setPadding={setPadding}
-                    setFilter={setFilterConfig}
-                    filters={filterConfig}
-                    token={token}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
+                {
+                    !showSuccess && !showFailed &&
+                    <Component
+                        {...pageProps}
+                        lang={lang}
+                        setButtons={setButtons}
+                        showNav={setShowNav}
+                        setPadding={setPadding}
+                        setFilter={setFilterConfig}
+                        filters={filterConfig}
+                        token={token}
+                        selected={selected}
+                        setSelected={setSelected}
+                        showSuccess={setShowSuccess}
+                        showFailed={setShowFailed}
+                        setSuccessData={setSuccessData}
+                    />
+                }
+                {
+                    showSuccess &&
+                    <Success {...successData} showSuccess={setShowSuccess}></Success>
+                }
             </div>
         </main>
     );
 }
 
 MyApp.getInitialProps = async (context: any) => {
-    const {req, res, pathname} = context.ctx;
-    const {language, auth_key} = req.cookies;
+    const {req, res, pathname} = context?.ctx;
+    const language = req?.cookies?.language;
+    const auth_key = req?.cookies?.auth_key;
 
     if (!auth_key && pathname != '/') {
-        res.writeHead(302, {Location: '/'});
-        res.end();
+        res?.writeHead(302, {Location: '/'});
+        res?.end();
     } else if (auth_key && pathname == '/') {
-        res.writeHead(302, {Location: '/super-admin'});
-        res.end();
+        res?.writeHead(302, {Location: '/super-admin'});
+        res?.end();
     }
 
     return {
