@@ -8,6 +8,7 @@ interface MainProps {
     data: newCompanyConfig[],
     selected: string[],
     filters: object,
+    search: string,
     showFailed: Function,
     showSuccess: Function,
     setButtons: Function,

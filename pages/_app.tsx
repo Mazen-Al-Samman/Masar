@@ -13,18 +13,19 @@ const isBrowser = typeof window !== "undefined";
 function MyApp({Component, pageProps, lang, token}: MainProps) {
     const dir = lang == 'en' ? 'ltr' : 'rtl';
     const translation = translations[lang];
-    const [buttons, setButtons] = useState(['search', 'language', !token ? '' : 'logout]']);
+    const [buttons, setButtons] = useState(['search', 'language', !token ? '' : 'logout']);
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
     const [filterConfig, setFilterConfig] = useState();
     const [showSuccess, setShowSuccess] = useState(false);
     const [showFailed, setShowFailed] = useState(false);
+    const [search, setSearch] = useState('');
     const [successData, setSuccessData] = useState({
         title: "Great, Your action has been done successfully!",
         subTitle: "Go to home page and have fun.",
         buttonLink: '/super-admin',
         buttonText: 'Home'
-    })
+    });
 
     // State for selected filters to be shared between components
     const [selected, setSelected] = useState([]);
@@ -41,6 +42,8 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                     buttons={buttons}
                     selected={selected}
                     setSelected={setSelected}
+                    search={search}
+                    setSearch={setSearch}
                     token={token}></NavBar>
             }
             <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
@@ -60,6 +63,7 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                         showSuccess={setShowSuccess}
                         showFailed={setShowFailed}
                         setSuccessData={setSuccessData}
+                        search={search}
                     />
                 }
                 {

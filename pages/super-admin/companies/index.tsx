@@ -8,10 +8,10 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 
 interface PageProps {
-    filtersData: object
+    filtersData: object,
 }
 
-const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelected}: (MainProps & PageProps)) => {
+const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelected, search}: (MainProps & PageProps)) => {
     // @ts-ignore
     let filteredCompanies = [...data];
     for (let selectedFilter in selected) {
@@ -23,6 +23,9 @@ const Companies = ({data, setButtons, filtersData, setFilter, selected, setSelec
         // @ts-ignore
         filteredCompanies = filteredCompanies.filter((company) => filterValues.includes(company[selectedFilter]));
     }
+
+    // @ts-ignore
+    filteredCompanies = filteredCompanies.filter((company) => company.title?.toLowerCase().includes(search.toLowerCase()));
 
     const router = useRouter();
     const redirectTo = (url: string) => {

@@ -14,9 +14,11 @@ interface NavBarConfig {
     filtersData?: object,
     selected?: string[],
     setSelected?: Function,
+    search: string,
+    setSearch: Function
 }
 
-function NavBar({lang, translation, buttons, token, filtersData, selected, setSelected}: NavBarConfig) {
+function NavBar({lang, translation, buttons, token, filtersData, selected, setSelected, search, setSearch}: NavBarConfig) {
     const cookies = new Cookies();
     const superAdminHeader = [
         {
@@ -52,7 +54,7 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                     <div className="mt-2">
                         {
                             buttons.includes('search') &&
-                            <SearchBox styles={styles} translation={translation} lang={lang}></SearchBox>
+                            <SearchBox styles={styles} placeholder={translation.search} search={search} setSearch={setSearch} lang={lang}></SearchBox>
                         }
 
                         {
