@@ -29,10 +29,6 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
             'title': translation.allCompanies,
             'url': '/super-admin/companies'
         },
-        {
-            'title': translation.contact,
-            'url': '/'
-        },
     ];
 
     return (
