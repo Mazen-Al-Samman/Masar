@@ -1,0 +1,19 @@
+.scroll {
+    overflow-y: scroll;
+    margin-inline-end: -20px;
+    padding-inline-end: 20px;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    height: 75px !important;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px #E6E9EA;
+}
