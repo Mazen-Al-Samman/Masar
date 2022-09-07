@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import {left, right} from "@popperjs/core";
+import {isClientSide} from "../hooks/helpers";
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -22,10 +24,6 @@ const ChartBox = ({config}: BoxItems) => {
     const obj = {
         series: series,
         options: {
-            chart: {
-                width: '10px',
-                horizontal: 'center'
-            },
             labels: labels,
             dataLabels: {
                 enabled: false
@@ -41,18 +39,14 @@ const ChartBox = ({config}: BoxItems) => {
                 fontSize: '12px',
                 fontFamily: lang == 'ar' ? 'arabic' : 'Poppins',
                 fontWeight: 600,
-                offsetX: negative * 10,
-                offsetY: (series.length > 3 ? -30 : 0),
-                itemMargin: {
-                    vertical: 8,
-                },
-                position: (lang == 'ar') ? 'left' : 'right',
+                position: (lang == 'ar') ? left : right,
+                offsetY: (series.length > 3 ? -30 : 30),
                 markers: {
-                    offsetX: negative * -15,
-                    offsetY: 1.1,
+                    offsetX: negative * -8,
+                    offsetY: 2,
                 },
                 formatter: function (seriesName: string, opts: any) {
-                    return [opts.w.globals.series[opts.seriesIndex] + " " + seriesName]
+                    return `${opts.w.globals.series[opts.seriesIndex]} ${seriesName}`;
                 }
             },
             colors: colors,
@@ -65,14 +59,36 @@ const ChartBox = ({config}: BoxItems) => {
         <div style={{padding: '32px'}}>
             <p style={{fontStyle: 'normal', fontWeight: '700', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                {(typeof window !== 'undefined') &&
+                {series.length > 0 ?
                     <Chart
                         options={obj.options}
                         series={obj.series}
                         type="pie"
-                        height={160}
-                        width={408}
-                    />
+                        height={"130%"}
+                        width={"130%"}
+                    /> :
+                    <div className="d-flex justify-content-between gap-5">
+                        <div className="p-5 d-flex justify-content-center align-items-center" style={{
+                            height: '200px',
+                            width: '200px',
+                            borderRadius: '200px',
+                            backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            fontSize: '25px',
+                            fontWeight: '600',
+                            color: '#04252E',
+                            overflowX: 'hidden'
+                        }}>
+                        </div>
+
+                        <div>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                            <p style={{width: '150px', height: '20px', backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)'}}></p>
+                        </div>
+                    </div>
                 }
             </div>
         </div>

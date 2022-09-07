@@ -3,6 +3,7 @@ import {v4 as uuidV4} from 'uuid';
 import NavBox from "./NavBox";
 import FilterBox from '../components/FilterBox'
 import {useState, useEffect, useRef} from "react";
+import {getToken} from "../hooks/User";
 
 interface NavConfig {
     styles: any,
@@ -14,12 +15,12 @@ interface NavConfig {
     hasList: boolean,
     squareWidth: string,
     lang: string,
-    token?: string,
     selected?: string[],
     setSelected?: Function,
 }
 
 const NavButton = ({styles, source, width, height, alt, items, hasList, squareWidth, lang, selected, setSelected}: NavConfig) => {
+    const token = getToken();
     const [show, setShow] = useState(false);
     const ref = useRef(null);
     if (!Array.isArray(items)) items = [items];

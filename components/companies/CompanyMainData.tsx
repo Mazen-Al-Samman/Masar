@@ -40,7 +40,7 @@ const CompanyMainData = ({data}: PageData) => {
                             </div>
                         </Col>
 
-                        <Col lg={6}>
+                        <Col lg={6} className="mt-2 mt-lg-0">
                             <div style={{
                                 width: '100%',
                                 height: '45px',

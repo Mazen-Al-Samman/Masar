@@ -7,6 +7,8 @@ export interface config {
     number_of_employees?: string,
     city?: string,
     country?: string,
+    owner?: string,
+    id?: number | string
 }
 
 const styles = {
@@ -37,12 +39,12 @@ const CompanyBox = ({logo, description, title, country, city, number_of_employee
                 <p style={{fontSize: '14px', fontWeight: '400', color: '#4F666D', marginTop: '8px'}}>{`${description?.substring(0, 100)}...`}</p>
 
                 <div style={{display: 'flex'}}>
-                    <div style={{display: 'flex', justifyContent: 'left', width: '200px'}}>
+                    <div style={{display: 'flex', justifyContent: 'left'}}>
                         <Image src={`/icons/employee.svg`} width={24} height={24}></Image>
                         <span style={styles.span}>{`${number_of_employees} Employee`}</span>
                     </div>
 
-                    <div style={{display: 'flex', justifyContent: 'left', marginInlineStart: '28px', width: '200px'}}>
+                    <div style={{display: 'flex', justifyContent: 'left', marginInlineStart: '28px'}}>
                         <Image src={`/icons/location.svg`} width={24} height={24}></Image>
                         <span style={styles.span}>{`${country}, ${city}`}</span>
                     </div>

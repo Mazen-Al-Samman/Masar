@@ -17,15 +17,33 @@
 
 .list {
     position: absolute;
-    width: 348px;
+    width: 100%;
     max-height: 296px;
     background: #FFFFFF;
     box-shadow: 0 4px 32px rgba(155, 168, 171, 0.24);
     border-radius: 8px;
-    margin-top: 10px;
+    margin-top: 4px;
     padding: 24px;
-    overflow-y: auto;
     z-index: 10000;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.users [type="radio"]:checked + label,
+.users [type="radio"]:not(:checked) + label {
+    padding-left: 50px !important;
+    color: #04252E;
+    font-size: 14px;
 }
 
 .list [type="radio"]:checked,
@@ -95,7 +113,7 @@
 
 .scroll {
     max-height: 245px;
-    width: 105%;
+    width: 101%;
 }
 
 .scroll {
@@ -118,6 +136,8 @@
 
 .item {
     display: inline-block;
+    width: 100% !important;
+    position: relative;
 }
 
 .item:nth-child(even) {

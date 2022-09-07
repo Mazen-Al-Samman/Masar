@@ -14,12 +14,10 @@ const CompanyAttributes = ({data}: PageData) => {
                 boxShadow: '0px 20px 50px rgba(4, 37, 46, 0.08)',
                 borderRadius: '12px',
                 padding: '32px',
-                height: '125px',
-                display: "flex",
-                justifyContent: 'space-between'
+                minHeight: '125px',
             }}>
-                <Col lg={3} style={{display: 'flex', justifyContent: 'center', columnGap: '20px'}}>
-                    <div>
+                <Col lg={3} sm={12} md={12} className="d-flex justify-content-start">
+                    <div className="mx-2">
                         <Image src={`/icons/location.svg`} width={56} height={56}></Image>
                     </div>
                     <div>
@@ -33,8 +31,8 @@ const CompanyAttributes = ({data}: PageData) => {
                     </div>
                 </Col>
 
-                <Col lg={3} style={{display: 'flex', justifyContent: 'center', columnGap: '20px'}}>
-                    <div>
+                <Col lg={3} sm={12} md={12} className="d-flex justify-content-start">
+                    <div className="mx-2">
                         <Image src={`/icons/employee.svg`} width={56} height={56}></Image>
                     </div>
                     <div>
@@ -48,8 +46,8 @@ const CompanyAttributes = ({data}: PageData) => {
                     </div>
                 </Col>
 
-                <Col lg={3} style={{display: 'flex', justifyContent: 'center', columnGap: '20px'}}>
-                    <div>
+                <Col lg={3} sm={12} md={12} className="d-flex justify-content-start">
+                    <div className="mx-2">
                         <Image src={`/icons/manager.svg`} width={56} height={56}></Image>
                     </div>
                     <div>
@@ -63,8 +61,8 @@ const CompanyAttributes = ({data}: PageData) => {
                     </div>
                 </Col>
 
-                <Col lg={3} style={{display: 'flex', justifyContent: 'center', columnGap: '20px'}}>
-                    <div>
+                <Col lg={3} sm={12} md={12} className="d-flex justify-content-start">
+                    <div className="mx-2">
                         <Image src={`/icons/company.svg`} width={56} height={56}></Image>
                     </div>
                     <div>

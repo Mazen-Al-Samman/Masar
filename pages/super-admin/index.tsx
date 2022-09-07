@@ -7,8 +7,8 @@ export default function Index({lang}: MainProps) {
     const translate = translation[lang];
     return (
         <Container>
-            <Row>
-                <Col style={{padding: 0}} sm={12} md={12} lg={4}>
+            <Row className="gy-lg-4 gx-4">
+                <Col className="mb-3 mb-lg-0" sm={12} md={12} lg={4}>
                     <Box height='349px' type='text' config={
                         {
                             mainText: translate.companies,
@@ -43,7 +43,7 @@ export default function Index({lang}: MainProps) {
                 </Col>
 
                 {/* Total KPI Status */}
-                <Col sm={12} md={12} lg={4}>
+                <Col className="mb-3 mb-lg-0" sm={12} md={12} lg={4}>
                     <Box height='349px' type='pieChart' config={{
                         mainText: translate.totalKpiStatus,
                         series: [5, 2, 3],
@@ -53,8 +53,8 @@ export default function Index({lang}: MainProps) {
                     }}></Box>
                 </Col>
 
-                {/* Total KPI Timeliness */}
-                <Col style={{padding: 0}} sm={12} md={12} lg={4}>
+                {/* Total Controls Assessment */}
+                <Col className="mb-3 mb-lg-0" sm={12} md={12} lg={4}>
                     <Box height='349px' type='image' config={
                         {
                             mainText: translate.totalControlsAssessment,
@@ -79,10 +79,8 @@ export default function Index({lang}: MainProps) {
                     }></Box>
                 </Col>
 
-            </Row>
-            <Row style={{marginTop: '15px'}} className="gx-4">
-                <Col style={{paddingInlineStart: 0}} sm={12} md={12} lg={7}>
-                    {/* Total Risk Rating */}
+                {/* Total Risk Rating */}
+                <Col className="mb-3 mb-lg-0" sm={12} md={12} lg={7}>
                     <Box height='349px' type='columnChart' config={
                         {
                             mainText: translate.totalRiskRating,
@@ -96,7 +94,8 @@ export default function Index({lang}: MainProps) {
                     }></Box>
                 </Col>
 
-                <Col style={{padding: 0}} sm={12} md={12} lg={5}>
+                {/* Total Risk Category */}
+                <Col className="mb-3 mb-lg-0" sm={12} md={12} lg={5}>
                     <Box height='349px' type='pieChart' config={{
                         mainText: translate.totalRiskCategory,
                         series: [31, 16, 25, 6, 22, 16, 16, 22, 31, 31],
@@ -105,6 +104,7 @@ export default function Index({lang}: MainProps) {
                         lang: lang,
                     }}></Box>
                 </Col>
+
             </Row>
         </Container>
     );

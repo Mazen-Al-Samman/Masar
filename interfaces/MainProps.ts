@@ -4,7 +4,6 @@ interface MainProps {
     Component: any,
     pageProps: any,
     lang: string,
-    token: string,
     data: newCompanyConfig[],
     selected: string[],
     filters: object,
@@ -16,7 +15,14 @@ interface MainProps {
     setPadding: Function,
     setFilter: Function,
     setSelected: Function,
-    setSuccessData: Function
+    setSuccessData: Function,
+    setNavList: Function,
+}
+
+export interface pageProps {
+    showFailed: Function,
+    showSuccess: Function,
+    setSuccessData?: Function,
 }
 
 export default MainProps;

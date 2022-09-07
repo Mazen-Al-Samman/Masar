@@ -119,8 +119,9 @@ const Companies = ({
                         }
                     </Col>
 
-                    <Col onClick={() => redirectTo(`companies/new`)} lg={6} style={{marginBottom: '24px'}}>
-                        <Details type={`new`}></Details>
+                    <Col onClick={() => redirectTo(`companies/new`)} lg={6} sm={12} md={12}
+                         style={{marginBottom: '24px'}}>
+                        <Details type={`new`} data={{title: 'Add new company'}}></Details>
                     </Col>
                     {
                         filteredCompanies &&
@@ -173,6 +174,15 @@ export async function getServerSideProps(ctx: any) {
     const [companies] = await Promise.all([
         companiesDataReq
     ]);
+
+    if (companies?.data?.redirect) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: companies?.data?.to || "/",
+            }
+        }
+    }
 
     return {
         props: {

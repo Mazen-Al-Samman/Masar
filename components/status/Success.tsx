@@ -15,8 +15,9 @@ const Success = ({title, subTitle, buttonLink, buttonText, showSuccess}: PageDat
     const router = useRouter();
     const redirect = (e: any) => {
         e.preventDefault();
-        showSuccess(false)
-        return router.push(buttonLink);
+        return router.push(buttonLink).then(
+            showSuccess(false)
+        );
     }
 
     return (
@@ -26,7 +27,7 @@ const Success = ({title, subTitle, buttonLink, buttonText, showSuccess}: PageDat
             </div>
             <p className={`${style.mainMsg}`}>{title}</p>
             <p className={`${style.subMsg}`}>{subTitle}</p>
-            <button onClick={redirect} className={style.redirectBtn}>{buttonText}</button>
+            <button onClick={redirect} className={`${style.redirectBtn} p-3`}>{buttonText}</button>
         </div>
     )
 }

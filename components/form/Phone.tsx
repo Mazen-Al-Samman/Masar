@@ -97,7 +97,6 @@ const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, o
                 <div style={{
                     marginInlineStart: '16px',
                     display: 'flex',
-                    width: '228px',
                     height: '48px',
                     border: '1px solid #E6E9EA',
                     borderRadius: '8px',
@@ -134,7 +133,7 @@ const Phone = ({id, name, placeHolder, label, list, lang, onFocus, validation, o
                         color: 'red',
                         textAlign: 'center',
                         marginTop: '5px',
-                        fontSize: '12px',
+                        fontSize: '10px',
                         letterSpacing: '1px'
                     }}>{validation}</p>
                 }

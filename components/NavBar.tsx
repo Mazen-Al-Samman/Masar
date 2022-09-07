@@ -3,54 +3,58 @@ import Link from 'next/link';
 import {NavButton, SearchBox} from './CommonComponents';
 import {Container, Row, Col} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
-import {useState} from 'react';
 import {v4 as uuidV4} from 'uuid';
+import {ISingleNavItem} from "../pages/_app";
+import {isLoggedIn} from "../hooks/User";
+import {isClientSide} from "../hooks/helpers";
 
 interface NavBarConfig {
     lang: string,
     translation: { [x: string]: any; },
     buttons: string[],
-    token: string,
     filtersData?: object,
     selected?: string[],
     setSelected?: Function,
     search: string,
-    setSearch: Function
+    setSearch: Function,
+    list: ISingleNavItem[]
 }
 
-function NavBar({lang, translation, buttons, token, filtersData, selected, setSelected, search, setSearch}: NavBarConfig) {
+function NavBar({
+                    lang,
+                    translation,
+                    buttons,
+                    filtersData,
+                    selected,
+                    setSelected,
+                    search,
+                    setSearch,
+                    list
+                }: NavBarConfig) {
     const cookies = new Cookies();
-    const superAdminHeader = [
-        {
-            'title': translation.home,
-            'url': '/super-admin'
-        },
-        {
-            'title': translation.allCompanies,
-            'url': '/super-admin/companies'
-        },
-    ];
 
     return (
-        <Container fluid className={`${styles.nav}`}>
-            <Row>
-                <Col lg={12} sm={12} className="d-flex mt-2 justify-content-between">
-                    <div className='d-flex justify-content-start'>
+        <div className={`${styles.nav}`}>
+            <Container>
+                <Row className="h-100">
+                    <Col lg={8} md={12} sm={12}
+                         className="d-flex justify-content-lg-start justify-content-center align-items-center">
                         <img src={`/img/logo-${lang}.svg`} alt="Masar Logo" className={styles.masarLogo} width={99}
                              height={61}/>
-                        <ul className={`${styles.navList} ${styles.mt3}`}>
+                        <ul className={`${styles.navList} ${styles.mt3} d-lg-flex d-none`}>
                             {
-                                superAdminHeader.map(item => {
-                                    return <li key={uuidV4()}><Link href={item.url}>{item.title}</Link></li>;
+                                list && list.map(item => {
+                                    return <li key={uuidV4()}><Link href={item.link}>{item.title}</Link></li>;
                                 })
                             }
                         </ul>
-                    </div>
+                    </Col>
 
-                    <div className="mt-2">
+                    <Col lg={4} md={12} xs={12} sm={12} className="d-lg-flex justify-content-end align-items-center d-none">
                         {
                             buttons.includes('search') &&
-                            <SearchBox styles={styles} placeholder={translation.search} search={search} setSearch={setSearch} lang={lang}></SearchBox>
+                            <SearchBox styles={styles} placeholder={translation.search} search={search}
+                                       setSearch={setSearch} lang={lang}></SearchBox>
                         }
 
                         {
@@ -88,7 +92,6 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                         {
                             buttons.includes('filter') &&
                             <NavButton
-                                token={token}
                                 source='/icons/filter.svg'
                                 alt='Filter Icon'
                                 width={24}
@@ -134,7 +137,7 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                         }
 
                         {
-                            buttons.includes('logout') &&
+                            isClientSide() && isLoggedIn() &&
                             <NavButton
                                 source='/icons/logout.svg'
                                 alt='Logout Icon'
@@ -152,7 +155,7 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                                         'type': 'button',
                                         'color': '#ED5858',
                                         'onClick': function () {
-                                            cookies.remove('auth_key', {path: '/'});
+                                            cookies.remove('user', {path: '/'});
                                             window.location.reload()
                                         }
                                     }
@@ -160,10 +163,10 @@ function NavBar({lang, translation, buttons, token, filtersData, selected, setSe
                                 hasList={true}
                                 lang={lang}></NavButton>
                         }
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
     );
 }
 

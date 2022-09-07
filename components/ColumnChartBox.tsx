@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import {right} from "@popperjs/core";
+import {isClientSide} from "../hooks/helpers";
 
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
@@ -19,12 +21,13 @@ interface ChartData {
 }
 
 const ColumnChartBox = ({config}: ChartConfig) => {
+    const width = isClientSide() ? window.innerWidth : 0;
     const {mainText, colors, percents, labels, categories, data, lang} = config;
     const negative = (lang == 'ar') ? -1 : 1;
+
     const options = {
         chart: {
             offsetY: -40,
-            type: 'bar',
             toolbar: {
                 show: false
             }
@@ -41,8 +44,8 @@ const ColumnChartBox = ({config}: ChartConfig) => {
             enabled: false
         },
         legend: {
-            show: true,
-            position: 'right',
+            show: width > 1300,
+            position: right,
             fontSize: '12px',
             fontFamily: lang == 'ar' ? 'arabic' : 'poppins',
             fontWeight: 600,
@@ -56,7 +59,7 @@ const ColumnChartBox = ({config}: ChartConfig) => {
                 offsetX: negative * -10
             },
             formatter: function (seriesName: string, opts: any) {
-                return [percents[opts.seriesIndex] + " " + seriesName]
+                return `${percents[opts.seriesIndex]}% ${seriesName}`;
             }
         },
         grid: {
@@ -69,7 +72,6 @@ const ColumnChartBox = ({config}: ChartConfig) => {
                 show: false
             }
         },
-        labels: labels
     };
 
     const series = [
@@ -80,15 +82,50 @@ const ColumnChartBox = ({config}: ChartConfig) => {
     return (
         <div style={{padding: '32px'}}>
             <p style={{fontStyle: 'normal', fontWeight: '700', fontSize: '20px', marginBottom: '42px'}}>{mainText}</p>
-            <div style={{display: "flex", justifyContent: "center"}}>
-                {(typeof window !== 'undefined') &&
+            <div className="d-flex justify-content-center position-relative w-100">
+                {data.length > 0 ?
                     <Chart
                         options={options}
                         series={series}
                         type="bar"
-                        width={610}
+                        width={width > 1300 ? "600" : "350"}
                         height={275}
-                    />
+                    /> :
+                    <div style={{
+                        transform: 'scaleY(-1)'
+                    }}>
+                        <div className="d-flex justify-content-between gap-5">
+                            <div style={{
+                                width: '100px',
+                                height: '200px',
+                                backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            }}></div>
+
+                            <div style={{
+                                width: '100px',
+                                height: '165px',
+                                backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            }}></div>
+
+                            <div style={{
+                                width: '100px',
+                                height: '175px',
+                                backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            }}></div>
+
+                            <div style={{
+                                width: '100px',
+                                height: '215px',
+                                backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            }}></div>
+
+                            <div style={{
+                                width: '100px',
+                                height: '150px',
+                                backgroundImage: 'linear-gradient(to right, #e1e1e1, #eee)',
+                            }}></div>
+                        </div>
+                    </div>
                 }
             </div>
         </div>

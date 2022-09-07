@@ -38,10 +38,11 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
     }
 
     const handleChange = (e: any) => {
-        let newValue = e.target.id;
+        const newValue = e.target.id;
+        const valueArray = newValue?.split('-');
         onFocus && onFocus(name);
         onChange && onChange(name, e.target.value);
-        setValue(newValue);
+        setValue(valueArray[0]);
     }
 
     const closeLists = () => {
@@ -66,7 +67,6 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
             <FormLabel style={{fontSize: '12px', fontWeight: '600'}}>{label}</FormLabel>
             <br/>
             <div style={{
-                width: '348px',
                 height: '48px',
                 border: '1px solid #E6E9EA',
                 borderRadius: '8px',
@@ -74,7 +74,7 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
             }}>
                 <input disabled className={styles.form} value={value} id={id} name={name} placeholder={placeHolder}
                        style={{
-                           width: '100%',
+                           width: '90%',
                            height: '100%',
                            border: 'none',
                            borderRadius: '8px',
@@ -89,18 +89,21 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
 
             {
                 show &&
-                <div className={styles.list}>
+                <div className={`${styles.list}`}>
                     <div className={styles.scroll}>
                         {
-                            list && list.data.map(item => {
+                            list && list.data.length > 0 ? list.data.map(item => {
                                 return (
-                                    <div key={uuidV4()} className={styles.listItem}>
-                                        <input type="radio" id={item.title} name={name} value={item.id}
+                                    <div key={uuidV4()} className={`${styles.listItem} d-flex justify-content-start`}>
+                                        <input style={{visibility: 'hidden'}} type="radio" id={`${item.title}-${item.id}`} name={name} value={item.id}
                                                onChange={handleChange} checked={item.title == value}/>
-                                        <label htmlFor={item.title}>{item.title}</label>
+                                        <label style={{textAlign: 'left'}} className="me-3" htmlFor={`${item.title}-${item.id}`}>{item.title}</label>
                                     </div>
                                 )
-                            })
+                            }) :
+                                <div key={uuidV4()} className={`${styles.listItem} d-flex justify-content-start`}>
+                                    <label>No Data</label>
+                                </div>
                         }
                     </div>
                 </div>
@@ -110,9 +113,9 @@ const RadioList = ({id, name, placeHolder, label, list, onFocus, validation, sel
                 color: 'red',
                 textAlign: 'center',
                 marginTop: '5px',
-                fontSize: '12px',
+                fontSize: '10px',
                 letterSpacing: '1px'
-            }}>{validation && validation}</p>
+            }}>{validation}</p>
         </div>
     )
 }

@@ -8,6 +8,8 @@ import Phone from "../../../components/form/Phone";
 import TextArea from "../../../components/form/TextArea";
 import {HandleRequestClient, HandleRequestSSR} from "../../api/Handler";
 import {countries} from "../../../public/assets/countries";
+import {Col, Container, Row} from "react-bootstrap";
+import {getToken} from "../../../hooks/User";
 
 export interface newCompanyConfig {
     number_of_employees: RadioListConfig,
@@ -57,7 +59,7 @@ export interface Country {
     code: string
 }
 
-const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess, showFailed}: MainProps) => {
+const NewCompany = ({setButtons, data, lang, setSuccessData, showSuccess, showFailed}: MainProps) => {
     const [validation, setValidation] = useState<Validation>({})
     const [company, setCompany] = useState<Company>({})
     const [manager, setManager] = useState<Manager>({})
@@ -157,7 +159,7 @@ const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept-Language': lang,
-                'x-api-key': token,
+                'x-api-key': getToken() ?? '',
             },
             data: {
                 company: companyClone,
@@ -190,211 +192,249 @@ const NewCompany = ({setButtons, data, lang, token, setSuccessData, showSuccess,
 
     return (
         <>
-            <Breadcrumb
-                main={{
-                    title: 'New Company',
-                    link: '/companies/new'
-                }}
-                sub={[
-                    {
-                        title: 'All Companies',
-                        link: '/companies/all'
-                    }
-                ]}></Breadcrumb>
+            <Container>
+                <Breadcrumb
+                    main={{
+                        title: 'New Company',
+                        link: '/super-admin/companies/new'
+                    }}
+                    sub={[
+                        {
+                            title: 'All Companies',
+                            link: '/super-admin/companies'
+                        }
+                    ]}></Breadcrumb>
 
-            <form style={{marginBottom: '50px', letterSpacing: '1px'}}>
-                {
-                    !next &&
-                    <div id={`step1`}>
-                        {/* Page Header */}
-                        <div style={{marginTop: '40px', display: 'flex', justifyContent: 'left'}}>
-                            <Image src={`/icons/company.svg`} alt="Company Icon" width={56} height={56}/>
-                            <div style={{marginLeft: '24px', marginTop: '17px'}}>
-                                <h1 style={{fontSize: '20px', fontWeight: '700'}}>Company Details</h1>
-                                <p style={{color: '#365158', fontSize: '14px'}}>Please fill the information below</p>
+                <Row>
+                    <form style={{marginBottom: '50px', letterSpacing: '1px'}}>
+                        {
+                            !next &&
+                            <div id={`step1`}>
+                                {/* Page Header */}
+                                <div style={{marginTop: '40px', display: 'flex', justifyContent: 'left'}}>
+                                    <Image src={`/icons/company.svg`} alt="Company Icon" width={56} height={56}/>
+                                    <div style={{marginLeft: '24px', marginTop: '17px'}}>
+                                        <h1 style={{fontSize: '20px', fontWeight: '700'}}>Company Details</h1>
+                                        <p style={{color: '#365158', fontSize: '14px'}}>Please fill the information
+                                            below</p>
+                                    </div>
+                                </div>
+
+                                <Row style={{marginTop: '40px'}} className="d-flex justify-content-start">
+                                    <Col lg={4} sm={12}>
+                                        <Text id="title-en" name="title_en" placeHolder="example"
+                                              label="English Title" width="100%" height={48}
+                                              validation={validation.title_en}
+                                              onFocus={clearErrors} onChange={prepareObject}
+                                              value={company.title_en}></Text>
+                                    </Col>
+
+                                    <Col lg={4} sm={12} className="mt-5 mt-lg-0">
+                                        <Text id="title-ar" name="title_ar" placeHolder="example"
+                                              label="Arabic Title" width={"100%"} height={48}
+                                              validation={validation.title_ar}
+                                              onFocus={clearErrors} onChange={prepareObject}
+                                              value={company.title_ar}></Text>
+                                    </Col>
+                                </Row>
+
+                                <Row style={{marginTop: '40px'}} className="d-flex justify-content-start">
+                                    <Col lg={4} sm={12}>
+                                        <RadioList id="country"
+                                                   name="country"
+                                                   placeHolder="Select"
+                                                   label="Country"
+                                                   list={prepareCountries()}
+                                                   validation={validation.country}
+                                                   onChange={prepareObject}
+                                                   selected={company.country}
+                                                   onFocus={clearErrors}></RadioList>
+                                    </Col>
+
+                                    <Col lg={4} sm={12} className="mt-5 mt-lg-0">
+                                        <Text id="city" name="city" placeHolder="example" label="City" width={"100%"}
+                                              height={48} onChange={prepareObject} value={company.city}></Text>
+                                    </Col>
+                                </Row>
+
+                                <Row style={{marginTop: '40px'}} className="d-flex justify-content-start">
+                                    <Col lg={4} sm={12}>
+                                        <Phone lang={lang} id="phone" name="phone_number" placeHolder="123456789"
+                                               label="Phone Number" value={company.phone_number}
+                                               list={countries} validation={validation.phone_number}
+                                               onChange={prepareObject}
+                                               onFocus={clearErrors} country={countryCompany}
+                                               setCountry={setCountryCompany}></Phone>
+                                    </Col>
+
+                                    <Col lg={4} sm={12} className="mt-5 mt-lg-0">
+                                        <RadioList id="sector"
+                                                   name="sector_id"
+                                                   onChange={prepareObject}
+                                                   selected={company.sector_id}
+                                                   placeHolder="Select"
+                                                   label="Sector"
+                                                   list={
+                                                       // @ts-ignore
+                                                       data['sector']
+                                                   }
+                                                   validation={validation.sector_id}
+                                                   onFocus={clearErrors}></RadioList>
+                                    </Col>
+                                </Row>
+
+                                <Row style={{marginTop: '40px'}} className="d-flex justify-content-start">
+                                    <Col lg={4} sm={12}>
+                                        <RadioList id="number_of_employees"
+                                                   name="number_of_employees_id"
+                                                   placeHolder="Select"
+                                                   label="Number Of Employees"
+                                                   list={
+                                                       // @ts-ignore
+                                                       data['number_of_employees']
+                                                   }
+                                                   onChange={prepareObject}
+                                                   selected={company.number_of_employees_id}
+                                                   validation={validation.number_of_employees_id}
+                                                   onFocus={clearErrors}></RadioList>
+                                    </Col>
+
+                                    <Col lg={4} sm={12} className="mt-5 mt-lg-0">
+                                        <RadioList id="annualRevenue"
+                                                   name="revenue_id"
+                                                   placeHolder="Select"
+                                                   label="Annual Revenue"
+                                                   list={
+                                                       // @ts-ignore
+                                                       data['revenue']
+                                                   }
+                                                   validation={validation.revenue_id}
+                                                   onChange={prepareObject}
+                                                   selected={company.revenue_id}
+                                                   onFocus={clearErrors}></RadioList>
+                                    </Col>
+                                </Row>
+
+                                <Row style={{marginTop: '40px'}} className="d-flex justify-content-start">
+                                    <Col lg={4} sm={12}>
+                                        <TextArea id="description_ar" name="description_ar" placeHolder="example"
+                                                  label="Arabic Description" validation={validation.description_ar}
+                                                  onChange={prepareObject} value={company.description_ar}
+                                                  onFocus={clearErrors}></TextArea>
+                                    </Col>
+
+                                    <Col lg={4} sm={12} className="mt-5 mt-lg-0">
+                                        <TextArea id="description" name="description_en" placeHolder="example"
+                                                  label="English Description" validation={validation.description_en}
+                                                  onFocus={clearErrors} onChange={prepareObject}
+                                                  value={company.description_en}></TextArea>
+                                    </Col>
+                                </Row>
+
+                                <button onClick={nextPage} style={{
+                                    backgroundColor: '#04252E',
+                                    width: '149px',
+                                    height: '54px',
+                                    borderRadius: '8px',
+                                    color: 'white',
+                                    marginTop: '62px',
+                                    display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'
+                                }}>
+                                    <p>Next</p>
+                                    <p style={{marginLeft: '12px', marginTop: '3px'}}>
+                                        <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
+                                    </p>
+                                </button>
                             </div>
-                        </div>
+                        }
 
-                        <div style={{marginTop: '40px'}}>
-                            <Text id="title-en" name="title_en" placeHolder="example"
-                                  label="English Title" width={348} height={48} validation={validation.title_en}
-                                  onFocus={clearErrors} onChange={prepareObject} value={company.title_en}></Text>
+                        {
+                            next &&
+                            <div id={`step2`}>
+                                {/* Page Header */}
+                                <div style={{marginTop: '40px', display: 'flex', justifyContent: 'left'}}>
+                                    <Image src={`/icons/manager.svg`} alt="Manager Icon" width={56} height={56}/>
+                                    <div style={{marginLeft: '24px', marginTop: '17px'}}>
+                                        <h1 style={{fontSize: '20px', fontWeight: '700'}}>Manager Details</h1>
+                                        <p style={{color: '#365158', fontSize: '14px'}}>Please fill the information
+                                            below</p>
+                                    </div>
+                                </div>
 
-                            <Text id="title-ar" name="title_ar" placeHolder="example"
-                                  label="Arabic Title" width={348} height={48} validation={validation.title_ar}
-                                  onFocus={clearErrors} onChange={prepareObject} value={company.title_ar}></Text>
-                        </div>
+                                <Col lg={4} sm={12} md={12} className="mt-2">
+                                    <Text id="manager-name" name="username" placeHolder="example"
+                                          label="Manager Name" width={`100%`} height={48}
+                                          validation={validation.username} onChange={prepareObject}
+                                          value={manager.username}
+                                          onFocus={clearErrors}></Text>
+                                </Col>
 
-                        <div style={{marginTop: '32px'}}>
-                            <RadioList id="country"
-                                       name="country"
-                                       placeHolder="Select"
-                                       label="Country"
-                                       list={prepareCountries()}
-                                       validation={validation.country}
-                                       onChange={prepareObject}
-                                       selected={company.country}
-                                       onFocus={clearErrors}></RadioList>
-                            <Text id="city" name="city" placeHolder="example" label="City" width={348}
-                                  height={48} onChange={prepareObject} value={company.city}></Text>
-                        </div>
+                                <Col lg={4} sm={12} md={12} className="mt-5">
+                                    <Text id="manager-email" name="email" placeHolder="john.doe@example.com"
+                                          label="Email" width={`100%`} height={48} validation={validation.email}
+                                          onFocus={clearErrors} onChange={prepareObject} value={manager.email}></Text>
+                                </Col>
 
-                        <div style={{marginTop: '32px'}}>
-                            <Phone lang={lang} id="phone" name="phone_number" placeHolder="123456789"
-                                   label="Phone Number" value={company.phone_number}
-                                   list={countries} validation={validation.phone_number} onChange={prepareObject}
-                                   onFocus={clearErrors} country={countryCompany}
-                                   setCountry={setCountryCompany}></Phone>
+                                <Col lg={4} sm={12} md={12} className="mt-5">
+                                    <Text id="manager-position" name="position" placeHolder="example"
+                                          label="Position" width={`100%`} height={48}
+                                          validation={validation.position} onChange={prepareObject}
+                                          value={manager.position}
+                                          onFocus={clearErrors}></Text>
+                                </Col>
 
-                            <RadioList id="sector"
-                                       name="sector_id"
-                                       onChange={prepareObject}
-                                       selected={company.sector_id}
-                                       placeHolder="Select"
-                                       label="Sector"
-                                       list={
-                                           // @ts-ignore
-                                           data['sector']
-                                       }
-                                       validation={validation.sector_id}
-                                       onFocus={clearErrors}></RadioList>
-                        </div>
+                                <Col lg={4} sm={12} md={12} className="mt-5">
+                                    <Phone lang={lang} id="phone" name="phone" placeHolder="123456789"
+                                           label="Phone Number"
+                                           list={countries} validation={validation.phone}
+                                           value={manager.phone} onChange={prepareObject} onFocus={clearErrors}
+                                           country={countryManager}
+                                           setCountry={setCountryManager}></Phone>
+                                </Col>
 
-                        <div style={{marginTop: '32px'}}>
-                            <RadioList id="number_of_employees"
-                                       name="number_of_employees_id"
-                                       placeHolder="Select"
-                                       label="Number Of Employees"
-                                       list={
-                                           // @ts-ignore
-                                           data['number_of_employees']
-                                       }
-                                       onChange={prepareObject}
-                                       selected={company.number_of_employees_id}
-                                       validation={validation.number_of_employees_id}
-                                       onFocus={clearErrors}></RadioList>
+                                <div style={{display: 'flex', justifyContent: 'left'}}>
+                                    <button onClick={previousPage} className="mt-5" style={{
+                                        backgroundColor: '#04252E',
+                                        width: '100px',
+                                        height: '54px',
+                                        borderRadius: '8px',
+                                        color: 'white',
+                                        marginBottom: '100px',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        padding: '16px',
+                                        fontSize: '16px'
+                                    }}>
+                                        <p className="mt-2" style={{transform: 'rotate(180deg)'}}>
+                                            <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
+                                        </p>
+                                    </button>
 
-                            <RadioList id="annualRevenue"
-                                       name="revenue_id"
-                                       placeHolder="Select"
-                                       label="Annual Revenue"
-                                       list={
-                                           // @ts-ignore
-                                           data['revenue']
-                                       }
-                                       validation={validation.revenue_id}
-                                       onChange={prepareObject}
-                                       selected={company.revenue_id}
-                                       onFocus={clearErrors}></RadioList>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <TextArea id="description_ar" name="description_ar" placeHolder="example"
-                                      label="Arabic Description" validation={validation.description_ar}
-                                      onChange={prepareObject} value={company.description_ar}
-                                      onFocus={clearErrors}></TextArea>
-
-                            <TextArea id="description" name="description_en" placeHolder="example"
-                                      label="English Description" validation={validation.description_en}
-                                      onFocus={clearErrors} onChange={prepareObject}
-                                      value={company.description_en}></TextArea>
-                        </div>
-
-                        <button onClick={nextPage} style={{
-                            backgroundColor: '#04252E',
-                            width: '149px',
-                            height: '54px',
-                            borderRadius: '8px',
-                            color: 'white',
-                            marginTop: '62px',
-                            display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'
-                        }}>
-                            <p>Next</p>
-                            <p style={{marginLeft: '12px', marginTop: '3px'}}>
-                                <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
-                            </p>
-                        </button>
-                    </div>
-                }
-
-                {
-                    next &&
-                    <div id={`step2`}>
-                        {/* Page Header */}
-                        <div style={{marginTop: '40px', display: 'flex', justifyContent: 'left'}}>
-                            <Image src={`/icons/manager.svg`} alt="Manager Icon" width={56} height={56}/>
-                            <div style={{marginLeft: '24px', marginTop: '17px'}}>
-                                <h1 style={{fontSize: '20px', fontWeight: '700'}}>Manager Details</h1>
-                                <p style={{color: '#365158', fontSize: '14px'}}>Please fill the information below</p>
+                                    <button onClick={handleSubmit} className="mt-5" style={{
+                                        backgroundColor: '#04252E',
+                                        width: '149px',
+                                        height: '54px',
+                                        borderRadius: '8px',
+                                        color: 'white',
+                                        marginBottom: '100px',
+                                        marginLeft: '20px',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        padding: '12px 16px',
+                                        fontSize: '16px'
+                                    }}>
+                                        <p>Done</p>
+                                        <p style={{marginLeft: '12px', marginTop: '3px'}}>
+                                            <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
+                                        </p>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div style={{marginTop: '40px'}}>
-                            <Text id="manager-name" name="username" placeHolder="example"
-                                  label="Manager Name" width={348} height={48}
-                                  validation={validation.username} onChange={prepareObject} value={manager.username}
-                                  onFocus={clearErrors}></Text>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <Text id="manager-email" name="email" placeHolder="john.doe@example.com"
-                                  label="Email" width={348} height={48} validation={validation.email}
-                                  onFocus={clearErrors} onChange={prepareObject} value={manager.email}></Text>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <Text id="manager-position" name="position" placeHolder="example"
-                                  label="Position" width={348} height={48}
-                                  validation={validation.position} onChange={prepareObject}
-                                  value={manager.position}
-                                  onFocus={clearErrors}></Text>
-                        </div>
-
-                        <div style={{marginTop: '32px'}}>
-                            <Phone lang={lang} id="phone" name="phone" placeHolder="123456789"
-                                   label="Phone Number"
-                                   list={countries} validation={validation.phone}
-                                   value={manager.phone} onChange={prepareObject} onFocus={clearErrors}
-                                   country={countryManager}
-                                   setCountry={setCountryManager}></Phone>
-                        </div>
-
-                        <div style={{display: 'flex', justifyContent: 'left'}}>
-                            <button onClick={previousPage} style={{
-                                backgroundColor: '#04252E',
-                                width: '100px',
-                                height: '54px',
-                                borderRadius: '8px',
-                                color: 'white',
-                                marginTop: '48px',
-                                marginBottom: '100px',
-                                display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'
-                            }}>
-                                <p style={{marginTop: '-3px', transform: 'rotate(180deg)'}}>
-                                    <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
-                                </p>
-                            </button>
-
-                            <button onClick={handleSubmit} style={{
-                                backgroundColor: '#04252E',
-                                width: '149px',
-                                height: '54px',
-                                borderRadius: '8px',
-                                color: 'white',
-                                marginTop: '48px',
-                                marginBottom: '100px',
-                                marginLeft: '20px',
-                                display: 'flex', justifyContent: 'center', padding: '12px 16px', fontSize: '16px'
-                            }}>
-                                <p>Done</p>
-                                <p style={{marginLeft: '12px', marginTop: '3px'}}>
-                                    <Image src={`/icons/right-arrow.svg`} width={20} height={20}></Image>
-                                </p>
-                            </button>
-                        </div>
-                    </div>
-                }
-            </form>
+                        }
+                    </form>
+                </Row>
+            </Container>
         </>
     )
 }
@@ -412,9 +452,18 @@ export async function getServerSideProps(ctx: any) {
         newCompanyFilterRequest
     ]);
 
+    if (filter?.data?.redirect) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: filter?.data?.to || "/",
+            }
+        }
+    }
+
     return {
         props: {
-            data: filter.data,
+            data: filter?.data,
         }
     };
 }

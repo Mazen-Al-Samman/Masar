@@ -1,16 +1,24 @@
 import {v4 as uuidV4} from 'uuid';
 import css from './styles/box.module.css';
+import {useRouter} from "next/router";
 
 interface BoxConfig {
     config: {
-        mainText: string,
-        items: BoxItems[]
+        mainText: string;
+        items: BoxItems[];
+        button?: IButton;
     }
 }
 
+interface IButton {
+    text: string;
+    onClick: () => {};
+}
+
 interface BoxItems {
-    title: string,
-    desc: string
+    title: string;
+    desc: string;
+    href?: string;
 }
 
 
@@ -29,7 +37,7 @@ const styles = {
     inner: {
         div: {
             marginTop: '30px',
-            height:'250px',
+            height: '250px',
             overflow: 'auto'
         },
         p: {
@@ -54,21 +62,33 @@ const styles = {
 }
 
 const TextBox = ({config}: BoxConfig) => {
-    const {mainText, items} = config;
+    const {mainText, items, button} = config;
+    const router = useRouter();
     return (
         <div style={styles.main}>
-            <p style={styles.p}>{mainText}</p>
+            <div className="d-flex justify-content-between">
+                <p style={styles.p}>{mainText}</p>
+                {
+                    button &&
+                    <p className="pointer" onClick={button.onClick}>{button.text}</p>
+                }
+            </div>
             <div style={styles.inner.div} className={css.scroll}>
                 {
-                    items.map(item => {
-                        return (
-                            <div key={uuidV4()}>
-                                <p style={styles.inner.p}>{item.title}</p>
-                                <span style={styles.inner.span}>{item.desc}</span>
-                                <hr style={styles.inner.hr}/>
-                            </div>
-                        )
-                    })
+                    items.length ? items.map(item => {
+                            return (
+                                <div key={uuidV4()} style={{cursor: 'pointer'}} onClick={() => {
+                                    item.href ? router.push(item.href) : '';
+                                }}>
+                                    <p style={styles.inner.p}>{item.title}</p>
+                                    <span style={styles.inner.span}>{item.desc}</span>
+                                    <hr style={styles.inner.hr}/>
+                                </div>
+                            )
+                        }) :
+                        <div className="d-flex justify-content-center align-items-center h-100">
+                            <p>No Data</p>
+                        </div>
                 }
             </div>
         </div>

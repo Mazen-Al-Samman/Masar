@@ -1,19 +1,29 @@
 import '../styles/globals.css'
 import MainProps from '../interfaces/MainProps';
-import NavBar from '../components/NavBar';
-import translations from '../common/translation';
 import Header from '../components/Header';
 import styles from '../styles/Home.module.css'
 import {useState} from 'react';
 import Success from "../components/status/Success";
 import Failed from "../components/status/Failed";
+import dynamic from "next/dynamic";
+import {useTheme} from "../hooks/theme";
+import {defaultNavItems} from "../hooks/NavHelpers";
+import AppContext from "../components/AppContext";
+const NavBar = dynamic(() => import('../components/NavBar'), { ssr: false, });
+import '/styles.css';
 
-const isBrowser = typeof window !== "undefined";
+export interface ISingleNavItem {
+    title: string,
+    link: string
+}
 
-function MyApp({Component, pageProps, lang, token}: MainProps) {
-    const dir = lang == 'en' ? 'ltr' : 'rtl';
-    const translation = translations[lang];
-    const [buttons, setButtons] = useState(['search', 'language', !token ? '' : 'logout']);
+function MyApp({Component, pageProps, lang}: MainProps) {
+    const theme = useTheme();
+    const dir = theme.dir;
+    const translation = theme.translation;
+    const [buttons, setButtons] = useState(['language']);
+    const [data, setData] = useState({});
+    const [navList, setNavList] = useState<ISingleNavItem[]>([...defaultNavItems()]);
     const [showNav, setShowNav] = useState(true);
     const [padding, setPadding] = useState(true);
     const [filterConfig, setFilterConfig] = useState();
@@ -44,27 +54,28 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
                     setSelected={setSelected}
                     search={search}
                     setSearch={setSearch}
-                    token={token}></NavBar>
+                    list={navList}></NavBar>
             }
-            <div style={{padding: `${padding ? '0 156px' : '0'}`}}>
+            <div style={{padding: `${padding ? '0' : '0'}`}}>
                 {
                     !showSuccess && !showFailed &&
-                    <Component
-                        {...pageProps}
-                        lang={lang}
-                        setButtons={setButtons}
-                        showNav={setShowNav}
-                        setPadding={setPadding}
-                        setFilter={setFilterConfig}
-                        filters={filterConfig}
-                        token={token}
-                        selected={selected}
-                        setSelected={setSelected}
-                        showSuccess={setShowSuccess}
-                        showFailed={setShowFailed}
-                        setSuccessData={setSuccessData}
-                        search={search}
-                    />
+                    <AppContext.Provider value={{data, setData}}>
+                        <Component
+                            {...pageProps}
+                            lang={lang}
+                            setButtons={setButtons}
+                            showNav={setShowNav}
+                            setPadding={setPadding}
+                            setFilter={setFilterConfig}
+                            filters={filterConfig}
+                            selected={selected}
+                            setSelected={setSelected}
+                            showSuccess={setShowSuccess}
+                            showFailed={setShowFailed}
+                            setSuccessData={setSuccessData}
+                            search={search}
+                        />
+                    </AppContext.Provider>
                 }
                 {
                     showSuccess &&
@@ -82,7 +93,7 @@ function MyApp({Component, pageProps, lang, token}: MainProps) {
 MyApp.getInitialProps = async (context: any) => {
     const {req, res, pathname} = context?.ctx;
     const language = req?.cookies?.language;
-    const auth_key = req?.cookies?.auth_key;
+    const auth_key = req?.cookies?.user;
 
     if (!auth_key && pathname != '/') {
         res?.writeHead(302, {Location: '/'});
@@ -94,7 +105,6 @@ MyApp.getInitialProps = async (context: any) => {
 
     return {
         lang: language ?? 'en',
-        token: auth_key ?? null,
     }
 };
 

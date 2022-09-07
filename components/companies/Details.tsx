@@ -2,6 +2,8 @@ import NewCompany from "./NewCompany";
 import CompanyBox from "./CompanyBox";
 import {config} from "./CompanyBox";
 import styles from "../styles/box.module.css";
+import DepartmentDetails from "../departments/DepartmentDetails";
+import ProcessDetails from "../ProcessDetails";
 
 interface Config {
     type: string,
@@ -13,7 +15,7 @@ const Details = ({type, data}: Config) => {
         <div style={{
             backgroundColor: '#FFFFFF',
             width: '100%',
-            height: '185px',
+            minHeight: '185px',
             borderRadius: '12px',
             boxShadow: '0px 20px 50px rgba(4, 37, 46, 0.08)',
             display: 'flex',
@@ -28,9 +30,13 @@ const Details = ({type, data}: Config) => {
 function renderBlock(type: string, data: config | undefined) {
     switch (type) {
         case 'new':
-            return <NewCompany></NewCompany>;
+            return <NewCompany data={{title: data?.title}}></NewCompany>;
         case 'company':
             return <CompanyBox {...data}></CompanyBox>
+        case 'department':
+            return <DepartmentDetails {...data}></DepartmentDetails>
+        case 'process':
+            return <ProcessDetails {...data}></ProcessDetails>
     }
 }
 

@@ -1,4 +1,5 @@
 import axios, {AxiosRequestHeaders} from "axios";
+import {getTokenFromObject} from "../../hooks/User";
 
 const BaseUrl = 'https://masar-api.tech-inspire.com';
 
@@ -48,8 +49,8 @@ export const HandleRequestClient = ({
 
 export const HandleRequestSSR = ({url, method, headers, data, context}: request) => {
     if (context) {
-        const {language, auth_key} = context.req.cookies;
-        headers['x-api-key'] = auth_key;
+        const {language, user} = context.req.cookies;
+        headers['x-api-key'] = getTokenFromObject(user);
         headers['Accept-Language'] = language ?? 'en';
     }
 
@@ -59,7 +60,26 @@ export const HandleRequestSSR = ({url, method, headers, data, context}: request)
         url,
         headers,
         data,
-    });
+    }).catch((error) => {
+        const errors = error.response;
+        switch (errors.status) {
+            case 401:
+                context.res.setHeader("Set-Cookie", [`auth_key=''; Max-Age=0; path=/`]);
+                return {
+                    data: {
+                        redirect: true,
+                        to: "/",
+                    }
+                };
+            case 403:
+                return {
+                    data: {
+                        redirect: true,
+                        to: "/admin",
+                    }
+                };
+        }
+    })
 }
 
 export default {

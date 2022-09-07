@@ -1,11 +1,11 @@
 import MainProps from '../../../interfaces/MainProps';
-import translation from "../../../common/translation";
 import Box from "../../../components/Box";
 import CompanyMainData from "../../../components/companies/CompanyMainData";
 import {HandleRequestSSR} from "../../api/Handler";
 import {Col, Container, Row} from "react-bootstrap";
 import CompanyAttributes from "../../../components/companies/CompanyAttributes";
 import {useLayoutEffect} from "react";
+import {useTheme} from "../../../hooks/theme";
 
 interface PageData {
     view: CompanyView
@@ -43,8 +43,7 @@ export interface CompanyView {
 }
 
 const View = ({lang, view, setButtons}: (MainProps & PageData)) => {
-    const translate = translation[lang];
-
+    const {translation} = useTheme();
     useLayoutEffect(() => {
         setButtons(['search', 'language', 'logout']);
     }, []);
@@ -78,35 +77,35 @@ const View = ({lang, view, setButtons}: (MainProps & PageData)) => {
                     </Col>
 
                     {/* Total KPI Status */}
-                    <Col sm={12} md={12} lg={4}>
+                    <Col sm={12} md={12} lg={4} className="mt-3 mt-lg-0">
                         <Box height='349px' type='pieChart' config={{
-                            mainText: translate.totalKpiStatus,
+                            mainText: translation.totalKpiStatus,
                             series: [5, 2, 3],
-                            labels: [translate.achieved, translate.overAchieved, translate.notAchieved],
+                            labels: [translation.achieved, translation.overAchieved, translation.notAchieved],
                             colors: ['#715AFF', '#1D2D44', '#009FB7'],
                             lang: lang,
                         }}></Box>
                     </Col>
 
                     {/* Total KPI Timeliness */}
-                    <Col style={{padding: 0}} sm={12} md={12} lg={4}>
+                    <Col sm={12} md={12} lg={4} className="mt-3 mt-lg-0 p-lg-0">
                         <Box height='349px' type='image' config={
                             {
-                                mainText: translate.totalControlsAssessment,
-                                subText: translate.none,
+                                mainText: translation.totalControlsAssessment,
+                                subText: translation.none,
                                 image: '/icons/none.svg',
                                 lang: lang,
                                 iconDescItems: [
                                     {
-                                        title: translate.adequate,
+                                        title: translation.adequate,
                                         color: '#5CE5BD'
                                     },
                                     {
-                                        title: translate.needsImprovement,
+                                        title: translation.needsImprovement,
                                         color: '#000000'
                                     },
                                     {
-                                        title: translate.none,
+                                        title: translation.none,
                                         color: '#ED5858'
                                     }
                                 ]
@@ -115,27 +114,27 @@ const View = ({lang, view, setButtons}: (MainProps & PageData)) => {
                     </Col>
 
                 </Row>
-                <Row style={{marginTop: '15px'}} className="gx-4">
+                <Row className="gx-4 mt-3">
                     <Col style={{paddingInlineStart: 0}} sm={12} md={12} lg={7}>
                         {/* Total Risk Rating */}
                         <Box height='349px' type='columnChart' config={
                             {
-                                mainText: translate.totalRiskRating,
+                                mainText: translation.totalRiskRating,
                                 colors: ['#5CE5BD', '#3A9177', '#FFCE20', '#ED5858', '#AD4040'],
                                 percents: ['50%', '70%', '100%', '30%', '10%'],
                                 labels: ['11', '22', '33', '44', '55'],
-                                categories: [translate.veryHigh, translate.high, translate.medium, translate.low, translate.veryLow],
+                                categories: [translation.veryHigh, translation.high, translation.medium, translation.low, translation.veryLow],
                                 data: [4, 5, 8, 3, 2],
                                 lang: lang,
                             }
                         }></Box>
                     </Col>
 
-                    <Col style={{padding: 0}} sm={12} md={12} lg={5}>
+                    <Col sm={12} md={12} lg={5} className="mt-3 mt-lg-0 p-lg-0">
                         <Box height='349px' type='pieChart' config={{
-                            mainText: translate.totalRiskCategory,
+                            mainText: translation.totalRiskCategory,
                             series: [31, 16, 25, 6, 22, 16, 16, 22, 31, 31],
-                            labels: [translate.strategic, translate.operational, translate.technology, translate.financial, translate.strategic, translate.operational, translate.technology, translate.financial, translate.strategic, translate.operational],
+                            labels: [translation.strategic, translation.operational, translation.technology, translation.financial, translation.strategic, translation.operational, translation.technology, translation.financial, translation.strategic, translation.operational],
                             colors: ['#034732', '#009FB7', '#E3D7FF', '#C33149', '#CFE8EF', '#715AFF', '#FE9158', '#1D2D44', '#AEF78E', '#443850'],
                             lang: lang,
                         }}></Box>
@@ -164,6 +163,7 @@ export async function getServerSideProps(ctx: any) {
 
     return {
         props: {
+            // @ts-ignore
             view: companyView.data,
         }
     };
